@@ -94,10 +94,31 @@ class Ajax {
    * @param password
    */
   login(username, password) {
-    const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+    const headers = {'Content-Type': 'application/x-www-form-urlencoded','Access-Control-Allow-Origin':'*'};
     return this.post(`${globalConfig.getAPIPath()}${globalConfig.login.validate}`, {username, password}, {headers});
   }
 
+  /**
+  *
+  *  security 登录
+  */
+
+  loginMy(){
+    var paramsUrl='/login';
+    var fd = new FormData();fd.append('username','51847525');fd.append('password','Crcnet123456');
+    // 使用xhr提交
+    var xhr = new XMLHttpRequest();
+    xhr.addEventListener("load",  (data)=>{this.getListDataAfterLogin()}, false);
+    xhr.addEventListener("error", (data)=>{console.log('xhr fail!!!')}, false);
+    xhr.open("POST", paramsUrl);
+    xhr.setRequestHeader('Access-Control-Allow-Origin', '*'); // 必须有
+    xhr.send(fd);
+  }
+
+  getListDataAfterLogin(){
+    console.info('登录我的后台成功！');
+  }
+  
   /**
    *  封装CRUD相关操作
    *

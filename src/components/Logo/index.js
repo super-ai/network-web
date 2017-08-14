@@ -6,7 +6,6 @@ import './index.less';
  * 定义Logo组件
  */
 class Logo extends React.PureComponent {
-
   render() {
     return (
       <div className={this.props.collapse ? "ant-layout-logo-collapse" : "ant-layout-logo-normal"}>
@@ -17,7 +16,9 @@ class Logo extends React.PureComponent {
       </div>
     );
   }
-
 }
 
 export default Logo;
+
+// 增加公司logo
+// <img src={globalConfig.favicon} />
