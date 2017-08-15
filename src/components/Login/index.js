@@ -51,12 +51,11 @@ class Login extends React.PureComponent {
     try {
       // 服务端验证
       // const res = await ajax.login(username, password);
-      debugger;
       const res = await ajax.loginMy(username, password);
       hide();
       logger.debug('login validate return: result %o', res);
       return;
-      debugger;
+      
       if (res.success) {
         message.success('登录成功');
         // 如果登录成功, 触发一个loginSuccess的action, payload就是登录后的用户名
