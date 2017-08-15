@@ -176,7 +176,7 @@ class Ajax {
     });
     var fetchOpts = {
       method:'POST',
-      mode: "cors",
+      mode: "no-cors",
       credentials:'include',
       cache: 'default',
       headers:myHeaders,
