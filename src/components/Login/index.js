@@ -19,8 +19,8 @@ class Login extends React.PureComponent {
   // 一般而言公司内部都会提供基于LDAP的统一登录, 用到这个登录组件的场景应该挺少的
 
   state = {
-    username: '',  // 当前输入的用户名
-    password: '',  // 当前输入的密码
+    username: '51847525',  // 当前输入的用户名
+    password: 'Crcnet123456',  // 当前输入的密码
     requesting: false, // 当前是否正在请求服务端接口
   };
 
@@ -54,7 +54,8 @@ class Login extends React.PureComponent {
       const res = await ajax.loginMy(username, password);
       hide();
       logger.debug('login validate return: result %o', res);
-
+      return;
+      debugger;
       if (res.success) {
         message.success('登录成功');
         // 如果登录成功, 触发一个loginSuccess的action, payload就是登录后的用户名

@@ -2,6 +2,10 @@ import Logger from './Logger';
 import superagent from 'superagent';
 import globalConfig from '../config';
 
+// superagent 不会用
+// import { Promise } from 'es6-promise';
+// import fetch from 'isomorphic-fetch';
+
 const logger = new Logger('Ajax');
 
 /**
@@ -32,7 +36,7 @@ class Ajax {
       const tmp = superagent(method, url);
       // 是否是跨域请求
       if (globalConfig.isCrossDomain()) {
-        tmp.withCredentials();
+        // tmp.withCredentials();
       }
       // 设置全局的超时时间
       if (globalConfig.api.timeout && !isNaN(globalConfig.api.timeout)) {
@@ -40,6 +44,9 @@ class Ajax {
       }
       // 默认的Content-Type和Accept
       tmp.set('Content-Type', 'application/json').set('Accept', 'application/json');
+      // 增加跨域
+      tmp.set('Access-Control-Allow-Origin','*');
+
       // 如果有自定义的header
       if (headers) {
         tmp.set(headers);
@@ -60,6 +67,7 @@ class Ajax {
         if (res && res.body) {
           resolve(res.body);
         } else {
+          debugger;
           reject(err || res);
         }
       });
@@ -84,7 +92,44 @@ class Ajax {
    * @returns {*}
    */
   getCurrentUser() {
-    return this.get(`${globalConfig.getAPIPath()}${globalConfig.login.getCurrentUser}`);
+    var rlt = this.getCurrent();
+    debugger;
+    return rlt;
+    // return this.get(`${globalConfig.getAPIPath()}${globalConfig.login.getCurrentUser}`);
+  }
+
+  getCurrentUserMy(){
+
+  }
+
+  // 使用fetch获取数据
+  getCurrent(){
+    var selectData = [],params = new Object();
+    // var paramsUrl='/api/staff/getCurrent';
+    var paramsUrl = `${globalConfig.getAPIPath()}${globalConfig.login.getCurrentUser}`;
+    var fetchOpts = {
+      method:'GET',
+      // mode: "no-cors",
+      credentials:'include',
+      cache: 'default',
+    };
+
+    // 设置提交参数
+    // params = this.props.form.getFieldsValue();  //使用表单方法直接获取提交值
+    // params.dt = this.state.dpValue.format('YYYY-MM-DD');params.arealevel = 0;params.areaname = '';
+    // paramsUrl += '?';
+    Object.keys(params).forEach(function(val){
+      paramsUrl += val + '=' + encodeURIComponent(params[val]) + '&';
+    })
+    fetch(paramsUrl,fetchOpts)
+    .then(
+      (res) => {return res.text();}
+    )
+    .then((data) => {
+      var obj = eval('(' + data.data + ')');   //不能使用JSON.parse
+      return data;
+    })
+    .catch((e) => {debugger;console.log('获取数据失败');});
   }
 
   /**
@@ -95,7 +140,10 @@ class Ajax {
    */
   login(username, password) {
     const headers = {'Content-Type': 'application/x-www-form-urlencoded','Access-Control-Allow-Origin':'*'};
-    return this.post(`${globalConfig.getAPIPath()}${globalConfig.login.validate}`, {username, password}, {headers});
+    // return this.post(`${globalConfig.getAPIPath()}${globalConfig.login.validate}`, {username, password}, {headers});
+    // return this.post(`${globalConfig.getAPIPath()}${globalConfig.login.validate}`, {username, password}, {headers});
+    return this.post('/login', {username, password}, {headers});
+
   }
 
   /**
@@ -103,22 +151,28 @@ class Ajax {
   *  security 登录
   */
 
-  loginMy(){
-    var paramsUrl='/login';
-    var fd = new FormData();fd.append('username','51847525');fd.append('password','Crcnet123456');
+  loginMy(username, password){
+    var paramsUrl= `${globalConfig.login.validate}`;
+    var fd = new FormData();
+    // fd.append('username','51847525');fd.append('password','Crcnet123456');
+    fd.append('username',username);fd.append('password',password);
     // 使用xhr提交
     var xhr = new XMLHttpRequest();
-    xhr.addEventListener("load",  (data)=>{this.getListDataAfterLogin()}, false);
-    xhr.addEventListener("error", (data)=>{console.log('xhr fail!!!')}, false);
+    xhr.addEventListener("load",  (data)=>{this.loginSuccess(data)}, false);
+    xhr.addEventListener("error", (data)=>{this.loginFail(data)}, false);
     xhr.open("POST", paramsUrl);
     xhr.setRequestHeader('Access-Control-Allow-Origin', '*'); // 必须有
     xhr.send(fd);
   }
 
-  getListDataAfterLogin(){
+  loginSuccess(data){
     console.info('登录我的后台成功！');
   }
-  
+
+  loginFail(data){
+    console.info('登录我的后台失败！');
+  }
+
   /**
    *  封装CRUD相关操作
    *

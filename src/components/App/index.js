@@ -78,23 +78,30 @@ class App extends React.Component {
    * App组件挂载后要先尝试去服务端获取已登录的用户
    */
   async componentDidMount() {
+    // 不去获取用户
+    // return;
+
+    // redux的state
     if (!this.props.login) {
       const hide = message.loading('正在获取用户信息...', 0);
 
       try {
         // 先去服务端验证下, 说不定已经登录了
         const res = await ajax.getCurrentUser();
-        hide();
 
+        hide();
+        debugger;
         // 注意这里, debug模式下每次刷新都必须重新登录
         if (res.success && !globalConfig.debug) {
           // 这里不需要setState了, 因为setState的目的是为了re-render, 而下一句会触发redux的状态变化, 也会re-render
           // 所以直接修改状态, 就是感觉这么做有点奇怪...
           this.state.tryingLogin = false;
           // App组件也可能触发loginSuccess action
+          // handleLoginSuccess 是何方神圣
           this.props.handleLoginSuccess(res.data);
         } else {
           this.handleLoginError('获取用户信息失败, 请重新登录');
+
         }
       } catch (e) {
         // 如果网络请求出错, 弹出一个错误提示
