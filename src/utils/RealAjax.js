@@ -148,7 +148,9 @@ class Ajax {
   */
 
   loginMy(username, password){
-    var paramsUrl= `${globalConfig.login.validate}`;
+    // var paramsUrl = `${globalConfig.getAPIPath()}${globalConfig.login.validate}`;
+    var paramsUrl='/login';
+    debugger;
     var fd = new FormData();
     // fd.append('username','51847525');fd.append('password','Crcnet123456');
     fd.append('username',username);fd.append('password',password);

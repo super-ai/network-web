@@ -83,11 +83,6 @@ module.exports = {
       // 必须设置为false
       // "changeOrigin": false,
     },
-    "/api/staff/getCurrent": {
-      "target": "http://localhost:8080",
-      // 必须设置为false
-      // "changeOrigin": false,
-    },
     "/api/*": {
       "target": "http://localhost:8080",
     }
