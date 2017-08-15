@@ -152,6 +152,7 @@ class Ajax {
     var fd = new FormData();
     // fd.append('username','51847525');fd.append('password','Crcnet123456');
     fd.append('username',username);fd.append('password',password);
+    debugger;
     // 使用xhr提交
     var xhr = new XMLHttpRequest();
     xhr.addEventListener("load",  (data)=>{this.loginSuccess(data)}, false);

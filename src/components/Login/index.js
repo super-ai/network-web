@@ -51,6 +51,7 @@ class Login extends React.PureComponent {
     try {
       // 服务端验证
       // const res = await ajax.login(username, password);
+      debugger;
       const res = await ajax.loginMy(username, password);
       hide();
       logger.debug('login validate return: result %o', res);
