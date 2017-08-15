@@ -73,7 +73,8 @@ module.exports = {
       // HtmlWebpackPlugin自己有一个favicon属性, 但用起来有点问题, 所以自己重新搞个favIcon属性
       favIcon: globalConfig.favicon,
       // 这个属性也是我自己定义的, dev模式下要加载一些额外的js
-      devMode: true,
+      // 设置为false 否则index.html.template 回去获取 webpack-dev-server.js文件
+      devMode: false,
     }),
   ],
   // 代理
