@@ -92,20 +92,14 @@ class Ajax {
    * @returns {*}
    */
   getCurrentUser() {
-    var rlt = this.getCurrent();
-    debugger;
-    return rlt;
+    return this.getCurrent();
     // return this.get(`${globalConfig.getAPIPath()}${globalConfig.login.getCurrentUser}`);
-  }
-
-  getCurrentUserMy(){
-
   }
 
   // 使用fetch获取数据
   getCurrent(){
     var selectData = [],params = new Object();
-    // var paramsUrl='/api/staff/getCurrent';
+    // var paramsUrl='/api/staff/getCurrent'; 不可以！
     var paramsUrl = `${globalConfig.getAPIPath()}${globalConfig.login.getCurrentUser}`;
     var fetchOpts = {
       method:'GET',
@@ -121,13 +115,15 @@ class Ajax {
     Object.keys(params).forEach(function(val){
       paramsUrl += val + '=' + encodeURIComponent(params[val]) + '&';
     })
-    fetch(paramsUrl,fetchOpts)
+
+    return fetch(paramsUrl,fetchOpts)
     .then(
       (res) => {return res.text();}
+      // (res) => { return res;}
     )
     .then((data) => {
-      var obj = eval('(' + data.data + ')');   //不能使用JSON.parse
-      return data;
+      var obj = eval('(' + data + ')');   //不能使用JSON.parse
+      return obj;
     })
     .catch((e) => {debugger;console.log('获取数据失败');});
   }
