@@ -98,7 +98,8 @@ class Ajax {
     var paramsUrl = `${globalConfig.getAPIPath()}${globalConfig.login.getCurrentUser}`;
     var fetchOpts = {
       method:'GET',
-      // mode: "no-cors",
+      // mode: "no-cors", 不能使用
+      // mode:'no-cors',  //也可以不用
       credentials:'include',
       cache: 'default',
     };
@@ -113,15 +114,9 @@ class Ajax {
 
     return fetch(paramsUrl,fetchOpts)
     .then(
-      (res) => {return res.json();}
+      (res) => {console.log('获取currentUser数据成功');return res.json()}
     )
-    // .then((data) => {
-    //   // var obj = eval('(' + data + ')');   //不能使用JSON.parse
-    //   console.log('获取currentUser数据成功');
-    //   return data;
-    // })
     .catch((e) => {console.log('获取currentUser数据失败');});
-
   }
 
   /**
@@ -173,8 +168,8 @@ class Ajax {
     });
     var fetchOpts = {
       method:'POST',
-      mode: "no-cors",
-      // credentials:'include',
+      // mode: "no-cors",
+      credentials:'include',
       cache: 'default',
       // headers:myHeaders,
       body:fd
@@ -187,10 +182,8 @@ class Ajax {
     return fetch(paramsUrl,fetchOpts)
     .then(
       (res) => {debugger;return res.text();}
-      // (res) => { return res;}
     )
     .then((data) => {
-      // var obj = eval('(' + data + ')');   //不能使用JSON.parse
       console.log('用户登录成功!');
       return data;
     })

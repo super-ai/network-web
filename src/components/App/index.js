@@ -90,7 +90,7 @@ class App extends React.Component {
         const res = await ajax.getCurrentUser();
 
         hide();
-        debugger;
+
         // 注意这里, debug模式下每次刷新都必须重新登录
         if (res && res.status == 'success' && !globalConfig.debug) {
           // 这里不需要setState了, 因为setState的目的是为了re-render, 而下一句会触发redux的状态变化, 也会re-render
