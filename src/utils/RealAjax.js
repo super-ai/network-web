@@ -98,7 +98,7 @@ class Ajax {
     var paramsUrl = `${globalConfig.getAPIPath()}${globalConfig.login.getCurrentUser}`;
     var fetchOpts = {
       method:'GET',
-      mode: "no-cors",
+      // mode: "no-cors",
       credentials:'include',
       cache: 'default',
     };
@@ -113,13 +113,13 @@ class Ajax {
 
     return fetch(paramsUrl,fetchOpts)
     .then(
-      (res) => {debugger;return res.text();}
+      (res) => {return res.json();}
     )
-    .then((data) => {
-      // var obj = eval('(' + data + ')');   //不能使用JSON.parse
-      console.log('获取currentUser数据成功');
-      return data;
-    })
+    // .then((data) => {
+    //   // var obj = eval('(' + data + ')');   //不能使用JSON.parse
+    //   console.log('获取currentUser数据成功');
+    //   return data;
+    // })
     .catch((e) => {console.log('获取currentUser数据失败');});
 
   }
