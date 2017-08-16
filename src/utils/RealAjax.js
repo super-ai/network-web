@@ -90,19 +90,15 @@ class Ajax {
    *
    * @returns {*}
    */
-  getCurrentUser() {
-    return this.getCurrent();
-    // return this.get(`${globalConfig.getAPIPath()}${globalConfig.login.getCurrentUser}`);
-  }
-
   // 使用fetch获取数据
-  getCurrent(){
+  getCurrentUser() {
+    // return this.get(`${globalConfig.getAPIPath()}${globalConfig.login.getCurrentUser}`);
     var selectData = [],params = new Object();
     // var paramsUrl='/api/staff/getCurrent'; 不可以！
     var paramsUrl = `${globalConfig.getAPIPath()}${globalConfig.login.getCurrentUser}`;
     var fetchOpts = {
       method:'GET',
-      // mode: "no-cors",
+      mode: "no-cors",
       credentials:'include',
       cache: 'default',
     };
@@ -117,14 +113,15 @@ class Ajax {
 
     return fetch(paramsUrl,fetchOpts)
     .then(
-      (res) => {return res.text();}
-      // (res) => { return res;}
+      (res) => {debugger;return res.text();}
     )
     .then((data) => {
-      var obj = eval('(' + data + ')');   //不能使用JSON.parse
-      return obj;
+      // var obj = eval('(' + data + ')');   //不能使用JSON.parse
+      console.log('获取currentUser数据成功');
+      return data;
     })
     .catch((e) => {console.log('获取currentUser数据失败');});
+
   }
 
   /**
@@ -177,9 +174,9 @@ class Ajax {
     var fetchOpts = {
       method:'POST',
       mode: "no-cors",
-      credentials:'include',
+      // credentials:'include',
       cache: 'default',
-      headers:myHeaders,
+      // headers:myHeaders,
       body:fd
     };
 
@@ -193,9 +190,9 @@ class Ajax {
       // (res) => { return res;}
     )
     .then((data) => {
-      debugger;
-      var obj = eval('(' + data + ')');   //不能使用JSON.parse
-      return obj;
+      // var obj = eval('(' + data + ')');   //不能使用JSON.parse
+      console.log('用户登录成功!');
+      return data;
     })
     .catch((e) => {console.log('用户登录失败!');});
   }
