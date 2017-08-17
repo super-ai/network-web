@@ -73,6 +73,12 @@ class Ajax {
     });
   }
 
+
+  // 回头再封装
+  fetchWrapper(method,url,{params,data,headers}={}){
+
+  }
+
   // 基础的get/post方法
 
   get(url, opts = {}) {
@@ -81,56 +87,6 @@ class Ajax {
 
   post(url, data, opts = {}) {
     return this.requestWrapper('POST', url, {...opts, data});
-  }
-
-  // 业务方法
-
-  /**
-   * 获取当前登录的用户
-   *
-   * @returns {*}
-   */
-  // 使用fetch获取数据
-  getCurrentUser() {
-    console.warn('调用getCurrentUser方法');
-
-    // 呢吗 ok的时候 啥都ok了 以下这句话可以直接使用
-    // return this.get(`${globalConfig.login.getCurrentUser}`);
-    var selectData = [],params = new Object();
-    var paramsUrl = `${globalConfig.login.getCurrentUser}`;
-    // ok!
-    // var paramsUrl='/api/staff/getCurrentUser';
-    // error
-    // var paramsUrl = 'http://localhost:8080/api/staff/getCurrentUser';
-
-    //定义一个headers 不需要了
-    var myHeaders = {'Access-Control-Allow-Origin':'*'};
-    var fetchOpts = {
-      method:'GET',
-      // mode: "no-cors", 不能使用
-      // mode:'no-cors',  //也可以不用
-      credentials:'include',
-      cache: 'default',
-      // headers:myHeaders
-    };
-
-    // 设置提交参数
-    // params = this.props.form.getFieldsValue();  //使用表单方法直接获取提交值
-    // params.dt = this.state.dpValue.format('YYYY-MM-DD');params.arealevel = 0;params.areaname = '';
-    // paramsUrl += '?';
-    Object.keys(params).forEach(function(val){
-      paramsUrl += val + '=' + encodeURIComponent(params[val]) + '&';
-    })
-
-    return fetch(paramsUrl,fetchOpts)
-    .then((res)=>{
-      if(res && res.redirected)
-        console.warn('用户没有登录，跳转到登录页面!');
-      else {
-        return res.json();
-      }
-    })
-    .catch((e) => {debugger;console.log('获取currentUser异常');});
   }
 
   /**
@@ -154,39 +110,17 @@ class Ajax {
 
   loginMy(username, password){
     console.warn('调用loginMy方法');
-    /* xhr可以完成登录 但是不知道如何返回 ‘promise’ */
-    // 不会跳转到同域 即使webpack中配置了proxy
-    // var paramsUrl='/login';
-    // // var paramsUrl = `${globalConfig.login.validate}`;
-    // var fd = new FormData();
-    // // fd.append('username','51847525');fd.append('password','Crcnet123456');
-    // fd.append('username',username);fd.append('password',password);
-    // debugger;
-    // // 使用xhr提交
-    // var xhr = new XMLHttpRequest();
-    // xhr.addEventListener("load",  (data)=>{this.loginSuccess(data)}, false);
-    // xhr.addEventListener("error", (data)=>{this.loginFail(data)}, false);
-    // xhr.open("POST", paramsUrl);
-    // xhr.setRequestHeader('Access-Control-Allow-Origin', '*'); // 必须有
-    // xhr.send(fd);
-
-    debugger;
-
-    /* XMLHttpRequest 不知道为啥不能提交 只能使用fetch */
-    var selectData = [],params = new Object();
-    // var paramsUrl='/api/staff/getCurrent'; 不可以！
-    // var paramsUrl = `${globalConfig.login.validate}`;
-    var paramsUrl = '/login';
+    var params = new Object();
+    var paramsUrl = `${globalConfig.login.validate}${this.extendParams(params)}`;
 
     var fd = new FormData();
-    fd.append('username','51847525');fd.append('password',password);
+    fd.append('username',username);fd.append('password',password);
 
     let myHeaders = new Headers({
       'Access-Control-Allow-Origin': '*'
     });
     var fetchOpts = {
       method:'POST',
-      // 必须有 why
       credentials:'include',
       cache: 'default',
       body:fd
@@ -198,7 +132,6 @@ class Ajax {
 
     return fetch(paramsUrl,fetchOpts)
     .then((res)=>{
-      debugger;
       if(res && res.redirected && res.url.indexOf('/login') > -1)
         console.warn('用户没有登录，跳转到登录页面!');
       else {
@@ -208,13 +141,48 @@ class Ajax {
     .catch((e) => {console.log('用户登录失败!');});
   }
 
-  loginSuccess(data){
-    debugger;
-    console.info('登录我的后台成功！');
+  // 业务方法
+
+  /**
+   * 获取当前登录的用户
+   *
+   * @returns {*}
+   */
+  // 使用fetch获取数据
+  getCurrentUser() {
+    console.warn('调用getCurrentUser方法');
+
+    // 呢吗 ok的时候 啥都ok了 以下这句话可以直接使用
+    // return this.get(`${globalConfig.login.getCurrentUser}`);
+    var params = new Object();
+    var paramsUrl = `${globalConfig.login.getCurrentUser}${this.extendParams(params)}`;
+    var fetchOpts = {
+      method:'GET',
+      credentials:'include',
+      cache: 'default',
+    };
+
+    return fetch(paramsUrl,fetchOpts)
+    .then((res)=>{
+      if(res && res.redirected && res.url.indexOf('/login') > -1)
+        console.warn(`用户没有登录，跳转到登录页面!`,res);
+      else {
+        return res.json();
+      }
+    })
+    .catch((e) => {debugger;console.log('获取currentUser异常');});
   }
 
-  loginFail(data){
-    console.info('登录我的后台失败！');
+  /**
+  * url参数展开
+  */
+  extendParams(params){
+    // 设置提交参数
+    var paramsStr='';
+    Object.keys(params).forEach(function(val){
+       paramsStr+= val + '=' + encodeURIComponent(params[val]) + '&';
+    })
+    return paramsStr;
   }
 
   /**
@@ -297,3 +265,13 @@ class CRUDUtil {
 }
 
 export default Ajax;
+
+
+
+// ok!
+// var paramsUrl='/api/staff/getCurrentUser';
+// error
+// var paramsUrl = 'http://localhost:8080/api/staff/getCurrentUser';
+
+
+// var myHeaders = {'Access-Control-Allow-Origin':'*'};

@@ -37,7 +37,7 @@ module.exports = {
   },
 
   login: {  // 登录相关配置
-    getCurrentUser: 'api/staff/getCurrentUser',  // 后端必须要提供接口校验当前用户的身份, 如果拿不到用户信息, 才会尝试登录
+    getCurrentUser: '/api/staff/getCurrentUser',  // 后端必须要提供接口校验当前用户的身份, 如果拿不到用户信息, 才会尝试登录
 
     // 登录有两种情况:
 

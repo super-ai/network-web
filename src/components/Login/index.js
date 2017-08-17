@@ -71,7 +71,7 @@ class Login extends React.PureComponent {
       //   this.props.handleLoginSuccess(res.data);
       // }
       else {
-        message.error(`登录失败: ${res.message}, 请联系管理员`);
+        message.error(`登录失败, 请联系管理员`);
         this.setState({requesting: false});
       }
     } catch (exception) {
