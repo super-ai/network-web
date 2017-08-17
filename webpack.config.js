@@ -78,14 +78,16 @@ module.exports = {
     }),
   ],
   // 代理
-  // "proxy": {
-  //   "/login": {
-  //     "target": "http://localhost:8080",
-  //     // 必须设置为false
-  //     // "changeOrigin": false,
-  //   },
-  //   "/api/*": {
-  //     "target": "http://localhost:8080",
-  //   }
-  // },
+  devServer: {
+    "proxy": {
+      "/login": {
+        "target": "http://localhost:8080",
+        // 必须设置为false
+        // "changeOrigin": false,
+      },
+      "/api/*": {
+        "target": "http://localhost:8080",
+      }
+    }
+  }
 };

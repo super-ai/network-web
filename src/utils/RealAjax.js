@@ -92,16 +92,24 @@ class Ajax {
    */
   // 使用fetch获取数据
   getCurrentUser() {
-    // return this.get(`${globalConfig.getAPIPath()}${globalConfig.login.getCurrentUser}`);
+    // 呢吗 ok的时候 啥都ok了 以下这句话可以直接使用
+    // return this.get(`${globalConfig.login.getCurrentUser}`);
     var selectData = [],params = new Object();
-    // var paramsUrl='/api/staff/getCurrent'; 不可以！
-    var paramsUrl = `${globalConfig.getAPIPath()}${globalConfig.login.getCurrentUser}`;
+    var paramsUrl = `${globalConfig.login.getCurrentUser}`;
+    // ok!
+    // var paramsUrl='/api/staff/getCurrentUser';
+    // error
+    // var paramsUrl = 'http://localhost:8080/api/staff/getCurrentUser';
+
+    //定义一个headers 不需要了
+    var myHeaders = {'Access-Control-Allow-Origin':'*'};
     var fetchOpts = {
       method:'GET',
       // mode: "no-cors", 不能使用
       // mode:'no-cors',  //也可以不用
       credentials:'include',
       cache: 'default',
+      // headers:myHeaders
     };
 
     // 设置提交参数
@@ -113,10 +121,14 @@ class Ajax {
     })
 
     return fetch(paramsUrl,fetchOpts)
-    .then(
-      (res) => {console.log('获取currentUser数据成功');return res.json()}
-    )
-    .catch((e) => {console.log('获取currentUser数据失败');});
+    .then((res)=>{
+      if(res && res.redirected)
+        console.warn('用户没有登录，跳转到登录页面!');
+      else {
+        return res.json();
+      }
+    })
+    .catch((e) => {debugger;console.log('获取currentUser异常');});
   }
 
   /**
@@ -139,58 +151,59 @@ class Ajax {
   */
 
   loginMy(username, password){
-    // 不会跳转到同域
+    // 不会跳转到同域 即使webpack中配置了proxy
     // var paramsUrl='/login';
 
-    // var paramsUrl = `${globalConfig.getAPIPath()}${globalConfig.login.validate}`;
-    // var fd = new FormData();
-    // // fd.append('username','51847525');fd.append('password','Crcnet123456');
-    // fd.append('username',username);fd.append('password',password);
-    // debugger;
-    // // 使用xhr提交
-    // var xhr = new XMLHttpRequest();
-    // xhr.addEventListener("load",  (data)=>{this.loginSuccess(data)}, false);
-    // xhr.addEventListener("error", (data)=>{this.loginFail(data)}, false);
-    // xhr.open("POST", paramsUrl);
-    // xhr.setRequestHeader('Access-Control-Allow-Origin', '*'); // 必须有
-    // xhr.send(fd);
+    var paramsUrl = `${globalConfig.getAPIPath()}${globalConfig.login.validate}`;
+    var fd = new FormData();
+    // fd.append('username','51847525');fd.append('password','Crcnet123456');
+    fd.append('username','username');fd.append('password',password);
+    debugger;
+    // 使用xhr提交
+    var xhr = new XMLHttpRequest();
+    xhr.addEventListener("load",  (data)=>{this.loginSuccess(data)}, false);
+    xhr.addEventListener("error", (data)=>{this.loginFail(data)}, false);
+    xhr.open("POST", paramsUrl);
+    xhr.setRequestHeader('Access-Control-Allow-Origin', '*'); // 必须有
+    xhr.send(fd);
 
     /* XMLHttpRequest 不知道为啥不能提交 只能使用fetch */
-    var selectData = [],params = new Object();
-    // var paramsUrl='/api/staff/getCurrent'; 不可以！
-    var paramsUrl = `${globalConfig.getAPIPath()}${globalConfig.login.validate}`;
-
-    var fd = new FormData();
-    fd.append('username',username);fd.append('password',password);
-
-    let myHeaders = new Headers({
-      'Access-Control-Allow-Origin': '*'
-    });
-    var fetchOpts = {
-      method:'POST',
-      // mode: "no-cors",
-      credentials:'include',
-      cache: 'default',
-      // headers:myHeaders,
-      body:fd
-    };
-
-    Object.keys(params).forEach(function(val){
-      paramsUrl += val + '=' + encodeURIComponent(params[val]) + '&';
-    })
-
-    return fetch(paramsUrl,fetchOpts)
-    .then(
-      (res) => {debugger;return res.text();}
-    )
-    .then((data) => {
-      console.log('用户登录成功!');
-      return data;
-    })
-    .catch((e) => {console.log('用户登录失败!');});
+    // var selectData = [],params = new Object();
+    // // var paramsUrl='/api/staff/getCurrent'; 不可以！
+    // var paramsUrl = `${globalConfig.getAPIPath()}${globalConfig.login.validate}`;
+    //
+    // var fd = new FormData();
+    // fd.append('username','51847525');fd.append('password',password);
+    //
+    // let myHeaders = new Headers({
+    //   'Access-Control-Allow-Origin': '*'
+    // });
+    // var fetchOpts = {
+    //   method:'POST',
+    //   // 必须有 why
+    //   credentials:'include',
+    //   cache: 'default',
+    //   body:fd
+    // };
+    //
+    // Object.keys(params).forEach(function(val){
+    //   paramsUrl += val + '=' + encodeURIComponent(params[val]) + '&';
+    // })
+    //
+    // return fetch(paramsUrl,fetchOpts)
+    // .then(
+    //   (res) => {debugger;return res.text();}
+    // )
+    // .then((data) => {
+    //   debugger;
+    //   console.log('用户登录成功!');
+    //   return data;
+    // })
+    // .catch((e) => {console.log('用户登录失败!');});
   }
 
   loginSuccess(data){
+    debugger;
     console.info('登录我的后台成功！');
   }
 
