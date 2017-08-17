@@ -45,7 +45,7 @@ module.exports = {
     sso: '',  // 是否使用单点登录? 是的话我会把地址encode后加到后面, 然后跳转, 如果这个是空字符串, 说明不使用单点登录
     // 2. 不使用sso, 使用我提供的一个登录界面
     // validate: '/login',  // 校验用户信息, 表单的submit地址. 如果登录成功, 必须返回用户名
-    validate: 'login',
+    validate: '/login',
 
     logout: 'logout',  // 退出的url, 用户点击退出时, 浏览器会直接跳转到这个链接
     // login?logout

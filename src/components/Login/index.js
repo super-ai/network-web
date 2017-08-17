@@ -52,16 +52,25 @@ class Login extends React.PureComponent {
       // 服务端验证
       // const res = await ajax.login(username, password);
       const res = await ajax.loginMy(username, password);
-      debugger;
       hide();
       logger.debug('login validate return: result %o', res);
-      return;
 
-      if (res.success) {
-        message.success('登录成功');
-        // 如果登录成功, 触发一个loginSuccess的action, payload就是登录后的用户名
+
+      debugger;
+      if (res && res.status == 'success' && !globalConfig.debug) {
+        // 这里不需要setState了, 因为setState的目的是为了re-render, 而下一句会触发redux的状态变化, 也会re-render
+        // 所以直接修改状态, 就是感觉这么做有点奇怪...
+        this.state.tryingLogin = false;
+        // App组件也可能触发loginSuccess action
+        // handleLoginSuccess 是何方神圣
         this.props.handleLoginSuccess(res.data);
-      } else {
+      }
+      // if (res.success) {
+      //   message.success('登录成功');
+      //   // 如果登录成功, 触发一个loginSuccess的action, payload就是登录后的用户名
+      //   this.props.handleLoginSuccess(res.data);
+      // }
+      else {
         message.error(`登录失败: ${res.message}, 请联系管理员`);
         this.setState({requesting: false});
       }
