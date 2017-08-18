@@ -49,6 +49,10 @@ const routes = (
           </Route>
         </Route>
 
+        <Route path='system-manage'>
+          <Route path='menu' tableName='menu' getComponent={DBTableContainer}/>
+        </Route>
+
         <Route path="test">
           <Route path="aaa" component={Hello}/>
           <Route path="bbb" component={Hello}/>
