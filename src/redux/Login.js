@@ -11,7 +11,6 @@ const initState = {
 const reducer = (state = initState, action = {}) => {
   switch (action.type) {
     case 'LOGIN_SUCCESS':
-      debugger;
       return {...state, login: true, userName: action.payload};
     default:
       return state;

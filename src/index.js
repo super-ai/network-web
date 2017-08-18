@@ -1,7 +1,6 @@
 /**
  * 程序的入口, 类似java中的main
  */
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux'

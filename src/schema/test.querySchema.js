@@ -13,7 +13,6 @@ module.exports = [
 
     // 数据类型, 前端会根据数据类型展示不同的输入框
     // 目前可用的dataType: int/float/varchar/datetime
-    // 为啥我会把字符串定义为varchar而不是string呢...我也不知道, 懒得改了...
     dataType: 'varchar',
 
     // 显示类型, 一些可枚举的字段, 比如type, 可以被显示为单选框或下拉框
