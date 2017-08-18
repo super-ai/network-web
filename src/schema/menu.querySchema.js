@@ -34,7 +34,7 @@ module.exports = [
     defaultValue:['male']
   },
   {
-    key:'multiSelect',
+    key:'multi-select',
     title:'测试多选',
     dataType:'int',
     showType:'multiSelect',

@@ -11,7 +11,7 @@
 module.exports = {
   name: '互联网信息化系统',  // 项目的名字
   favicon: 'http://jxy.me/favicon.ico',  // 设置网页的favicon, 可以是外链, 也可以是本地
-  footer: '中移铁通云数据支撑版权 © 2017-2099',  // footer中显示的字, 可以嵌入html标签
+  footer: '中移铁通云数据支撑 © 2017-2099',  // footer中显示的字, 可以嵌入html标签
 
   debug: false,  // 是否开启debug模式, 不会请求后端接口, 使用mock的数据
 
