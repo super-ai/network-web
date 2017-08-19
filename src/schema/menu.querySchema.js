@@ -19,26 +19,28 @@ module.exports = [
     title:'菜单名称',
     dataType:'varchar',
     placeholder:'菜单名称'
-  },
-  {
-    key:'dt',
-    title:'测试日期',
-    dataType:'datetime'
-  },
-  {
-    key:'select',
-    title:'测试单选',
-    dataType:'int',
-    showType:'select',
-    options:[{key:'male',value:'男'},{key:'female',value:'女'}],
-    defaultValue:['male']
-  },
-  {
-    key:'multi-select',
-    title:'测试多选',
-    dataType:'int',
-    showType:'multiSelect',
-    options:[{key:'male',value:'男'},{key:'female',value:'女'}],
-    defaultValue:['male','female']
   }
+  // ,
+  // {
+  //   key:'dt',
+  //   title:'测试日期',
+  //   dataType:'datetime'
+  // }
+  // ,
+  // {
+  //   key:'select',
+  //   title:'测试单选',
+  //   dataType:'int',
+  //   showType:'select',
+  //   options:[{key:'male',value:'男'},{key:'female',value:'女'}],
+  //   defaultValue:['male']
+  // },
+  // {
+  //   key:'multi-select',
+  //   title:'测试多选',
+  //   dataType:'int',
+  //   showType:'multiSelect',
+  //   options:[{key:'male',value:'男'},{key:'female',value:'女'}],
+  //   defaultValue:['male','female']
+  // }
 ]

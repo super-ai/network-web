@@ -81,7 +81,7 @@ export default {
     try {
       const res = await ajax.CRUD(tableName).getRemoteSchema();
       logger.debug('get remote schema for table %s, res = %o', tableName, res);
-      if (res.success) {
+      if (res.status == 'success') {
         querySchema = this.merge(localSchema.querySchema, res.data.querySchema);
         dataSchema = this.merge(localSchema.dataSchema, res.data.dataSchema);
       } else {

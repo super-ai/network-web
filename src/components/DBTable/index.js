@@ -239,7 +239,7 @@ class DBTable extends React.PureComponent {
 
     const res = await this.select(this.state.queryObj, this.state.currentPage, this.state.pageSize);
     //message.success('查询成功');
-    if (res.success) {
+    if (res.status == 'success') {
       this.setState({
         data: res.data,
         total: res.total,
@@ -293,7 +293,7 @@ class DBTable extends React.PureComponent {
       logger.error('select exception, %o', ex);
       hide();
       const res = {};  // 手动构造一个res返回
-      res.success = false;
+      res.status = 'failure';
       res.message = `网络请求出错: ${ex.message}`;
       return Promise.resolve(res);  // 还是要返回一个promise对象
     }
@@ -307,7 +307,7 @@ class DBTable extends React.PureComponent {
   handlePageChange = async(page) => {
     logger.debug('handlePageChange, page = %d', page);
     const res = await this.select(this.state.queryObj, page, this.state.pageSize);
-    if (res.success) {
+    if (res.status == 'success') {
       this.setState({
         currentPage: page,
         data: res.data,
@@ -328,7 +328,7 @@ class DBTable extends React.PureComponent {
     logger.debug('handleFormSubmit, queryObj = %o', queryObj);
     // 这时查询条件已经变了, 要从第一页开始查
     const res = await this.select(queryObj, 1, this.state.pageSize);
-    if (res.success) {
+    if (res.status == 'success') {
       this.setState({
         currentPage: 1,
         data: res.data,

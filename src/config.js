@@ -75,7 +75,7 @@ module.exports = {
       showUpdate: true,  // 显示修改按钮, 默认true
       showDelete: true,  // 显示删除按钮, 默认true
 
-      asyncSchema: false,  // 是否从服务端加载schema, 默认false
+      asyncSchema: true,  // 是否从服务端加载schema, 默认false
       ignoreSchemaCache: false,  // 是否忽略schema的缓存, 对于异步schema而言, 默认只会请求一次后端接口然后缓存起来
     },
   },

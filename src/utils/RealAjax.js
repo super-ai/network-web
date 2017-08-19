@@ -107,7 +107,6 @@ class Ajax {
   *
   *  security 登录
   */
-
   loginMy(username, password){
     console.warn('调用loginMy方法');
     var params = new Object();
@@ -218,7 +217,8 @@ class CRUDUtil {
    * @returns {*}
    */
   select(queryObj) {
-    return this.ajax.post(`${globalConfig.getAPIPath()}/${this.tableName}/select`, queryObj);
+    // return this.ajax.post(`${globalConfig.getAPIPath()}/${this.tableName}/select`, queryObj);
+    return this.ajax.get(`/api/${this.tableName}/select`, queryObj);
   }
 
   /**
@@ -260,7 +260,8 @@ class CRUDUtil {
    * @returns {*}
    */
   getRemoteSchema() {
-    return this.ajax.get(`${globalConfig.getAPIPath()}/${this.tableName}/schema`);
+    // return this.ajax.get(`${globalConfig.getAPIPath()}/${this.tableName}/schema`);
+    return this.ajax.get(`/api/${this.tableName}/schema`);
   }
 }
 
