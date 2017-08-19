@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { Component }  from 'react';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import globalConfig from 'config';
 import ajax from '../../utils/ajax';
 import Logger from '../../utils/Logger';
-import {message} from 'antd';
+import {message,Form, Icon, Input, Button, Checkbox} from 'antd';
 import './index.less';
 import {loginSuccessCreator} from '../../redux/Login.js';
 
+const FormItem = Form.Item;
 const logger = Logger.getLogger('Login');
 
 /**
@@ -83,6 +84,7 @@ class Login extends React.PureComponent {
 
   render() {
     // 整个组件被一个id="loginDIV"的div包围, 样式都设置到这个div中
+    const { getFieldDecorator } = this.props.form;
     return (
       <div id="loginDIV">
 
@@ -97,16 +99,41 @@ class Login extends React.PureComponent {
 
         <div className="login">
           <h1>{globalConfig.name}</h1>
-          <form onSubmit={this.handleSubmit}>
-            <input className="login-input" type="text" value={this.state.username}
-                   onChange={this.handleUsernameInput} placeholder="用户名" required="required"/>
-            <input className="login-input" type="password" value={this.state.password}
-                   onChange={this.handlePasswordInput} placeholder="密码" required="required"/>
-            <button className="btn btn-primary btn-block btn-large"
-                    type="submit" disabled={this.state.requesting}>
-              登录
-            </button>
-          </form>
+
+          <Form onSubmit={this.handleSubmit} style={{maxWidth: '300px'}}>
+              <FormItem>
+                  {getFieldDecorator('userName', {
+                      initialValue:this.state.username,
+                      rules: [{ required: true, message: '请输入用户名!' }],
+                  })(
+                      <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="用户名"
+                      onChange={this.handleUsernameInput}/>
+                  )}
+              </FormItem>
+              <FormItem>
+                  {getFieldDecorator('password', {
+                      initialValue:this.state.password,
+                      rules: [{ required: true, message: '请输入密码!' }],
+                  })(
+                      <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="密码"
+                      onChange={this.handlePasswordInput}/>
+                  )}
+              </FormItem>
+              <FormItem>
+                  {getFieldDecorator('remember', {
+                      valuePropName: 'checked',
+                      initialValue: true,
+                  })(
+                      <Checkbox>记住我</Checkbox>
+                  )}
+                  <a className="login-form-forgot" href="#" style={{float: 'right'}}>忘记密码</a>
+                  <Button type="primary" htmlType="submit" className="login-form-button" style={{width: '100%'}}>
+                      登录
+                  </Button>
+                  或 <a href="#">现在就去注册!</a>
+              </FormItem>
+          </Form>
+
         </div>
 
       </div>
@@ -115,6 +142,8 @@ class Login extends React.PureComponent {
 
 }
 
+const LoginForm = Form.create()(Login);
+
 const mapDispatchToProps = (dispatch) => {
   return {
     handleLoginSuccess: bindActionCreators(loginSuccessCreator, dispatch),
@@ -122,4 +151,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 // 不需要从state中获取什么, 所以传一个null
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(LoginForm);
