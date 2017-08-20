@@ -1,4 +1,4 @@
-// 1、配置内容为实际对象的所有属性
+// 1、配置内容为实际对象的所有属性！！！
 // 2、可配置的内容为
 //    <li>key:对象的属性名称（不是数据库属性的命名）</li>
 //    <li>title:表的列名称</li>
@@ -41,6 +41,13 @@ module.exports = [
     dataType:'int',
     showType:'select',
     options:[{key:'312',value:'在用'},{key:'313',value:'保修'},{key:'314',value:'报废'}]
+  },
+  {
+    key:'properties',
+    title:'产权',
+    dataType:'int',
+    showType:'multiSelect',
+    options:[{key:'315',value:'铁通自购'},{key:'316',value:'铁通租赁'},{key:'317',value:'外包维护单位'}]
   }
   // ,
   // {
