@@ -73,7 +73,6 @@ class Ajax {
     });
   }
 
-
   // 回头再封装
   fetchWrapper(method,url,{params,data,headers}={}){
 
@@ -90,34 +89,14 @@ class Ajax {
   }
 
   /**
-   * 用户登录
-   *
-   * @param username
-   * @param password
-   */
-  login(username, password) {
-    const headers = {'Content-Type': 'application/x-www-form-urlencoded','Access-Control-Allow-Origin':'*'};
-    // return this.post(`${globalConfig.getAPIPath()}${globalConfig.login.validate}`, {username, password}, {headers});
-    // return this.post(`${globalConfig.getAPIPath()}${globalConfig.login.validate}`, {username, password}, {headers});
-    return this.post('/login', {username, password}, {headers});
-
-  }
-
-  /**
   *
   *  security 登录
   */
-  loginMy(username, password){
-    console.warn('调用loginMy方法');
+  login(username, password){
     var params = new Object();
     var paramsUrl = `${globalConfig.login.validate}${this.extendParams(params)}`;
-
     var fd = new FormData();
     fd.append('username',username);fd.append('password',password);
-
-    let myHeaders = new Headers({
-      'Access-Control-Allow-Origin': '*'
-    });
     var fetchOpts = {
       method:'POST',
       credentials:'include',
@@ -149,8 +128,6 @@ class Ajax {
    */
   // 使用fetch获取数据
   getCurrentUser() {
-    console.warn('调用getCurrentUser方法');
-
     // 呢吗 ok的时候 啥都ok了 以下这句话可以直接使用
     // return this.get(`${globalConfig.login.getCurrentUser}`);
     var params = new Object();

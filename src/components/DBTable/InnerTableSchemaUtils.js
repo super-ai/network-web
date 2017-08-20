@@ -251,6 +251,9 @@ const SchemaUtils = {
     }
   },
 
+  /**
+  * 根据不同的field 返回不同的XML
+  */
   transFormField(field) {
     // 对于主键, 直接返回一个不可编辑的textarea, 因为主键一般是数据库自增的
     // 如果有特殊情况需要自己指定主键, 再说吧

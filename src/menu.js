@@ -35,6 +35,18 @@ const sidebarMenu = [
     ],
   },
   {
+    key:'resource',
+    name:'备品备件',
+    icon:'smile',
+    child:[
+      {
+        key:'res-meter',
+        name:'仪表仪器',
+        icon:'clock-circle'
+      }
+    ]
+  },
+  {
     key:'system-manage',
     name:'系统管理',
     icon:'smile',

@@ -48,8 +48,12 @@ const routes = (
           </Route>
         </Route>
 
+        <Route path='resource'>
+          <Route path='res-meter' tableName='ResMeter' getComponent={DBTableContainer}/>
+        </Route>
+
         <Route path='system-manage'>
-          <Route path='menu' tableName='menu' getComponent={DBTableContainer}/>
+          <Route path='menu' tableName='Menu' getComponent={DBTableContainer}/>
         </Route>
 
         <Route path="test">
