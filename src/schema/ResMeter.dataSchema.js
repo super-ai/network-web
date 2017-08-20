@@ -1,6 +1,6 @@
 // 1、配置内容为实际对象的所有属性
 // 2、可配置的内容为
-//    <li>key:对象的属性名称(不是小写中横线形式)</li>
+//    <li>key:对象的属性名称（不是数据库属性的命名）</li>
 //    <li>title:表的列名称</li>
 //    <li>dataType:数据类型 int/float/varchar/datetime</li>
 //    <li>showType:显示类型 normal/radio/checkbox/select/multiSelect/textarea/image/file/cascader</li>
@@ -27,21 +27,20 @@ module.exports = [
   },
   {
     key:'model',
-    title:'菜单名称',
-    dataType:'varchar',
-    render(text){
-      return '前缀_' + text;
-    }
-  },
-  {
-    key:'iconCls',
-    title:'图标',
+    title:'型号',
     dataType:'varchar',
   },
   {
-    key:'url',
-    title:'Url',
+    key:'serial',
+    title:'序列号',
     dataType:'varchar',
+  },
+  {
+    key:'dimShareStatus',
+    title:'状态',
+    dataType:'int',
+    showType:'select',
+    options:[{key:'312',value:'在用'},{key:'313',value:'保修'},{key:'314',value:'报废'}]
   }
   // ,
   // {
