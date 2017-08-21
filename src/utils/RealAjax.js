@@ -84,6 +84,7 @@ class Ajax {
     return this.requestWrapper('GET', url, {...opts});
   }
 
+  //data body传递 ; opts params接收
   post(url, data, opts = {}) {
     return this.requestWrapper('POST', url, {...opts, data});
   }
@@ -194,8 +195,11 @@ class CRUDUtil {
    * @returns {*}
    */
   select(queryObj) {
-    // return this.ajax.post(`${globalConfig.getAPIPath()}/${this.tableName}/select`, queryObj);
-    return this.ajax.get(`/api/${this.tableName}/select`, queryObj);
+    return this.ajax.get(`${globalConfig.api.path}/${this.tableName}/select`, queryObj);
+    // ok
+    // return this.ajax.get('/api/ResMeter/select', queryObj);
+    // err
+    // return this.ajax.get('http://localhost:8080/api/ResMeter/select', queryObj);
   }
 
   /**
@@ -205,7 +209,7 @@ class CRUDUtil {
    * @returns {*}
    */
   insert(dataObj) {
-    return this.ajax.post(`${globalConfig.getAPIPath()}/${this.tableName}/insert`, dataObj);
+    return this.ajax.post(`${globalConfig.api.path}/${this.tableName}/insert`, dataObj);
   }
 
   /**
@@ -217,7 +221,7 @@ class CRUDUtil {
    */
   update(keys = [], dataObj) {
     const tmp = keys.join(',');
-    return this.ajax.post(`${globalConfig.getAPIPath()}/${this.tableName}/update`, dataObj, {params: {keys: tmp}});
+    return this.ajax.post(`${globalConfig.api.path}/${this.tableName}/update`, dataObj, {params: {keys: tmp}});
   }
 
   /**
@@ -228,7 +232,7 @@ class CRUDUtil {
    */
   delete(keys = []) {
     const tmp = keys.join(',');
-    return this.ajax.get(`${globalConfig.getAPIPath()}/${this.tableName}/delete`, {params: {keys: tmp}});
+    return this.ajax.get(`${globalConfig.api.path}/${this.tableName}/delete`, {params: {keys: tmp}});
   }
 
   /**
@@ -237,7 +241,7 @@ class CRUDUtil {
    * @returns {*}
    */
   getRemoteSchema() {
-    // return this.ajax.get(`${globalConfig.getAPIPath()}/${this.tableName}/schema`);
+    // return this.ajax.get(`${globalConfig.api.path}/${this.tableName}/schema`);
     return this.ajax.get(`/api/${this.tableName}/schema`);
   }
 }
