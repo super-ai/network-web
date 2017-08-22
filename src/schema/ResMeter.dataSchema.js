@@ -52,16 +52,16 @@ module.exports = [
   {
     key:'dimShareStatus',
     title:'状态',
-    dataType:'int',
+    dataType:'varchar',
     showType:'select',
-    options:[{key:'312',value:'在用'},{key:'313',value:'保修'},{key:'314',value:'报废'}]
+    options:[{key:312,value:'在用'},{key:313,value:'保修'},{key:314,value:'报废'}]
   },
   {
     key:'properties',
     title:'产权',
-    dataType:'int',
+    dataType:'varchar',
     showType:'multiSelect',
-    options:[{key:'315',value:'铁通自购'},{key:'316',value:'铁通租赁'},{key:'317',value:'外包维护单位'}]
+    options:[{key:315,value:'铁通自购'},{key:316,value:'铁通租赁'},{key:317,value:'外包维护单位'}]
   },
   {
     key:'listImage',
