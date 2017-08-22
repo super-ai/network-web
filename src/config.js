@@ -10,7 +10,7 @@
 
 module.exports = {
   name: '互联网信息化系统',  // 项目的名字
-  favicon: 'http://jxy.me/favicon.ico',  // 设置网页的favicon, 可以是外链, 也可以是本地
+  favicon:'https://facebook.github.io/react/img/logo_og.png', // 设置网页的favicon, 可以是外链, 也可以是本地
   footer: '中移铁通云数据支撑 © 2017-2099',  // footer中显示的字, 可以嵌入html标签
 
   debug: false,  // 是否开启debug模式, 不会请求后端接口, 使用mock的数据
@@ -67,7 +67,7 @@ module.exports = {
 
     default: {  // 针对每个表格的默认配置
       showExport: true,  // 显示导出按钮, 默认true
-      showImport: true,  // 显示导入按钮, 默认true
+      showImport: false,  // 显示导入按钮, 默认true
       showInsert: true,  // 显示新增按钮, 默认true
       showUpdate: true,  // 显示修改按钮, 默认true
       showDelete: true,  // 显示删除按钮, 默认true

@@ -23,7 +23,7 @@ module.exports = [
   {
     key: 'avatar',
     title: '头像',
-    dataType: 'varchar',
+    dataType: 'varchar',  
     showType: 'image',
     sizeLimit: 500,  // 限制图片大小, 单位kb, 如果不设置这个属性, 就使用默认配置, 见config.js中相关配置
     max: 1,  // 最多可以上传几张图片? 默认1
