@@ -65,7 +65,7 @@ module.exports = [
   },
   {
     key:'listImage',
-    title:'字符串图片(单)',
+    title:'图片(单)',
     dataType:'varchar',
     showType:'image',
     max:1,
@@ -76,7 +76,7 @@ module.exports = [
   },
   {
     key: 'listImages',
-    title: '字符串图片(多)',
+    title: '图片(多)',
     dataType: 'varchar',
     showType: 'image',
     max: 5,
@@ -85,6 +85,26 @@ module.exports = [
     // defaultValue: ['http://jxy.me/about/avatar.jpg', 'http://jxy.me/about/avatar.jpg'],
     width: 150,
     placeholder: '多个图片上传',
+  },
+  {
+    key:'listFile',
+    title:'文件(单)',
+    dataType:'varchar',
+    showType:'file',
+    max:1,
+    sizeLimit:500,
+    width:80, // 高度会按照比例调整
+    placeholder: '单个文件上传',
+  },
+  {
+    key: 'listFiles',
+    title: '文件(多)',
+    dataType: 'varchar',
+    showType: 'file',
+    max: 5,
+    sizeLimit:500,
+    width: 150,
+    placeholder: '多个文件上传',
   }
   // ,
   // {
