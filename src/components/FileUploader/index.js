@@ -38,13 +38,10 @@ class FileUploader extends React.Component {
 
     // 是否自定义了图片上传的路径
     if (url) {
-      if (url.startsWith('http')) {
         this.uploadUrl = url;
-      } else {
-        this.uploadUrl = `${globalConfig.getAPIPath()}${url}`;
-      }
     } else {
-      this.uploadUrl = `${globalConfig.getAPIPath()}${forImage ? globalConfig.upload.image : globalConfig.upload.file}`;  // 默认上传接口
+      this.uploadUrl = `${globalConfig.api.path}${forImage ? globalConfig.upload.image : globalConfig.upload.file}`;  // 默认上传接口
+      console.info(`请求地址为:${this.uploadUrl}`);
     }
 
     // 上传时的文件大小限制
@@ -316,6 +313,7 @@ class FileUploader extends React.Component {
 
     // 我本来是写成accept="image/*"的, 但chrome下有些bug, 要很久才能弹出文件选择框
     // 只能用后缀名的写法了
+    //// withCredentials={globalConfig.isCrossDomain()}
     return (
       <div>
         <Upload
@@ -326,7 +324,7 @@ class FileUploader extends React.Component {
           onChange={this.handleChange}
           beforeUpload={this.beforeUpload}
           accept={this.accept}
-          withCredentials={globalConfig.isCrossDomain()}
+          withCredentials={true}
         >
           {this.renderUploadButton()}
         </Upload>
