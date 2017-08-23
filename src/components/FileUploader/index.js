@@ -310,7 +310,6 @@ class FileUploader extends React.Component {
 
   render() {
     const {previewVisible, previewImage, fileList} = this.state;
-
     // 我本来是写成accept="image/*"的, 但chrome下有些bug, 要很久才能弹出文件选择框
     // 只能用后缀名的写法了
     //// withCredentials={globalConfig.isCrossDomain()}

@@ -26,6 +26,8 @@
 // 2.单个图片也可以使用字符串(不建议)
 // 3.
 
+//datetime
+//1. 前台给后台返回的日期为 'yyyy-MM-dd hh:mm:ss'
 
 
 
@@ -42,12 +44,13 @@ module.exports = [
     title:'型号',
     dataType:'varchar',
     showInForm: false,
+    showInTable:false,
   },
   {
     key:'serial',
     title:'序列号',
     dataType:'varchar',
-    showInForm: false,
+    showInForm: true,
   },
   {
     key:'dimShareStatus',
@@ -64,7 +67,7 @@ module.exports = [
     options:[{key:315,value:'铁通自购'},{key:316,value:'铁通租赁'},{key:317,value:'外包维护单位'}]
   },
   {
-    key:'listImage',
+    key:'image',
     title:'图片(单)',
     dataType:'varchar',
     showType:'image',
@@ -79,15 +82,13 @@ module.exports = [
     title: '图片(多)',
     dataType: 'varchar',
     showType: 'image',
+    width: 100,
     max: 5,
     sizeLimit:500,
-    // max>1时, 默认值是string array
-    // defaultValue: ['http://jxy.me/about/avatar.jpg', 'http://jxy.me/about/avatar.jpg'],
-    width: 150,
     placeholder: '多个图片上传',
   },
   {
-    key:'listFile',
+    key:'file',
     title:'文件(单)',
     dataType:'varchar',
     showType:'file',
@@ -105,7 +106,19 @@ module.exports = [
     sizeLimit:500,
     width: 150,
     placeholder: '多个文件上传',
-  }
+  },
+  {
+    key: 'dt',
+    title: '日期',
+    // 对于日期类型要注意下, 在js端日期被表示为yyyy-MM-dd HH:mm:ss的字符串, 在java端日期被表示为java.util.Date对象
+    // fastjson反序列化时可以自动识别
+    // 序列化倒是不用特别配置, 看自己需求, fastjson会序列化为一个字符串, 前端原样展示
+    // defaultValue: '2017-01-01 11:22:33',
+    dataType: 'datetime',
+    // 对于datetime而言, 配置showType是无意义的
+    placeholder: 'happy!',
+  },
+
   // ,
   // {
   //   key:'select',

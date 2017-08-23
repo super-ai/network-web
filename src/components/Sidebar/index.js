@@ -47,7 +47,7 @@ class Sidebar extends React.PureComponent {
     // 估计事后去看的话, 我都忘了为什么要加这些样式...
     return (
       <MenuItem key={obj.key} style={{ margin: '0px' }}>
-        {obj.icon && <Icon type={obj.icon}/>}
+        {obj.icon && <Icon type={obj.icon} className="icon"/>}
         {/*对于level1的菜单项, 如果没有图标, 取第一个字用于折叠时显示*/}
         {isLevel1 && !obj.icon && <span className="invisible-nav-text">{obj.name[0]}</span>}
         <Link to={`/${parentPath}`} style={{ display: 'inline' }}><span className="nav-text">{obj.name}</span></Link>
@@ -92,7 +92,7 @@ class Sidebar extends React.PureComponent {
 
             return (
               <SubMenu key={level2.key}
-                       title={level2.icon ? <span><Icon type={level2.icon} />{level2.name}</span> : level2.name}>
+                       title={level2.icon ? <span><Icon type={level2.icon}  className="icon"/>{level2.name}</span> : level2.name}>
                 {level3menu}
               </SubMenu>
             );
@@ -109,7 +109,7 @@ class Sidebar extends React.PureComponent {
         let level1Title;
         // 同样, 如果没有图标的话取第一个字
         if (level1.icon) {
-          level1Title = <span><Icon type={level1.icon}/><span className="nav-text">{level1.name}</span></span>;
+          level1Title = <span><Icon type={level1.icon}  className="icon"/><span className="nav-text">{level1.name}</span></span>;
         } else {
           level1Title = <span><span className="invisible-nav-text">{level1.name[0]}</span><span
             className="nav-text">{level1.name}</span></span>;
@@ -204,7 +204,7 @@ class Sidebar extends React.PureComponent {
           {this.menu}
         </Menu>
         <div className="ant-layout-sidebar-trigger" onClick={this.props.handleClickCollapse}>
-          <Icon type={this.props.collapse ? "right" : "left"}/>
+          <Icon type={this.props.collapse ? "right" : "left"}  className="icon"/>
         </div>
       </aside>
     );

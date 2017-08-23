@@ -49,12 +49,12 @@ const sidebarMenu = [
   {
     key:'system-manage',
     name:'系统管理',
-    icon:'smile',
+    icon:'setting',
     child:[
       {
         key:'menu',
         name:'菜单管理',
-        icon:'clock-circle'
+        icon:'bars'
       }
     ]
   },

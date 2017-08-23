@@ -258,7 +258,7 @@ class DBTable extends React.PureComponent {
   error = (errorMsg) => {
     // 对于错误信息, 要很明显的提示用户, 这个通知框要用户手动关闭
     notification.error({
-      message: '出错啦!',
+      message: '出错!',
       description: `请联系管理员, 错误信息: ${errorMsg}`,
       duration: 0,
     });

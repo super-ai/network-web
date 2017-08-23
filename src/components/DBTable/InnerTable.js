@@ -533,7 +533,7 @@ class InnerTable extends React.PureComponent {
   error(errorMsg) {
     // 对于错误信息, 要很明显的提示用户, 这个通知框要用户手动关闭
     notification.error({
-      message: '出错啦!',
+      message: '出错!',
       description: `请联系管理员, 错误信息: ${errorMsg}`,
       duration: 0,
     });
@@ -688,7 +688,7 @@ class InnerTable extends React.PureComponent {
               {/* 注意这里, 如果schema中没有定义主键, 不允许update或delete */}
               {tableConfig.showUpdate &&
               <Button type="primary" disabled={!hasSelected || !this.primaryKey} onClick={this.onClickUpdate}>
-                <Icon type="edit"/> {multiSelected ? '批量修改' : '修改'}
+                <Icon type="edit" /> {multiSelected ? '批量修改' : '修改'}
               </Button>}
               {tableConfig.showDelete &&
               <Button type="primary" disabled={!hasSelected || !this.primaryKey} onClick={this.onClickDelete}>
