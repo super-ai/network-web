@@ -29,8 +29,6 @@
 //datetime
 //1. 前台给后台返回的日期为 'yyyy-MM-dd hh:mm:ss'
 
-
-
 module.exports = [
   {
     key:'id',
@@ -38,6 +36,20 @@ module.exports = [
     dataType:'int',
     primary:'true',
     sorter:(a,b)=>a.id - b.id
+  },
+  {
+    key:'ouId',
+    title:'ID',
+    dataType:'int',
+    showInTable:false,
+    showType:'ou',
+    validator: [{required: true, message: '必填'}],
+  },
+  {
+    key:'ouName',
+    title:'组织机构',
+    dataType:'varchar',
+    showInForm: false,
   },
   {
     key:'model',
@@ -73,7 +85,7 @@ module.exports = [
     showType:'image',
     max:1,
     sizeLimit:500,
-    width:80, // 高度会按照比例调整
+    width:50, // 高度会按照比例调整
     accept:'.jpg,.png,.gif,.jpeg',
     placeholder: '请上传jpg格式',
   },
@@ -82,7 +94,7 @@ module.exports = [
     title: '图片(多)',
     dataType: 'varchar',
     showType: 'image',
-    width: 100,
+    width: 50,
     max: 5,
     sizeLimit:500,
     placeholder: '多个图片上传',

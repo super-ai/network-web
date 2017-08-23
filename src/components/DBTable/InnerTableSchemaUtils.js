@@ -14,6 +14,7 @@ import FileUploader from '../FileUploader';
 import moment from 'moment';
 import Logger from '../../utils/Logger';
 import {ACTION_KEY} from './InnerTableRenderUtils';
+import Ou from '../Custom/OuTreeSelect';
 
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
@@ -281,6 +282,8 @@ const SchemaUtils = {
         return this.transformFile(field);
       case 'cascader':
         return this.transformCascader(field);
+      case 'ou':
+          return this.transformOu(field);
       default:
         return this.transformNormal(field);
     }
@@ -438,6 +441,22 @@ const SchemaUtils = {
     })(
       <Cascader options={field.options} expandTrigger="hover" placeholder={field.placeholder || '请选择'} size="default"
                 disabled={field.disabled}/>
+    ), field);
+  },
+
+  /**
+   * 转换为组织机构
+   *
+   * @param field
+   * @returns {XML}
+   */
+  transformOu(field) {
+    logger.debug('transform field %o to Ou component', field);
+    return this.colWrapper((getFieldDecorator, forUpdate) => getFieldDecorator(field.key, {
+      initialValue: forUpdate ? undefined : field.defaultValue,
+      rules: forUpdate ? field.$$updateValidator : field.validator,
+    })(
+      <Ou placeholder={field.placeholder || '请选择'} disabled={field.disabled}/>
     ), field);
   },
 
