@@ -15,10 +15,10 @@ module.exports = [
     placeholder:'id '
   },
   {
-    key:'text',
-    title:'菜单名称',
+    key:'serial',
+    title:'序列号',
     dataType:'varchar',
-    placeholder:'菜单名称'
+    placeholder:'序列号'
   }
   // ,
   // {

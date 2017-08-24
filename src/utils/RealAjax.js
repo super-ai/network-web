@@ -31,12 +31,13 @@ class Ajax {
    * @returns {Promise}
    */
   requestWrapper(method, url, {params, data, headers} = {}) {
+    debugger;
     logger.debug('method=%s, url=%s, params=%o, data=%o, headers=%o', method, url, params, data, headers);
     return new Promise((resolve, reject) => {
       const tmp = superagent(method, url);
       // 是否是跨域请求
       if (globalConfig.isCrossDomain()) {
-        // tmp.withCredentials();
+        tmp.withCredentials();
       }
       // 设置全局的超时时间
       if (globalConfig.api.timeout && !isNaN(globalConfig.api.timeout)) {
@@ -44,15 +45,13 @@ class Ajax {
       }
       // 默认的Content-Type和Accept
       tmp.set('Content-Type', 'application/json').set('Accept', 'application/json');
-      // 增加跨域
-      tmp.set('Access-Control-Allow-Origin','*');
-
       // 如果有自定义的header
       if (headers) {
         tmp.set(headers);
       }
       // url中是否有附加的参数?
       if (params) {
+        debugger;
         tmp.query(params);
       }
       // body中发送的数据
@@ -81,7 +80,10 @@ class Ajax {
   // 基础的get/post方法
 
   get(url, opts = {}) {
-    return this.requestWrapper('GET', url, {...opts});
+    var obj = new Object();
+    obj.params = opts;
+    return this.requestWrapper('GET', url, obj);
+    // return this.requestWrapper('GET', url, {...opts});
   }
 
   //data body传递 ; opts params接收
@@ -195,6 +197,7 @@ class CRUDUtil {
    * @returns {*}
    */
   select(queryObj) {
+    debugger;
     return this.ajax.get(`${globalConfig.api.path}/${this.tableName}/select`, queryObj);
     // ok
     // return this.ajax.get('/api/ResMeter/select', queryObj);
