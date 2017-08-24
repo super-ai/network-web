@@ -24,6 +24,12 @@ class OuTreeSelect extends React.Component{
     this.onLoadData(undefined);
   }
 
+  componentWillReceiveProps(nextProps){
+    //清空
+    var {value} = nextProps;
+    this.state.value = value;
+  }
+
   /**
   * 关键方法!!!
   * 在treeData指定key位置 生成新的treeData(数组)
@@ -97,7 +103,7 @@ class OuTreeSelect extends React.Component{
       treeData={this.state.treeData}
       loadData={this.onLoadData}
       onChange={this.onChangeHandler}
-      defaultValue = {this.props.value}
+      value={this.state.value}
       />
     )
   }

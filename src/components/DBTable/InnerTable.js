@@ -209,7 +209,7 @@ class InnerTable extends React.PureComponent {
       this.formComponent.resetFields();
       if (data) {
         console.info('当前的form值为:',data);
-        data.ouId = '测试部门';
+        // data.ouId = '测试部门';
         this.formComponent.setFieldsValue(data);
       }
     } else {

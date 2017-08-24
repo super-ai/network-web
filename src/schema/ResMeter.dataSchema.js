@@ -39,7 +39,7 @@ module.exports = [
   },
   {
     key:'ouId',
-    title:'ID',
+    title:'部门',
     dataType:'int',
     showType:'ou',
     initKey:'ouName',     //使用字段 ouName值 进行初始化
