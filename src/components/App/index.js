@@ -88,7 +88,7 @@ class App extends React.Component {
       try {
         // 先去服务端验证下, 说不定已经登录了
         const res = await ajax.getCurrentUser();
-
+        debugger;
         hide();
 
         // 注意这里, debug模式下每次刷新都必须重新登录

@@ -143,8 +143,9 @@ class Ajax {
 
     return fetch(paramsUrl,fetchOpts)
     .then((res)=>{
-      if(res && res.redirected && res.url.indexOf('/login') > -1)
-        console.warn(`用户没有登录，跳转到登录页面!`,res);
+      if(res && res.redirected && res.url.indexOf('/login') > -1){
+        return undefined;
+      }
       else {
         return res.json();
       }
