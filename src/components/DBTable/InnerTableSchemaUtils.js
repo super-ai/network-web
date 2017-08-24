@@ -456,7 +456,8 @@ const SchemaUtils = {
       initialValue: forUpdate ? undefined : field.defaultValue,
       rules: forUpdate ? field.$$updateValidator : field.validator,
     })(
-      <Ou placeholder={field.placeholder || '请选择'} disabled={field.disabled}/>
+      <Ou placeholder={field.placeholder || '请选择'} disabled={field.disabled}
+      />
     ), field);
   },
 

@@ -32,6 +32,7 @@ class OuTreeSelect extends React.Component{
       treeData={this.state.treeData}
       loadData={this.onLoadData}
       onChange={this.onChangeHandler}
+      defaultValue = {this.props.defaultValue}
       />
     )
   }
@@ -92,7 +93,6 @@ class OuTreeSelect extends React.Component{
 
   onChangeHandler(value){
     const onChange = this.props.onChange;
-    debugger;
     if (onChange) {
      onChange(value);
     }

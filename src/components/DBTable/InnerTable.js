@@ -142,6 +142,7 @@ class InnerTable extends React.PureComponent {
   }
 
   /**
+   * 关键方法
    * 将后端返回的一条数据转换为前端表格中能显示的一条数据
    * 后端返回的往往是数字(比如0表示屏蔽, 1表示正常)
    * 而表格中要显示对应的汉字, 跟dataSchema中的配置对应
@@ -595,16 +596,18 @@ class InnerTable extends React.PureComponent {
       if (res.success) {
         notification.success({
           message: '更新成功',
-          description: `更新${res.data}条数据`,
+          description: `更新${res.data.length}条数据`,
           duration: 3,
         });
 
         // 数据变化后, 刷新下表格
-        const transformedData = this.transformRawDataToTable(obj);
+        // const transformedData = this.transformRawDataToTable(obj); //(前台更新)
+        const transformedData = this.transformRawDataToTable(res.data[0]);  //(后台返回更新)
         const newData = [];
         const keySet = new Set(keys);  // array转set
         for (const record of this.state.data) {
           if (keySet.has(record.key)) {  // 是否是被更新的记录
+            debugger;
             const newRecord = Object.assign({}, record, transformedData); // 这个应该是浅拷贝
             newRecord.$$rawData = Object.assign({}, record.$$rawData, transformedData.$$rawData);
             logger.debug('newRecord = %o', newRecord);
@@ -613,6 +616,7 @@ class InnerTable extends React.PureComponent {
             newData.push(record);
           }
         }
+
         this.setState({selectedRowKeys: [], data: newData});
       } else {
         this.error(res.message);

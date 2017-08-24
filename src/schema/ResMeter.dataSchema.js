@@ -41,14 +41,18 @@ module.exports = [
     key:'ouId',
     title:'ID',
     dataType:'int',
-    showInTable:false,
     showType:'ou',
+    initKey:'ouName',     //使用字段 ouName值 进行初始化
+    render:(text,record)=>{
+      return record.ouName;
+    },
     validator: [{required: true, message: '必填'}],
   },
   {
     key:'ouName',
     title:'组织机构',
     dataType:'varchar',
+    showInTable:false,
     showInForm: false,
   },
   {

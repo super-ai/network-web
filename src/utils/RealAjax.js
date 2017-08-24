@@ -147,7 +147,7 @@ class Ajax {
         return res.json();
       }
     })
-    .catch((e) => {debugger;console.log('获取currentUser异常');});
+    .catch((e) => {;console.log('获取currentUser异常');});
   }
 
   /**
