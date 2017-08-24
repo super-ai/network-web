@@ -208,6 +208,8 @@ class InnerTable extends React.PureComponent {
     if (this.formComponent) {
       this.formComponent.resetFields();
       if (data) {
+        console.info('当前的form值为:',data);
+        data.ouId = '测试部门';
         this.formComponent.setFieldsValue(data);
       }
     } else {
@@ -607,7 +609,6 @@ class InnerTable extends React.PureComponent {
         const keySet = new Set(keys);  // array转set
         for (const record of this.state.data) {
           if (keySet.has(record.key)) {  // 是否是被更新的记录
-            debugger;
             const newRecord = Object.assign({}, record, transformedData); // 这个应该是浅拷贝
             newRecord.$$rawData = Object.assign({}, record.$$rawData, transformedData.$$rawData);
             logger.debug('newRecord = %o', newRecord);

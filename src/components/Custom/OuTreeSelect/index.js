@@ -20,22 +20,10 @@ class OuTreeSelect extends React.Component{
   }
 
   componentDidMount(){
+    //此时竟然没有this.props.value值
     this.onLoadData(undefined);
   }
 
-  render(){
-    return (
-      <TreeSelect
-      placeholder="部门"
-      style={{ width: 150 }}
-      dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-      treeData={this.state.treeData}
-      loadData={this.onLoadData}
-      onChange={this.onChangeHandler}
-      defaultValue = {this.props.defaultValue}
-      />
-    )
-  }
   /**
   * 关键方法!!!
   * 在treeData指定key位置 生成新的treeData(数组)
@@ -94,8 +82,24 @@ class OuTreeSelect extends React.Component{
   onChangeHandler(value){
     const onChange = this.props.onChange;
     if (onChange) {
+     console.info("当前属性为:",this.props)
      onChange(value);
     }
+  }
+
+
+  render(){
+    return (
+      <TreeSelect
+      placeholder="部门"
+      style={{ width: 150 }}
+      dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+      treeData={this.state.treeData}
+      loadData={this.onLoadData}
+      onChange={this.onChangeHandler}
+      defaultValue = {this.props.value}
+      />
+    )
   }
 
 }

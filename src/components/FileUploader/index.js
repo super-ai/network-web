@@ -41,7 +41,7 @@ class FileUploader extends React.Component {
         this.uploadUrl = url;
     } else {
       this.uploadUrl = `${globalConfig.api.path}${forImage ? globalConfig.upload.image : globalConfig.upload.file}`;  // 默认上传接口
-      console.info(`请求地址为:${this.uploadUrl}`);
+      // console.info(`请求地址为:${this.uploadUrl}`);
     }
 
     // 上传时的文件大小限制

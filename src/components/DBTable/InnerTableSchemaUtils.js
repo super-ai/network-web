@@ -452,12 +452,12 @@ const SchemaUtils = {
    */
   transformOu(field) {
     logger.debug('transform field %o to Ou component', field);
+    // debugger;
     return this.colWrapper((getFieldDecorator, forUpdate) => getFieldDecorator(field.key, {
       initialValue: forUpdate ? undefined : field.defaultValue,
       rules: forUpdate ? field.$$updateValidator : field.validator,
     })(
-      <Ou placeholder={field.placeholder || '请选择'} disabled={field.disabled}
-      />
+      <Ou placeholder={field.placeholder || '请选择'} disabled={field.disabled} />
     ), field);
   },
 
