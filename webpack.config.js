@@ -83,6 +83,9 @@ module.exports = {
       "/login": {
         "target": "http://localhost:8080",
       },
+      "/logout": {
+        "target": "http://localhost:8080",
+      },
       "/api/*": {
         "target": "http://localhost:8080",
       },

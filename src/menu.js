@@ -159,7 +159,7 @@ const sidebarMenu = [
 export default sidebarMenu;
 
 // 定义header菜单, 格式和sidebar是一样的
-// 特殊的地方在于, 我规定header的最右侧必须是用户相关操作的菜单, 所以定义了一个特殊的key
+// 特殊的地方在于, 我规定header的最右侧必须是用户相关操作的菜单, 所以定义了一个特殊的key userMenu
 // 另外注意这个菜单定义的顺序是从右向左的, 因为样式是float:right
 export const headerMenu = [
   {
@@ -168,109 +168,23 @@ export const headerMenu = [
     child: [
       {
         key: 'modifyUser',
-        name: '修改用户信息',
+        name: '修改个人信息',
         icon: 'bulb',
         // 对于headerMenu的菜单项, 可以让它跳到外部地址, 如果设置了url属性, 就会打开一个新窗口
         // 如果不设置url属性, 行为和sidebarMenu是一样的, 激活特定的组件, 注意在index.js中配置好路由, 否则会404
-        url: 'http://jxy.me',
+        url: 'https://github.com/facebook/react',
       },
       {
-        key: 'user222',
-        name: '药药切克闹',
+        key: 'modifyPassword',
+        name: '修改密码',
         icon: 'rocket',
       },
-      {
-        key: 'user333',
-        name: '选项3',
-        child: [
-          {
-            key: 'user333aaa',
-            name: 'user333aaa',
-            icon: 'windows',
-          },
-          {
-            key: 'user333bbb',
-            name: 'user333bbb',
-            url: 'http://jxy.me',
-          },
-        ],
-      },
     ],
   },
   {
-    key: 'headerMenu2',
-    name: 'header菜单',
+    key: 'help',
+    name: '帮助',
     icon: 'team',
-    child: [
-      {
-        key: 'headerMenu111',
-        name: '菜单项1',
-        icon: 'windows',
-        url: 'http://jxy.me',
-      },
-      {
-        key: '菜单项2',
-        name: '短信表管理',
-        url: 'http://jxy.me',
-      },
-      {
-        key: '菜单项3',
-        name: '选项3',
-        icon: 'chrome',
-        url: 'http://jxy.me',
-      },
-    ],
-  },
-  {
-    key: 'headerMenu3',
-    name: '我没有子菜单',
-    icon: 'setting',
-    url: 'http://jxy.me',
-  },
-  {
-    key: 'headerMenu4',
-    name: '我也没有子菜单',
-    icon: 'shopping-cart',
-  },
-  {
-    key: 'headerMenu5',
-    name: '我没有图标',
-    child: [
-      {
-        key: 'headerMenu5000000',
-        name: '二级导航无子菜单',
-      },
-      {
-        key: 'headerMenu51111',
-        name: '三级导航',
-        icon: 'laptop',
-        child: [
-          {
-            key: 'headerMenu51111aa',
-            name: '选项6',
-            icon: 'meh',
-          },
-          {
-            key: 'headerMenu51111bb',
-            name: '选项7',
-            icon: 'inbox',
-          },
-        ],
-      },
-      {
-        key: 'headerMenu52222',
-        name: '三级导航无图标',
-        child: [
-          {
-            key: 'headerMenu52222aa',
-            name: '选项8',
-          },
-          {
-            key: 'headerMenu52222bb',
-            name: '选项9',
-          },
-        ],
-      },
-    ],
+    url: 'https://github.com/facebook/react',
   },
 ];

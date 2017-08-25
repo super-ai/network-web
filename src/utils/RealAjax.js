@@ -31,7 +31,6 @@ class Ajax {
    * @returns {Promise}
    */
   requestWrapper(method, url, {params, data, headers} = {}) {
-    debugger;
     logger.debug('method=%s, url=%s, params=%o, data=%o, headers=%o', method, url, params, data, headers);
     return new Promise((resolve, reject) => {
       const tmp = superagent(method, url);
@@ -51,7 +50,6 @@ class Ajax {
       }
       // url中是否有附加的参数?
       if (params) {
-        debugger;
         tmp.query(params);
       }
       // body中发送的数据
@@ -72,17 +70,8 @@ class Ajax {
     });
   }
 
-  // 回头再封装
-  fetchWrapper(method,url,{params,data,headers}={}){
-
-  }
-
-  // 基础的get/post方法
-
-  get(url, opts = {}) {
-    var obj = new Object();
-    obj.params = opts;
-    return this.requestWrapper('GET', url, obj);
+  get(url, params = {}) {
+    return this.requestWrapper('GET', url, {params});
     // return this.requestWrapper('GET', url, {...opts});
   }
 
@@ -90,6 +79,11 @@ class Ajax {
   post(url, data, opts = {}) {
     return this.requestWrapper('POST', url, {...opts, data});
   }
+
+  //典型调用
+  // get(url,{id:1,name:'llp'});
+  // post(url,{width:10,height:20},{params:{},headers:{}})
+  // 这封装太烂了 还是使用requestWrapper 合适
 
   /**
   *
