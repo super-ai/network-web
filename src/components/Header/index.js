@@ -40,7 +40,7 @@ class Header extends React.PureComponent {
       <a href={`${globalConfig.login.logout}`}>注销</a>
     </MenuItem>;
 
-  // 维护MIS退出 
+  // 维护MIS退出
 	// window.location.href = "logout";
 	// sessionStorage.removeItem("username");
 	// sessionStorage.removeItem("ouname");

@@ -88,9 +88,7 @@ class App extends React.Component {
       try {
         // 先去服务端验证下, 说不定已经登录了
         const res = await ajax.getCurrentUser();
-        debugger;
         hide();
-
         // 注意这里, debug模式下每次刷新都必须重新登录
         if (res && res.status == 'success' && !globalConfig.debug) {
           // 这里不需要setState了, 因为setState的目的是为了re-render, 而下一句会触发redux的状态变化, 也会re-render
@@ -101,7 +99,6 @@ class App extends React.Component {
           this.props.handleLoginSuccess(res.data);
         } else {
           this.handleLoginError('获取用户信息失败, 请重新登录');
-
         }
       } catch (e) {
         // 如果网络请求出错, 弹出一个错误提示
