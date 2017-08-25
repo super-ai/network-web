@@ -44,6 +44,7 @@ class Header extends React.PureComponent {
 	// window.location.href = "logout";
 	// sessionStorage.removeItem("username");
 	// sessionStorage.removeItem("ouname");
+  // <a href={`${globalConfig.login.logout}`}>注销</a>
 
 
     // header右侧必须是用户菜单
