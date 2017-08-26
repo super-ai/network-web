@@ -4,6 +4,7 @@ module.exports = [
     title:'ID',
     dataType:'int',
     primary:'true',
+    width:50,
     sorter:(a,b)=>a.id - b.id
   },
   {
@@ -17,6 +18,11 @@ module.exports = [
   {
     key:'menuKey',
     title:'路由Key',
+    dataType:'varchar',
+  },
+  {
+    key:'type',
+    title:'菜单类型',
     dataType:'varchar',
   },
   {
