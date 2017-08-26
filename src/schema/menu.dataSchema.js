@@ -7,23 +7,35 @@ module.exports = [
     sorter:(a,b)=>a.id - b.id
   },
   {
-    key:'text',
+    key:'name',
     title:'菜单名称',
     dataType:'varchar',
     render(text){
-      return '前缀_' + text;
+      return text;
     }
   },
   {
-    key:'iconCls',
+    key:'menuKey',
+    title:'路由Key',
+    dataType:'varchar',
+  },
+  {
+    key:'icon',
     title:'图标',
     dataType:'varchar',
   },
   {
-    key:'url',
-    title:'Url',
-    dataType:'varchar',
-  }
+    key:'parentId',
+    title:'父节点',
+    dataType:'int',
+  },
+  {
+    key:'place',
+    title:'位置',
+    dataType:'int',
+  },
+
+
   // ,
   // {
   //   key:'select',
