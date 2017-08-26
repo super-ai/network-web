@@ -1,6 +1,5 @@
 // 一些辅助用的工具方法
 // 很多都是gross hack, 属于历史遗留问题
-
 // antd从2.x开始引入了moment: http://momentjs.com/docs/
 // 这是个好东西, 处理日期方便多了, 简直就是javascript界的joda-time
 // 这些prototype的hack基本用不到了
@@ -62,6 +61,61 @@ Date.prototype.plusDays = function (num) {
 
 // 为了克服js的一些坑...
 const Utils = {
+  /**
+  * 行结构转变成树形结构
+  * parentId 指向 id
+  */
+  transformToTree(res){
+    var rows = res.data;
+  	var nodes = [];
+  	var children = [];  //把自己的id和text都放到child中存储
+  	var parent = [];
+  	var node = {};
+  	rows.map((row,i)=>{
+  		if(row.id == editingId || row.parentId == editingId)
+  			return true;
+
+  		if(!row.parentId){	//根节点 同时push到 nodes 和 parents
+  			node = {id:row.id,text:row.name};
+  			if(row.iconCls)
+  				node.iconCls = row.iconCls;
+  			nodes.push(node);
+  			parent.push(node);
+  		}else{ 				//非根节点
+  			node = {child:{id:row.id,text:row.name},parentId:row.parentId}
+  			if(row.iconCls)
+  				node.child.iconCls = row.iconCls;
+  			children.push(node);
+  		}
+  	});
+
+  	var orphan = [];
+  	while(parent.length && children.length){	//parent或者children中有一个为空则停止
+  		node = parent.shift();	//删除第一个元素 并返回第一个元素
+  		/* 每次循环 都能找到一个parent的所有子节点 */
+  		children.map((row,i)=>{
+  			if(row.parentId === node.id){ //如果child指向当前parent 则把此节点推入其children中
+  				//这里对node的操作 竟然能直接影响nodes的值
+  				if(node.children){
+  					node.children.push(row.child);
+  				}else{
+  					node.children = [row.child];
+  				}
+
+  				parent.push(row.child);
+  			}else{
+  				orphan.push(row);
+  			}
+  		});
+
+  		children = orphan;
+  		orphan = [];
+  	}
+
+  	nodes.push({id:0,text:'无父菜单'});
+  	return nodes;
+  },
+
   isString(s) {
     return typeof(s) === 'string' || s instanceof String;
   },

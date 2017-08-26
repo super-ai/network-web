@@ -78,6 +78,11 @@ module.exports = {
     },
   },
 
+  menu:{
+    async:true,  //从后台按照权限获取
+    url:'/api/Menu/select'  //async:false 无用
+  },
+
   // 以下一些辅助的函数, 不要修改
   // 不能使用箭头函数, 会导致this是undefined
 

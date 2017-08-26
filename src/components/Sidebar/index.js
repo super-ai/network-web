@@ -5,26 +5,50 @@ import {bindActionCreators} from 'redux'
 import {Menu, Icon} from 'antd';
 import Logo from '../Logo';
 import Logger from '../../utils/Logger';
-import items from 'menu.js';  // 由于webpack中的设置, 不用写完整路径
+import localMenuItems from 'menu.js';  // 由于webpack中的设置, 不用写完整路径
 import globalConfig from 'config.js';
 import './index.less';
 import {sidebarCollapseCreator} from '../../redux/Sidebar.js';
+import ajax from '../../utils/ajax';
+import Utils from 'utils/index.js';
 
 const SubMenu = Menu.SubMenu;
 const MenuItem = Menu.Item;
-
 const logger = Logger.getLogger('Sidebar');
 
 /**
  * 定义sidebar组件
  */
 class Sidebar extends React.PureComponent {
+  constructor(){
+    super();  //这是毛意思
+    this.getMenu();
+  }
+
+  /**
+  * 后台获取菜单
+  */
+  async getMenu(){
+    if (!globalConfig.menu.async) return;
+    /* 获取后台菜单 并转为树形结构 再修改属性名称 */
+    const res = await ajax.requestWrapper('GET',`${globalConfig.menu.url}`);
+    if(res && res.success){
+      // 处理成menu.js格式 （utils方法）
+      debugger;
+      var treeData = Utils.transformToTree(res);
+
+      // 修改属性名称
+      var remoteMenuItems = modifyAttrName(treeData);
+      this.state.items = remoteMenuItems;
+    }
+  }
 
   // 尝试把sidebar做成PureComponent, 注意可能的bug
   // 注意PureComponent的子组件也应该是pure的
 
   state = {
     openKeys: [],  // 当前有哪些submenu被展开
+    items:localMenuItems //初始化为
   };
 
   // 哪些状态组件自己维护, 哪些状态放到redux, 是需要权衡的
@@ -64,7 +88,7 @@ class Sidebar extends React.PureComponent {
 
     // 菜单项是从配置中读取的, parse过程还是有点复杂的
     // map函数很好用
-    const menu = items.map((level1) => {
+    const menu = this.state.items.map((level1) => {
       // parse一级菜单
       paths.push(level1.key);
       level1KeySet.add(level1.key);
