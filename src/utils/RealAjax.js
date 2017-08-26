@@ -192,7 +192,6 @@ class CRUDUtil {
    * @returns {*}
    */
   select(queryObj) {
-    debugger;
     return this.ajax.get(`${globalConfig.api.path}/${this.tableName}/select`, queryObj);
     // ok
     // return this.ajax.get('/api/ResMeter/select', queryObj);

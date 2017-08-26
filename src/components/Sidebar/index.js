@@ -22,25 +22,6 @@ const logger = Logger.getLogger('Sidebar');
 class Sidebar extends React.PureComponent {
   constructor(){
     super();  //这是毛意思
-    this.getMenu();
-  }
-
-  /**
-  * 后台获取菜单
-  */
-  async getMenu(){
-    if (!globalConfig.menu.async) return;
-    /* 获取后台菜单 并转为树形结构 再修改属性名称 */
-    const res = await ajax.requestWrapper('GET',`${globalConfig.menu.url}`);
-    if(res && res.success){
-      // 处理成menu.js格式 （utils方法）
-      debugger;
-      var treeData = Utils.transformToTree(res);
-
-      // 修改属性名称
-      var remoteMenuItems = modifyAttrName(treeData);
-      this.state.items = remoteMenuItems;
-    }
   }
 
   // 尝试把sidebar做成PureComponent, 注意可能的bug
@@ -79,15 +60,47 @@ class Sidebar extends React.PureComponent {
     );
   }
 
+  /**
+  * 后台获取菜单
+  */
+  async getRemoteMenu(){
+    if (!globalConfig.menu.async) return;
+    /* 获取后台菜单 并转为树形结构 再修改属性名称 */
+    const res = await ajax.requestWrapper('GET',`${globalConfig.menu.url}`);
+    console.warn('异步取数完成');
+    if(res && res.success){
+      // 处理成menu.js格式 （utils方法）
+      var remoteMenuItems = Utils.transformToTree(res);
+      // 修改属性名称
+      this.state.items = remoteMenuItems;
+      console.warn('数据处理完成');
+    }
+  }
+
   // 在每次组件挂载的时候parse一次菜单, 不用每次render都解析
   // 其实这个也可以放在constructor里
-  componentWillMount() {
+  async componentWillMount() {
+    // this.getRemoteMenu();
+    if (globalConfig.menu.async){
+      /* 获取后台菜单 并转为树形结构 再修改属性名称 */
+      const res = await ajax.requestWrapper('GET',`${globalConfig.menu.url}`);
+      console.warn('异步取数完成');
+      if(res && res.success){
+        // 处理成menu.js格式 （utils方法）
+        var remoteMenuItems = Utils.transformToTree(res);
+        // 修改属性名称
+        this.state.items = remoteMenuItems;
+        console.warn('数据处理完成');
+      }
+    }
+
     const paths = [];  // 暂存各级路径, 当作stack用
     const level1KeySet = new Set();  // 暂存所有顶级菜单的key
     const level2KeyMap = new Map();  // 次级菜单与顶级菜单的对应关系
 
     // 菜单项是从配置中读取的, parse过程还是有点复杂的
     // map函数很好用
+    console.warn('菜单生成开始',this.state.items);
     const menu = this.state.items.map((level1) => {
       // parse一级菜单
       paths.push(level1.key);

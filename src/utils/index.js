@@ -72,17 +72,16 @@ const Utils = {
   	var parent = [];
   	var node = {};
   	rows.map((row,i)=>{
-  		if(row.id == editingId || row.parentId == editingId)
-  			return true;
-
+      // 增加key属性
+      node = Object.assign({},row,{key:row.menuKey});
   		if(!row.parentId){	//根节点 同时push到 nodes 和 parents
-  			node = {id:row.id,text:row.name};
+  			// node = {id:row.id,text:row.name};
   			if(row.iconCls)
   				node.iconCls = row.iconCls;
   			nodes.push(node);
   			parent.push(node);
   		}else{ 				//非根节点
-  			node = {child:{id:row.id,text:row.name},parentId:row.parentId}
+  			node = {child:{...node},parentId:row.parentId}
   			if(row.iconCls)
   				node.child.iconCls = row.iconCls;
   			children.push(node);
@@ -96,10 +95,10 @@ const Utils = {
   		children.map((row,i)=>{
   			if(row.parentId === node.id){ //如果child指向当前parent 则把此节点推入其children中
   				//这里对node的操作 竟然能直接影响nodes的值
-  				if(node.children){
-  					node.children.push(row.child);
+  				if(node.child){
+  					node.child.push(row.child);
   				}else{
-  					node.children = [row.child];
+  					node.child = [row.child];
   				}
 
   				parent.push(row.child);
@@ -112,7 +111,6 @@ const Utils = {
   		orphan = [];
   	}
 
-  	nodes.push({id:0,text:'无父菜单'});
   	return nodes;
   },
 
