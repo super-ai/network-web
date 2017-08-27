@@ -61,7 +61,7 @@ class Sidebar extends React.PureComponent {
   }
 
   genSubMenu(items){
-    console.warn('菜单组件开始生成',this.state.items);
+    console.warn('生成子菜单',this.state.items);
     //
     const paths = [];  // 暂存各级路径, 当作stack用
     const level1KeySet = new Set();  // 暂存所有顶级菜单的key
@@ -150,9 +150,7 @@ class Sidebar extends React.PureComponent {
       if(res && res.success){
         // 处理成menu.js格式 （utils方法）
         var remoteMenuItems = await Utils.transformToTree(res);
-        this.state.items = remoteMenuItems;
         this.setState({items:remoteMenuItems});
-        console.warn('异步数据处理完成');
       }
     }
 

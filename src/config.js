@@ -79,7 +79,7 @@ module.exports = {
   },
 
   menu:{
-    async:false,  //从后台按照权限获取
+    async:true,  //从后台按照权限获取
     url:'/api/Menu/select'  //async:false 无用
   },
 
