@@ -60,24 +60,7 @@ class Sidebar extends React.PureComponent {
     );
   }
 
-  /**
-  * 后台获取菜单
-  * uselsee
-  */
-  async getRemoteMenu(){
-    if (!globalConfig.menu.async) return;
-    /* 获取后台菜单 并转为树形结构 再修改属性名称 */
-    const res = await ajax.requestWrapper('GET',`${globalConfig.menu.url}`);
-    if(res && res.success){
-      // 处理成menu.js格式 （utils方法）
-      var remoteMenuItems = await Utils.transformToTree(res);
-      // 修改属性名称
-      this.state.items = remoteMenuItems;
-      console.warn('数据处理完成');
-    }
-  }
-
-  shouldComponentUpdate(){
+  genSubMenu(items){
     console.warn('菜单组件开始生成',this.state.items);
     //
     const paths = [];  // 暂存各级路径, 当作stack用
@@ -86,7 +69,7 @@ class Sidebar extends React.PureComponent {
 
     // 菜单项是从配置中读取的, parse过程还是有点复杂的
     // map函数很好用
-    const menu = this.state.items.map((level1) => {
+    const menu = items.map((level1) => {
       // parse一级菜单
       paths.push(level1.key);
       level1KeySet.add(level1.key);
@@ -154,7 +137,7 @@ class Sidebar extends React.PureComponent {
     this.level1KeySet = level1KeySet;
     this.level2KeyMap = level2KeyMap;
 
-    return true;
+    return menu;
   }
 
   // 在每次组件挂载的时候parse一次菜单, 不用每次render都解析
@@ -168,11 +151,11 @@ class Sidebar extends React.PureComponent {
         // 处理成menu.js格式 （utils方法）
         var remoteMenuItems = await Utils.transformToTree(res);
         this.state.items = remoteMenuItems;
+        this.setState({items:remoteMenuItems});
         console.warn('异步数据处理完成');
       }
     }
 
-    this.setState({items:remoteMenuItems});
   }
 
   // 我决定在class里面, 只有在碰到this问题时才使用箭头函数, 否则还是优先使用成员方法的形式定义函数
@@ -243,7 +226,7 @@ class Sidebar extends React.PureComponent {
               onOpenChange={this.handleOpenChange}
               onSelect={this.handleSelect}
               openKeys={this.props.collapse ? [] : this.state.openKeys}>
-          {this.menu}
+          {this.genSubMenu(this.state.items)}
         </Menu>
         <div className="ant-layout-sidebar-trigger" onClick={this.props.handleClickCollapse}>
           <Icon type={this.props.collapse ? "right" : "left"}  className="icon"/>
