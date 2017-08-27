@@ -62,45 +62,30 @@ class Sidebar extends React.PureComponent {
 
   /**
   * 后台获取菜单
+  * uselsee
   */
   async getRemoteMenu(){
     if (!globalConfig.menu.async) return;
     /* 获取后台菜单 并转为树形结构 再修改属性名称 */
     const res = await ajax.requestWrapper('GET',`${globalConfig.menu.url}`);
-    console.warn('异步取数完成');
     if(res && res.success){
       // 处理成menu.js格式 （utils方法）
-      var remoteMenuItems = Utils.transformToTree(res);
+      var remoteMenuItems = await Utils.transformToTree(res);
       // 修改属性名称
       this.state.items = remoteMenuItems;
       console.warn('数据处理完成');
     }
   }
 
-  // 在每次组件挂载的时候parse一次菜单, 不用每次render都解析
-  // 其实这个也可以放在constructor里
-  async componentWillMount() {
-    // this.getRemoteMenu();
-    if (globalConfig.menu.async){
-      /* 获取后台菜单 并转为树形结构 再修改属性名称 */
-      const res = await ajax.requestWrapper('GET',`${globalConfig.menu.url}`);
-      console.warn('异步取数完成');
-      if(res && res.success){
-        // 处理成menu.js格式 （utils方法）
-        var remoteMenuItems = Utils.transformToTree(res);
-        // 修改属性名称
-        this.state.items = remoteMenuItems;
-        console.warn('数据处理完成');
-      }
-    }
-
+  shouldComponentUpdate(){
+    console.warn('菜单组件开始生成',this.state.items);
+    //
     const paths = [];  // 暂存各级路径, 当作stack用
     const level1KeySet = new Set();  // 暂存所有顶级菜单的key
     const level2KeyMap = new Map();  // 次级菜单与顶级菜单的对应关系
 
     // 菜单项是从配置中读取的, parse过程还是有点复杂的
     // map函数很好用
-    console.warn('菜单生成开始',this.state.items);
     const menu = this.state.items.map((level1) => {
       // parse一级菜单
       paths.push(level1.key);
@@ -165,10 +150,29 @@ class Sidebar extends React.PureComponent {
         return tmp;
       }
     });
-
     this.menu = menu;
     this.level1KeySet = level1KeySet;
     this.level2KeyMap = level2KeyMap;
+
+    return true;
+  }
+
+  // 在每次组件挂载的时候parse一次菜单, 不用每次render都解析
+  // 其实这个也可以放在constructor里
+  async componentWillMount() {
+    // this.getRemoteMenu();
+    if (globalConfig.menu.async){
+      /* 获取后台菜单 并转为树形结构 再修改属性名称 */
+      const res = await ajax.requestWrapper('GET',`${globalConfig.menu.url}`);
+      if(res && res.success){
+        // 处理成menu.js格式 （utils方法）
+        var remoteMenuItems = await Utils.transformToTree(res);
+        this.state.items = remoteMenuItems;
+        console.warn('异步数据处理完成');
+      }
+    }
+
+    this.setState({items:remoteMenuItems});
   }
 
   // 我决定在class里面, 只有在碰到this问题时才使用箭头函数, 否则还是优先使用成员方法的形式定义函数
@@ -231,6 +235,7 @@ class Sidebar extends React.PureComponent {
   };
 
   render() {
+    console.warn('菜单开始渲染：数据为%o,this.menu为%o',this.state.items,this.menu);
     return (
       <aside className={this.props.collapse ? "ant-layout-sidebar-collapse" : "ant-layout-sidebar"}>
         <Logo collapse={this.props.collapse}/>
