@@ -61,8 +61,6 @@ class Sidebar extends React.PureComponent {
   }
 
   genSubMenu(){
-    console.warn('生成子菜单',this.state.items);
-    //
     const paths = [];  // 暂存各级路径, 当作stack用
     const level1KeySet = new Set();  // 暂存所有顶级菜单的key
     const level2KeyMap = new Map();  // 次级菜单与顶级菜单的对应关系
@@ -166,8 +164,6 @@ class Sidebar extends React.PureComponent {
    * @param openKeys
    */
   handleOpenChange = (openKeys) => {
-    console.warn('handleOpenChange啦啦');
-
     // 如果当前菜单是折叠状态, 就先展开
     if (this.props.collapse) {
       this.props.handleClickCollapse();
@@ -208,7 +204,6 @@ class Sidebar extends React.PureComponent {
    * @param key
    */
   handleSelect = ({key}) => {
-    console.warn('选择select事件');
     if (this.props.collapse) {
       this.props.handleClickCollapse();
     }
@@ -219,7 +214,6 @@ class Sidebar extends React.PureComponent {
   };
 
   render() {
-    console.warn('菜单开始渲染：数据为%o,this.menu为%o',this.state.items,this.menu);
     return (
       <aside className={this.props.collapse ? "ant-layout-sidebar-collapse" : "ant-layout-sidebar"}>
         <Logo collapse={this.props.collapse}/>

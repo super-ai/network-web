@@ -11,7 +11,7 @@ class Logo extends React.PureComponent {
       <div className={this.props.collapse ? "ant-layout-logo-collapse" : "ant-layout-logo-normal"}>
         <div className="ant-layout-logo-text">
           {/*侧边栏折叠的时候只显示一个字*/}
-          <a href="#">{this.props.collapse ? globalConfig.name[0] : globalConfig.name}</a>
+          <a href="#" style={{ color:'#ffffff' }}>{this.props.collapse ? globalConfig.name[0] : globalConfig.name}</a>
         </div>
       </div>
     );
