@@ -1,12 +1,12 @@
 module.exports = [
-  {
-    key:'id',
-    title:'ID',
-    dataType:'int',
-    primary:'true',
-    width:50,
-    sorter:(a,b)=>a.id - b.id
-  },
+  // {
+  //   key:'id',
+  //   title:'ID',
+  //   dataType:'int',
+  //   primary:'true',
+  //   width:100,
+  //   sorter:(a,b)=>a.id - b.id
+  // },
   {
     key:'name',
     title:'菜单名称',
