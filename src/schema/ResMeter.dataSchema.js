@@ -61,6 +61,7 @@ module.exports = [
     dataType:'varchar',
     showInForm: false,
     showInTable:false,
+    options:''
   },
   {
     key:'serial',
@@ -98,7 +99,7 @@ module.exports = [
     title: '图片(多)',
     dataType: 'varchar',
     showType: 'image',
-    width: 50,
+    width: 80,
     max: 5,
     sizeLimit:500,
     placeholder: '多个图片上传',

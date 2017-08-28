@@ -19,6 +19,12 @@ module.exports = [
     title:'序列号',
     dataType:'varchar',
     placeholder:'序列号'
+  },
+  {
+    key:'status',
+    title:'状态',
+    dataType:'varchar',
+    placeholder:'状态'
   }
   // ,
   // {

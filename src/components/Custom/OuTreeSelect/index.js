@@ -28,7 +28,6 @@ class OuTreeSelect extends React.Component{
     //清空
     var {value} = nextProps;
     this.state.value = value;
-    debugger;
   }
 
   /**

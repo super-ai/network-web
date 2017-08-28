@@ -26,6 +26,7 @@ const DBTableContainer = (location, cb) => {
 
 // 路由表, 只要menu.js中所有的叶子节点配置了路由就可以了
 // 我本来想根据menu.js自动生成路由表, 但那样太不灵活了, 还是自己配置好些
+// 路由表index.js中的path 原则上使用小写中横线的方式
 const routes = (
   <Provider store={store}>
     <Router history={hashHistory}>
@@ -56,36 +57,11 @@ const routes = (
           <Route path='menu' tableName='Menu' getComponent={DBTableContainer}/>
         </Route>
 
-        <Route path="test">
-          <Route path="aaa" component={Hello}/>
-          <Route path="bbb" component={Hello}/>
-          <Route path="ccc" component={Hello}/>
-          <Route path="sanjiaaa">
-            <Route path="666aa" component={Hello}/>
-          </Route>
-          <Route path="sanjibbb">
-            <Route path="666bb" component={Hello}/>
-          </Route>
+        <Route path='help'>
+          <Route path='normal_question' component={Welcome}/>
         </Route>
-
-        <Route path="headerMenu5">
-          <Route path="headerMenu5000000" component={Hello}/>
-          <Route path="headerMenu51111">
-            <Route path="headerMenu51111aa" component={Hello}/>
-            <Route path="headerMenu51111bb" component={Hello}/>
-          </Route>
-          <Route path="headerMenu52222">
-            <Route path="headerMenu52222aa" component={Hello}/>
-            <Route path="headerMenu52222bb" component={Hello}/>
-          </Route>
-        </Route>
-
-        <Route path="headerMenu4" component={Hello}/>
-        <Route path="alone" component={Hello}/>
-        <Route path="alone2" component={Hello}/>
 
         <Route path="*" component={Error}/>
-
       </Route>
     </Router>
   </Provider>
