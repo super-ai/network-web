@@ -10,7 +10,6 @@ class Logo extends React.PureComponent {
     return (
       <div className={this.props.collapse ? "ant-layout-logo-collapse" : "ant-layout-logo-normal"}>
         <div className="ant-layout-logo-text">
-          {/*侧边栏折叠的时候只显示一个字*/}
           <a href="#" style={{ color:'#ffffff' }}>{this.props.collapse ? globalConfig.name[0] : globalConfig.name}</a>
         </div>
       </div>
@@ -21,4 +20,6 @@ class Logo extends React.PureComponent {
 export default Logo;
 
 // 增加公司logo
-// <img src={globalConfig.favicon} />
+// <img src={globalConfig.favicon}  style={{ width:'50px' }}/>
+// {/*侧边栏折叠的时候只显示一个字*/}
+// <br />
