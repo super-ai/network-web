@@ -6,6 +6,7 @@ module.exports = [
     primary:'true',
     width:100,
     showInTable:false,
+    disabled:true,
     sorter:(a,b)=>a.id - b.id
   },
   {

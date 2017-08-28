@@ -19,6 +19,8 @@
 //    <li>sizeLimit:大小(K)</li>
 //    <li>accept:文件格式，逗号分隔，默认为.jpg,.png,.gif,.jpeg</li>
 //    <li>url:文件(图片)路径，默认为config.js中配置</li>
+//    <li>disabled:是否可以编辑 默认为false 自增ID 设置为true </li>
+
 
 
 // 图片返回注意：
