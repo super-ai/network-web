@@ -60,7 +60,7 @@ class Sidebar extends React.PureComponent {
     );
   }
 
-  genSubMenu(items){
+  genSubMenu(){
     console.warn('生成子菜单',this.state.items);
     //
     const paths = [];  // 暂存各级路径, 当作stack用
@@ -69,7 +69,7 @@ class Sidebar extends React.PureComponent {
 
     // 菜单项是从配置中读取的, parse过程还是有点复杂的
     // map函数很好用
-    const menu = items.map((level1) => {
+    const menu = this.state.items.map((level1) => {
       // parse一级菜单
       paths.push(level1.key);
       level1KeySet.add(level1.key);
@@ -166,6 +166,8 @@ class Sidebar extends React.PureComponent {
    * @param openKeys
    */
   handleOpenChange = (openKeys) => {
+    console.warn('handleOpenChange啦啦');
+
     // 如果当前菜单是折叠状态, 就先展开
     if (this.props.collapse) {
       this.props.handleClickCollapse();
@@ -206,6 +208,7 @@ class Sidebar extends React.PureComponent {
    * @param key
    */
   handleSelect = ({key}) => {
+    console.warn('选择select事件');
     if (this.props.collapse) {
       this.props.handleClickCollapse();
     }
@@ -224,7 +227,7 @@ class Sidebar extends React.PureComponent {
               onOpenChange={this.handleOpenChange}
               onSelect={this.handleSelect}
               openKeys={this.props.collapse ? [] : this.state.openKeys}>
-          {this.genSubMenu(this.state.items)}
+          {this.genSubMenu()}
         </Menu>
         <div className="ant-layout-sidebar-trigger" onClick={this.props.handleClickCollapse}>
           <Icon type={this.props.collapse ? "right" : "left"}  className="icon"/>
