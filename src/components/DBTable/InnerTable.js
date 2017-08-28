@@ -15,6 +15,7 @@ import moment from 'moment';
 import ImageSlider from '../ImageSlider';
 import InnerTableSchemaUtils from './InnerTableSchemaUtils';
 import InnerTableRenderUtils, {ACTION_KEY} from './InnerTableRenderUtils';
+import globalConfig from 'config.js';
 
 const logger = Logger.getLogger('InnerTable');
 
@@ -113,6 +114,7 @@ class InnerTable extends React.PureComponent {
     // tableSchema是转换后的Table组件可用的schema
     // 对于tableSchema, 即使命中了缓存, 也要重新设置下render函数
     this.tableSchema = InnerTableRenderUtils.bindRender(parseResult.tableSchema, tableName, this);
+
   }
 
   /**
@@ -138,7 +140,14 @@ class InnerTable extends React.PureComponent {
     // 在这里, 下面两种写法是等效的, 因为parseTableData方法只会被componentWillReceiveProps调用, 而componentWillReceiveProps的下一步就是判断是否re-render
     // 但要注意, 不是任何情况下都等效
     //this.setState({data: newData});
-    this.state.data = newData;
+    const {tableName, schema, tableLoading, tableConfig} = this.props;
+    if (tableConfig.type == 'normal'){
+      this.state.data = newData;
+    }else{
+      var tmp = Utils.transformToTreeGrid(newData);
+      console.info('表格的树形数据为:%o',tmp);
+      this.setState({data:tmp}); //转变成树形结构(children)
+    }
   }
 
   /**
@@ -678,8 +687,8 @@ class InnerTable extends React.PureComponent {
 
     const hasSelected = this.state.selectedRowKeys.length > 0;  // 是否选择
     const multiSelected = this.state.selectedRowKeys.length > 1;  // 是否选择了多项
-
     const UpdateComponent = this.updateComponent;
+
 
     return (
       <div>
@@ -724,7 +733,7 @@ class InnerTable extends React.PureComponent {
                            record={this.updateComponentRecord}/>}
         </Modal>
 
-        <Table rowSelection={rowSelection} columns={this.tableSchema} dataSource={this.state.data} pagination={false}
+        <Table bordered rowSelection={rowSelection} columns={this.tableSchema} dataSource={this.state.data} pagination={false}
                loading={tableLoading}/>
       </div>
     );

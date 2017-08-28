@@ -147,7 +147,7 @@ export default {
   },
 
   /**
-   * 获取某个表的个性化配置, 会合并默认配置
+   * 获取某个表的个性化配置, 会合并默认配置 globalConfig.DBTable.default
    *
    * @param tableName
    * @returns {*}

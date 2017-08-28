@@ -75,6 +75,7 @@ module.exports = {
 
       asyncSchema: true,  // 是否从服务端加载schema, 默认false
       ignoreSchemaCache: false,  // 是否忽略schema的缓存, 对于异步schema而言, 默认只会请求一次后端接口然后缓存起来
+      type:'normal'   //normal为普通表格; tree为树形表格;
     },
   },
 

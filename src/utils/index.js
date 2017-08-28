@@ -64,6 +64,7 @@ const Utils = {
   /**
   * 行结构转变成树形结构
   * parentId 指向 id
+  * 给菜单使用
   */
   transformToTree(res){
     var rows = res.data;
@@ -113,6 +114,56 @@ const Utils = {
 
   	return nodes;
   },
+
+  /**
+  * 行结构转变成树形结构
+  * parentId 指向 id
+  * 给树形表格使用
+  */
+  transformToTreeGrid(res){
+    var rows = res;
+    var nodes = [];
+    var children = [];  //把自己的id和text都放到child中存储
+    var parent = [];
+    var node = {};
+    rows.map((row,i)=>{
+      // 增加key属性
+      node = Object.assign({},row);
+      if(!row.parentId){	//根节点 同时push到 nodes 和 parents
+        nodes.push(node);
+        parent.push(node);
+      }else{ 				//非根节点
+        node = {children:{...node},parentId:row.parentId}
+        children.push(node);
+      }
+    });
+
+    var orphan = [];
+    while(parent.length && children.length){	//parent或者children中有一个为空则停止
+      node = parent.shift();	//删除第一个元素 并返回第一个元素
+      /* 每次循环 都能找到一个parent的所有子节点 */
+      children.map((row,i)=>{
+        if(row.parentId === node.id){ //如果child指向当前parent 则把此节点推入其children中
+          //这里对node的操作 竟然能直接影响nodes的值
+          if(node.children){
+            node.children.push(row.children);
+          }else{
+            node.children = [row.children];
+          }
+
+          parent.push(row.children);
+        }else{
+          orphan.push(row);
+        }
+      });
+
+      children = orphan;
+      orphan = [];
+    }
+
+    return nodes;
+  },
+
 
   isString(s) {
     return typeof(s) === 'string' || s instanceof String;

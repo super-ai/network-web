@@ -96,8 +96,8 @@ const SchemaUtils = {
     if (!ignoreCache) {
       tableSchemaMap.set(tableName, toCache);
     }
-
     return toCache;
+
   },
 
   /**
