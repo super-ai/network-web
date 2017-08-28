@@ -70,9 +70,9 @@ class Ajax {
     });
   }
 
-  get(url, params = {}) {
-    return this.requestWrapper('GET', url, {params});
-    // return this.requestWrapper('GET', url, {...opts});
+  get(url, opts = {}) {
+    // return this.requestWrapper('GET', url, {params});
+    return this.requestWrapper('GET', url, {...opts});
   }
 
   //data body传递 ; opts params接收
