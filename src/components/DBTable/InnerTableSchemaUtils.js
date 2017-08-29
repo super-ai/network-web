@@ -31,6 +31,25 @@ const tableSchemaMap = new Map();  // key是tableName, value是表格的schema, 
 const formSchemaMap = new Map();  // key是tableName, value是表单的schema callback
 const formMap = new Map();  // key是tableName, value是对应的react组件
 
+const treeData = [{
+  label: 'Node1',
+  value: '0-0',
+  key: '0-0',
+  children: [{
+    label: 'Child Node1',
+    value: '0-0-1',
+    key: '0-0-1',
+  }, {
+    label: 'Child Node2',
+    value: '0-0-2',
+    key: '0-0-2',
+  }],
+}, {
+  label: 'Node2',
+  value: '0-1',
+  key: '0-1',
+}];
+
 /**
  * 跟InnerFormSchemaUtils非常类似, 但不用考虑布局相关的东西了
  */
@@ -390,13 +409,14 @@ const SchemaUtils = {
   transformTreeSelect(field) {
     logger.debug('transform field %o to TreeSelect component', field);
     // options转换为树形结构
-    let treeData = Utits.transformToTreeData(field.options);
+    // let treeData = Utits.transformToTreeData(field.options);
+
     debugger;
     return this.colWrapper((getFieldDecorator, forUpdate) => getFieldDecorator(field.key, {
       initialValue: forUpdate ? undefined : field.defaultValue,
       rules: forUpdate ? field.$$updateValidator : field.validator,
     })(
-      <TreeSelect placeholder={field.placeholder || '请选择'} size="default" disabled={field.disabled} treeData={treeData}>
+      <TreeSelect  treeData={treeData}>
       </TreeSelect>
     ), field);
   },
