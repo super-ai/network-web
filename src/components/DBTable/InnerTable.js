@@ -327,6 +327,7 @@ class InnerTable extends React.PureComponent {
 
   /**
    * 点击modal中确认按钮的回调, 清洗数据并准备传给后端
+   * &&& 数据保存
    */
   handleModalOk = () => {
     // 提交表单之前, 要先校验下数据
@@ -553,6 +554,7 @@ class InnerTable extends React.PureComponent {
 
   /**
    * 真正去新增数据
+   * &&& 数据提交
    */
   async handleInsert(obj) {
     const CRUD = ajax.CRUD(this.props.tableName);
@@ -571,6 +573,7 @@ class InnerTable extends React.PureComponent {
         // 新增的数据放到第一行
         const newData = [];
         const transformedData = this.transformRawDataToTable(res.data);
+        console.warn('转换后的表格的数据为:',transformedData);
         // 表格中的每条记录都必须有个唯一的key, 否则会有warn, 如果有主键就用主键, 否则只能随便给个
         // 如果key有重复的, 会有warn, 显示也会有问题, 所以后端接口要注意下, 如果DB主键都能重复, 也只能呵呵了...
         if (this.primaryKey) {
