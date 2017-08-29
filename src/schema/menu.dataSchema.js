@@ -14,8 +14,6 @@ module.exports = [
     key:'name',
     title:'菜单名称',
     dataType:'varchar',
-    // showInForm:false,
-    // showInTable:false,
     validator:[{required:true,message:'必填'}]
   },
   {
@@ -24,7 +22,6 @@ module.exports = [
     dataType:'varchar',
     validator:[{required:true,message:'必填'}]
   },
-
   {
     key:'type',
     title:'菜单类型',
@@ -48,21 +45,4 @@ module.exports = [
     title:'位置',
     dataType:'int',
   },
-
-
-  // ,
-  // {
-  //   key:'select',
-  //   title:'测试单选',
-  //   dataType:'int',
-  //   showType:'select',
-  //   options:[{key:'male',value:'男'},{key:'female',value:'女'}],
-  // },
-  // {
-  //   key:'multi-select',
-  //   title:'测试多选',
-  //   dataType:'int',
-  //   showType:'multiSelect',
-  //   options:[{key:'male',value:'男'},{key:'female',value:'女'}],
-  // },
 ]
