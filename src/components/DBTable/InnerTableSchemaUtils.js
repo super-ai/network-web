@@ -7,7 +7,8 @@ import {
   Radio,
   InputNumber,
   Checkbox,
-  Cascader
+  Cascader,
+  TreeSelect
 } from 'antd';
 import TableUtils from './TableUtils.js';
 import FileUploader from '../FileUploader';
@@ -15,6 +16,7 @@ import moment from 'moment';
 import Logger from '../../utils/Logger';
 import {ACTION_KEY} from './InnerTableRenderUtils';
 import Ou from '../Custom/OuTreeSelect';
+import Utits from 'utils/index.js';
 
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
@@ -274,6 +276,8 @@ const SchemaUtils = {
         return this.transformCheckbox(field);
       case 'multiSelect':
         return this.transformMultiSelect(field);
+      case 'treeSelect':
+          return this.transformTreeSelect(field);
       case 'textarea':
         return this.transformTextArea(field);
       case 'image':
@@ -301,6 +305,7 @@ const SchemaUtils = {
       options.push(<Option key={option.key} value={option.key}>{option.value}</Option>);
     });
 
+    // debugger; //this is select
     return this.colWrapper((getFieldDecorator, forUpdate) => getFieldDecorator(field.key, {
       initialValue: forUpdate ? undefined : field.defaultValue,
       rules: forUpdate ? field.$$updateValidator : field.validator,
@@ -373,6 +378,26 @@ const SchemaUtils = {
       <Select multiple placeholder={field.placeholder || '请选择'} size="default" disabled={field.disabled}>
         {options}
       </Select>
+    ), field);
+  },
+
+  /**
+   * 转换为树形下拉框
+   *
+   * @param field
+   * @returns {XML}
+   */
+  transformTreeSelect(field) {
+    logger.debug('transform field %o to TreeSelect component', field);
+    // options转换为树形结构
+    let treeData = Utits.transformToTreeData(field.options);
+    debugger;
+    return this.colWrapper((getFieldDecorator, forUpdate) => getFieldDecorator(field.key, {
+      initialValue: forUpdate ? undefined : field.defaultValue,
+      rules: forUpdate ? field.$$updateValidator : field.validator,
+    })(
+      <TreeSelect placeholder={field.placeholder || '请选择'} size="default" disabled={field.disabled} treeData={treeData}>
+      </TreeSelect>
     ), field);
   },
 

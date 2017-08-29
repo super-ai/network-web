@@ -115,6 +115,7 @@ class InnerTable extends React.PureComponent {
     // 对于tableSchema, 即使命中了缓存, 也要重新设置下render函数
     this.tableSchema = InnerTableRenderUtils.bindRender(parseResult.tableSchema, tableName, this);
 
+    // console.warn('当前表格的schema为：%o',);
   }
 
   /**
@@ -144,7 +145,7 @@ class InnerTable extends React.PureComponent {
     if (tableConfig.type == 'normal'){
       this.state.data = newData;
     }else{
-      var tmp = Utils.transformToTreeGrid(newData);
+      var tmp = Utils.transformToTreeData(newData);
       console.info('表格的树形数据为:%o',tmp);
       this.setState({data:tmp}); //转变成树形结构(children)
     }

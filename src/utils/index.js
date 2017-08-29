@@ -120,7 +120,7 @@ const Utils = {
   * parentId 指向 id
   * 给树形表格使用
   */
-  transformToTreeGrid(res){
+  transformToTreeData(res){
     var rows = res;
     var nodes = [];
     var children = [];  //把自己的id和text都放到child中存储
