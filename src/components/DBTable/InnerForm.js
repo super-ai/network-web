@@ -43,6 +43,10 @@ class InnerForm extends React.PureComponent {
   // 1. 这个组件没有状态
   // 2. 只有props会导致re-render, 但由于这个组件是pure的, 所以只有表名变化时才会re-render
 
+  state={
+    expand:true
+  };
+
   componentDidMount() {
     this.processQueryParams();
   }
@@ -178,6 +182,10 @@ class InnerForm extends React.PureComponent {
     window.open(`${url}?q=${encodeURIComponent(JSON.stringify(newObj))}`);  // 注意url编码
   };
 
+  toggle = () => {
+    const { expand } = this.state;
+    this.setState({ expand: !expand });
+  };
 
   render() {
     const {tableName, schema, tableConfig} = this.props;
@@ -197,7 +205,7 @@ class InnerForm extends React.PureComponent {
     return (
       <div className="ant-advanced-search-form">
         {/*这个渲染组件的方法很有意思, 另外注意这里的ref*/}
-        <FormComponent ref={(input) => { this.formComponent = input; }}/>
+        {this.state.expand && <FormComponent ref={(input) => { this.formComponent = input; }}/>}
         <Row>
           <Col span={12} offset={12} style={{ textAlign: 'right' }}>
             <Button type="primary" onClick={this.handleSubmit}><Icon type="search"/>查询</Button>
@@ -206,6 +214,9 @@ class InnerForm extends React.PureComponent {
               <Button onClick={this.handleExport}><Icon type="export"/>导出</Button> : ''}
             {tableConfig.showImport ?
               <Upload {...uploadProps}><Button><Icon type="upload"/>导入</Button></Upload> : ''}
+            <a style={{ marginLeft: 8, fontSize: 12 }} onClick={this.toggle}>
+                {this.state.expand ?'折叠':'展开'} <Icon type={this.state.expand ? 'up' : 'down'} />
+              </a>
           </Col>
         </Row>
       </div>

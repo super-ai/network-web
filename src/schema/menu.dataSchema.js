@@ -33,7 +33,7 @@ module.exports = [
   {
     key:'icon',
     title:'图标',
-    dataType:'varchar',
+    dataType:'varchar'
   },
   {
     key:'parentId',
