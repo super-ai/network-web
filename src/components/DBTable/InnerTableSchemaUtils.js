@@ -8,7 +8,7 @@ import {
   InputNumber,
   Checkbox,
   Cascader,
-  TreeSelect
+  TreeSelect,
 } from 'antd';
 import TableUtils from './TableUtils.js';
 import FileUploader from '../FileUploader';
