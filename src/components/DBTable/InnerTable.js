@@ -269,7 +269,6 @@ class InnerTable extends React.PureComponent {
     // 否则就只把要更新的主键填到表单里
     if (!multiSelected) { //单选
       logger.debug('update single record, and fill original values');
-      debugger;
       const selectedKey = this.state.selectedRowKeys[0];
 
       // 在所有节点查找
@@ -579,6 +578,9 @@ class InnerTable extends React.PureComponent {
           duration: 3,
         });
 
+        this.props.refresh();
+        return;
+
         // 数据变化后, 刷新下表格, 我之前是变化后刷新整个页面的, 想想还是只刷新表格比较好
         // 新增的数据放到第一行 &&&
         const newData = [];
@@ -623,9 +625,16 @@ class InnerTable extends React.PureComponent {
           duration: 3,
         });
 
-        // 数据变化后, 刷新下表格
-        // const transformedData = this.transformRawDataToTable(obj); //(前台更新)
-        const transformedData = this.transformRawDataToTable(res.data[0]);  //(后台返回更新)
+
+
+        /* 数据变化后, 刷新表格 */
+
+        // 以下为后台刷新
+        this.props.refresh();
+        return;
+
+        // 以下为前台刷新
+        const transformedData = this.transformRawDataToTable(res.data[0]);  //(后台返回前台更新)
         const newData = [];
         const keySet = new Set(keys);  // array转set
         for (const record of this.state.data) {
@@ -638,8 +647,6 @@ class InnerTable extends React.PureComponent {
             newData.push(record);
           }
         }
-        // 前台刷新
-        // debugger;
 
         this.setState({selectedRowKeys: [], data: newData});
       } else {
