@@ -22,7 +22,7 @@ const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
 const Option = Select.Option;
-
+const TreeNode = TreeSelect.TreeNode;
 const logger = Logger.getLogger('InnerTableSchemaUtils');
 
 // 跟InnerForm类似, InnerTable也将parse schema的过程独立出来
@@ -264,6 +264,7 @@ const SchemaUtils = {
     return (getFieldDecorator, forUpdate, keysToUpdate) => {
       // 表单用于更新时, 可以只显示部分字段
       if (forUpdate === true && keysToUpdate && !keysToUpdate.has(field.key)) {
+        console.warn('啊 colWrapper 竟然返回null');
         return null;
       }
 
@@ -409,14 +410,19 @@ const SchemaUtils = {
   transformTreeSelect(field) {
     logger.debug('transform field %o to TreeSelect component', field);
     // options转换为树形结构
-    // let treeData = Utits.transformToTreeData(field.options);
-
+    let treeData = Utits.transformToTreeData(field.options);
     debugger;
     return this.colWrapper((getFieldDecorator, forUpdate) => getFieldDecorator(field.key, {
       initialValue: forUpdate ? undefined : field.defaultValue,
       rules: forUpdate ? field.$$updateValidator : field.validator,
     })(
-      <TreeSelect  treeData={treeData}>
+      <TreeSelect
+        showSearch
+        dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+        placeholder="Please select"
+        allowClear
+        treeDefaultExpandAll
+        treeData={treeData}>
       </TreeSelect>
     ), field);
   },
