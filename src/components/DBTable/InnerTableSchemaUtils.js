@@ -410,8 +410,7 @@ const SchemaUtils = {
   transformTreeSelect(field) {
     logger.debug('transform field %o to TreeSelect component', field);
     // options转换为树形结构
-    let treeData = Utits.transformToTreeData(field.options);
-    debugger;
+    const treeData = Utits.transformToTreeData(field.options);
     return this.colWrapper((getFieldDecorator, forUpdate) => getFieldDecorator(field.key, {
       initialValue: forUpdate ? undefined : field.defaultValue,
       rules: forUpdate ? field.$$updateValidator : field.validator,
