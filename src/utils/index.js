@@ -64,7 +64,7 @@ const Utils = {
   /**
   * 行结构转变成树形结构
   * parentId 指向 id
-  * 给菜单使用
+  * 给菜单(sidebar)使用
   */
   transformToTree(res){
     var rows = res.data;

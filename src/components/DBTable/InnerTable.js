@@ -34,8 +34,8 @@ class InnerTable extends React.PureComponent {
 
     selectedRowKeys: [],  // 当前有哪些行被选中, 这里只保存key
     // FIXME: 这里可能会有点问题, 父组件中有一个data, 这里又有一个data, 都表示的是表格中的数据, 两边状态不一致, 可能有潜在的bug
-    data: [],  // 表格中显示的数据
-
+    data: [],       // 表格中显示的数据
+    flatData:[],  // 表格为tree时候的原始数据
     // 图片预览相关状态
     previewVisible: false,  // 是否显示图片预览modal
     previewImages: [], // 要预览的图片
@@ -140,14 +140,14 @@ class InnerTable extends React.PureComponent {
 
     // 在这里, 下面两种写法是等效的, 因为parseTableData方法只会被componentWillReceiveProps调用, 而componentWillReceiveProps的下一步就是判断是否re-render
     // 但要注意, 不是任何情况下都等效
-    //this.setState({data: newData});
+    // &&& 树形数据存放在data 原始数据存放在flatData
     const {tableName, schema, tableLoading, tableConfig} = this.props;
+    this.state.flatData = newData;
     if (tableConfig.type == 'normal'){
       this.state.data = newData;
     }else{
       var tmp = Utils.transformToTreeData(newData);
-      console.info('表格的树形数据为:%o',tmp);
-      this.setState({data:tmp}); //转变成树形结构(children)
+      this.setState({data:tmp});
     }
   }
 
@@ -163,7 +163,7 @@ class InnerTable extends React.PureComponent {
 
     for (const key in obj) {
       if (key=='parentId'){
-        debugger;
+        // debugger;
       }
       if (this.fieldMap.get(key) && this.fieldMap.get(key).$$optionMap) {
         const optionMap = this.fieldMap.get(key).$$optionMap;
@@ -234,7 +234,6 @@ class InnerTable extends React.PureComponent {
 
   /*下面是一些事件处理的方法*/
 
-
   /**
    * 点击新增按钮, 弹出一个内嵌表单的modal
    *
@@ -268,12 +267,18 @@ class InnerTable extends React.PureComponent {
     const multiSelected = this.state.selectedRowKeys.length > 1;  // 是否选择了多项
     // 如果只选择了一项, 就把原来的值填到表单里
     // 否则就只把要更新的主键填到表单里
-    if (!multiSelected) {
+    if (!multiSelected) { //单选
       logger.debug('update single record, and fill original values');
+      debugger;
       const selectedKey = this.state.selectedRowKeys[0];
-      for (const record of this.state.data) {  // 找到被选择的那条记录
+
+      // 在所有节点查找
+      // 注意不是this.state.data
+      // tree时候 this.state.data 只包含根节点
+      for (const record of this.state.flatData) {  // 找到被选择的那条记录
         if (record.key === selectedKey) {
           Object.assign(newData, this.transformTableDataToForm(record));
+          debugger;
           break;
         }
       }
@@ -332,7 +337,7 @@ class InnerTable extends React.PureComponent {
 
   /**
    * 点击modal中确认按钮的回调, 清洗数据并准备传给后端
-   * &&& 数据保存
+   * &&& 数据提交保存
    */
   handleModalOk = () => {
     // 提交表单之前, 要先校验下数据
@@ -633,6 +638,8 @@ class InnerTable extends React.PureComponent {
             newData.push(record);
           }
         }
+        // 前台刷新
+        // debugger;
 
         this.setState({selectedRowKeys: [], data: newData});
       } else {
