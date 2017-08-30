@@ -138,7 +138,6 @@ const Utils = {
       }
     });
 
-    debugger;
     var orphan = [];
     while(parent.length && children.length){	//parent或者children中有一个为空则停止
       node = parent.shift();	//删除第一个元素 并返回第一个元素
@@ -161,7 +160,6 @@ const Utils = {
       children = orphan;
       orphan = [];
     }
-    debugger;
 
     return nodes;
   },

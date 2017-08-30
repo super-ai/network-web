@@ -146,7 +146,6 @@ class InnerTable extends React.PureComponent {
       this.state.data = newData;
     }else{
       var tmp = Utils.transformToTreeData(newData);
-      debugger;
       console.info('表格的树形数据为:%o',tmp);
       this.setState({data:tmp}); //转变成树形结构(children)
     }
@@ -161,7 +160,11 @@ class InnerTable extends React.PureComponent {
   transformRawDataToTable(obj) {
     const newObj = {};
     // 这段代码真是好蛋疼...
+
     for (const key in obj) {
+      if (key=='parentId'){
+        debugger;
+      }
       if (this.fieldMap.get(key) && this.fieldMap.get(key).$$optionMap) {
         const optionMap = this.fieldMap.get(key).$$optionMap;
         if (obj[key] instanceof Array) {
