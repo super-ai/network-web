@@ -675,6 +675,11 @@ class InnerTable extends React.PureComponent {
           duration: 3,
         });
 
+        // 以下为后台刷新
+        this.props.refresh();
+        return;
+
+        // 以下为前台刷新
         // 数据变化后, 刷新下表格
         const newData = [];
         const keySet = new Set(keys);  // array转set
