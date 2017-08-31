@@ -1,4 +1,5 @@
 module.exports = [
+  //  部门名称、层级、有无数据、parentId
   {
     key:'id',
     title:'ID',
@@ -17,33 +18,22 @@ module.exports = [
     validator:[{required:true,message:'必填'}]
   },
   {
-    key:'menuKey',
-    title:'路由Key',
-    dataType:'varchar',
+    key:'levelId',
+    title:'层级',
+    dataType:'int',
+    options:[{key:'全国级',value:'1'},{key:'省级',value:'2'},{key:'地市级',value:'3'},{key:'经营部级',value:'4'},{key:'其他',value:'100'}],
     validator:[{required:true,message:'必填'}]
   },
   {
-    key:'type',
-    title:'类型',
+    key:'hasData',
+    title:'有无数据',
     dataType:'varchar',
-    showType:'select',
-    options:[{key:'sidebar',value:'sidebar'},{key:'header',value:'header'}],
     validator:[{required:true,message:'必填'}]
-  },
-  {
-    key:'icon',
-    title:'图标',
-    dataType:'varchar'
   },
   {
     key:'parentId',
     title:'父节点',
     dataType:'int',
     showType:'treeSelect',
-  },
-  {
-    key:'place',
-    title:'位置',
-    dataType:'int',
-  },
+  }
 ]

@@ -1,3 +1,4 @@
 module.exports = {
-  type:'tree'
+  type:'tree',
+  lazyMode:false,
 }

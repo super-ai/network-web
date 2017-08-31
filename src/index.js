@@ -54,6 +54,7 @@ const routes = (
         </Route>
 
         <Route path='system-manage'>
+          <Route path='ou' tableName='OrganizationUnit' getComponent={DBTableContainer}/>
           <Route path='menu' tableName='Menu' getComponent={DBTableContainer}/>
         </Route>
 

@@ -16,6 +16,8 @@ import ImageSlider from '../ImageSlider';
 import InnerTableSchemaUtils from './InnerTableSchemaUtils';
 import InnerTableRenderUtils, {ACTION_KEY} from './InnerTableRenderUtils';
 import globalConfig from 'config.js';
+import { Promise } from 'es6-promise';
+import fetch from 'isomorphic-fetch';
 
 const logger = Logger.getLogger('InnerTable');
 
@@ -48,8 +50,17 @@ class InnerTable extends React.PureComponent {
    * 组件初次挂载时parse schema
    */
   componentWillMount() {
+    debugger;
     this.parseTableSchema(this.props);
     this.parseTableData(this.props);
+
+
+  }
+
+  componentDidMount(){
+    // 如果是懒加载 则先发起一次请求
+    debugger;
+    globalConfig.DBTable.lazyMode && this.handleOnExpand(undefined);
   }
 
   /**
@@ -277,7 +288,6 @@ class InnerTable extends React.PureComponent {
       for (const record of this.state.flatData) {  // 找到被选择的那条记录
         if (record.key === selectedKey) {
           Object.assign(newData, this.transformTableDataToForm(record));
-          debugger;
           break;
         }
       }
@@ -699,6 +709,69 @@ class InnerTable extends React.PureComponent {
     }
   }
 
+  /**
+  * 关键方法!!!
+  * 在treeData指定key位置 生成新的treeData(数组)
+  */
+  genTreeData(treeData, curKey, children){
+      var loop = (data) => {
+        if (data.length == 0)
+          /* 初始节点 */
+          children.forEach((item) => {data.push(item);});
+        else{
+          /* 展开节点 */
+          data.forEach((item) => {
+              if(curKey==item.key){
+                item.children = children;   // 使用 item.children = children.slice(); 竟然会异常！
+              }else{ //当前节点不是curKey
+                if(item.children)
+                  loop(item.children);
+              }
+          })
+        }
+      };  // loop
+
+    loop(treeData);
+  }
+  /**
+  * 页面展开和初始事件
+  */
+  handleOnExpand(expanded,treeNode){
+    debugger;
+    return new Promise((resolve) => {
+      var fetchOpts = {credentials:'include'};
+      var url = '/api/ou/list';
+      var curKey = undefined;
+      if(treeNode!=undefined){
+        url += '?id=' + treeNode.props.eventKey;  // key相当于easyUI中的 id
+        curKey = treeNode.props.eventKey;
+      }
+      /* 发起数据请求 */
+      fetch(url,fetchOpts)
+      .then((res) => res.text())
+      .then((result) => {
+        var obj = eval('(' + result + ')');   //不能使用JSON.parse
+        // 获取到数据
+        var children = [];
+        // obj.forEach((item) => {children.push({label:item.text,value:item.id,key:item.id,isLeaf:item.state=='closed'?false:true})} ); //并转化为tree格式
+        if (item.state=='closed'){
+            obj.forEach((item) => {children.push(Object.assign({},item,children:[]))});
+        }else {
+          obj.forEach((item) => {children.push(item)} );
+        }
+
+        var data = this.state.data.slice();
+        this.genTreeData(data,curKey,children);
+        this.setState({
+          data:data //不能直接操作state 否则不会render()
+        });
+        resolve();
+      })
+      .catch((e) => {message.error('获取部门树失败');});
+    })
+  }
+
+
 
   render() {
     const {tableName, schema, tableLoading, tableConfig} = this.props;
@@ -759,8 +832,14 @@ class InnerTable extends React.PureComponent {
                            record={this.updateComponentRecord}/>}
         </Modal>
 
-        <Table bordered rowSelection={rowSelection} columns={this.tableSchema} dataSource={this.state.data} pagination={false}
-               loading={tableLoading}/>
+        {/* 分为正常加载和懒加载两种类型表格 */}
+        {
+          !globalConfig.DBTable.lazyMode ?
+          <Table bordered rowSelection={rowSelection} columns={this.tableSchema} dataSource={this.state.data} pagination={false}
+               loading={tableLoading}/> :
+          <Table bordered rowSelection={rowSelection} columns={this.tableSchema} dataSource={this.state.data} pagination={false}
+                loading={tableLoading} onExpand={this.handleOnExpand}/>
+        }
       </div>
     );
   }
