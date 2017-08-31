@@ -715,7 +715,7 @@ class InnerTable extends React.PureComponent {
               if(curKey==item.key){
                 item.children = children;   // 使用 item.children = children.slice(); 竟然会异常！
               }else{ //当前节点不是curKey
-                if(item.children)
+                if(item.children && item.children.length>0)
                   loop(item.children);
               }
           })
@@ -762,6 +762,7 @@ class InnerTable extends React.PureComponent {
 
         var data = this.state.data.slice();
         this.genTreeData(data,treeNode.id,rltData);
+        debugger;
         this.setState({
           data:data //不能直接操作state 否则不会render()
         });
