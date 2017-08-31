@@ -70,9 +70,10 @@ class Ajax {
     });
   }
 
-  get(url, opts = {}) {
+  // params {'id':1,'name':'llp'}
+  get(url, params = {}) {
     // return this.requestWrapper('GET', url, {params});
-    return this.requestWrapper('GET', url, opts);
+    return this.requestWrapper('GET', url, {params});
   }
 
   //data body传递 ; opts params接收
@@ -229,7 +230,7 @@ class CRUDUtil {
    */
   delete(keys = []) {
     const tmp = keys.join(',');
-    return this.ajax.get(`${globalConfig.api.path}/${this.tableName}/delete`, {params: {keys: tmp}});
+    return this.ajax.get(`${globalConfig.api.path}/${this.tableName}/delete`, {keys: tmp});
   }
 
   /**
