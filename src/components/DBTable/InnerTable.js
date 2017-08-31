@@ -735,7 +735,13 @@ class InnerTable extends React.PureComponent {
       return;
     }
     // 关闭时候 不发起请求; 已经有子节点了 也不发出请求;
-    if(!expanded || (treeNode.children && treeNode.length > 0)){
+    if(!expanded){
+      console.warn('折叠操作 不再请求');
+      return;
+    }
+
+    if (treeNode.children && treeNode.children.length > 0){
+      console.warn('已有数据 不再请求');
       return;
     }
 
@@ -745,13 +751,12 @@ class InnerTable extends React.PureComponent {
       const res = await CRUD.select({id:treeNode.id});
       hide();
       if (res.success) {
-        debugger;
         // 如果有子节点 则增加children属性
         var rltData = res.data.map((item,index)=>{
           if (item.hasData){
-            return Object.assign({},item,{children:[]});
+            return Object.assign({},item,{key:item.id,children:[]});
           }else {
-            return Object.assign({},item);
+            return Object.assign({},item,{key:item.id});
           }
         })
 

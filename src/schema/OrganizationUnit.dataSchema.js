@@ -21,14 +21,22 @@ module.exports = [
     key:'levelId',
     title:'层级',
     dataType:'int',
-    options:[{key:'全国级',value:'1'},{key:'省级',value:'2'},{key:'地市级',value:'3'},{key:'经营部级',value:'4'},{key:'其他',value:'100'}],
+    showType:'select',
+    options:[{value:'全国级',key:1},{value:'省级',key:2},{value:'地市级',key:3},{value:'经营部级',key:4},{value:'其他',key:100}],
     validator:[{required:true,message:'必填'}]
   },
   {
     key:'hasData',
     title:'有无数据',
     dataType:'varchar',
-    validator:[{required:true,message:'必填'}]
+    validator:[{required:true,message:'必填'}],
+    render:(text,record)=>{
+      if(text){
+        return '有';
+      } else {
+        return '无';
+      }
+    }
   },
   {
     key:'parentId',
