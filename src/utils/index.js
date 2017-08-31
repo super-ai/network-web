@@ -126,6 +126,7 @@ const Utils = {
     var children = [];  //把自己的id和text都放到child中存储
     var parent = [];
     var node = {};
+    if (!rows) return;
     rows.map((row,i)=>{
       // 增加key属性
       node = Object.assign({},row);

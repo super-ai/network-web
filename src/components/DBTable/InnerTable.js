@@ -123,6 +123,7 @@ class InnerTable extends React.PureComponent {
   /**
    * 解析表格要显示的数据
    * 后端返回的数据不能直接在table中显示
+   * 把后端的数据解析成表格能显示的数据
    */
   parseTableData(props) {
     // 每行数据都必须有个key属性, 如果指定了主键, 就以主键为key
@@ -145,11 +146,17 @@ class InnerTable extends React.PureComponent {
     // &&& 树形数据存放在data 原始数据存放在flatData
     const {tableName, schema, tableLoading, tableConfig} = this.props;
     this.state.flatData = newData;
+
+    
     if (tableConfig.type == 'normal'){
       this.state.data = newData;
-    }else{
-      var tmp = Utils.transformToTreeData(newData);
-      this.setState({data:tmp});
+    }else{ //非懒加载状态
+      if(!tableConfig.lazyMode){
+        var tmp = Utils.transformToTreeData(newData);
+        this.setState({data:tmp});
+      }else{
+        this.state.data = newData;
+      }
     }
   }
 
@@ -165,7 +172,6 @@ class InnerTable extends React.PureComponent {
 
     for (const key in obj) {
       if (key=='parentId'){
-        // debugger;
       }
       if (this.fieldMap.get(key) && this.fieldMap.get(key).$$optionMap) {
         const optionMap = this.fieldMap.get(key).$$optionMap;
@@ -192,12 +198,16 @@ class InnerTable extends React.PureComponent {
    * 主要是处理日期字段, 必须是moment对象
    */
   transformRawDataToForm(obj) {
+
     const newObj = {};
 
     for (const key in obj) {
       // rawData中可能有些undefined或null的字段, 过滤掉
       if (!obj[key])
         continue;
+      // 没有定义的字段 也直接跳过
+      if (!this.fieldMap.get(key))
+          continue;
 
       if (this.fieldMap.get(key).dataType === 'datetime') {  // 判断是否是日期类型的字段
         newObj[key] = moment(obj[key]);
@@ -205,7 +215,6 @@ class InnerTable extends React.PureComponent {
         newObj[key] = obj[key];
       }
     }
-
     return newObj;
   }
 
@@ -752,8 +761,9 @@ class InnerTable extends React.PureComponent {
       hide();
       if (res.success) {
         // 如果有子节点 则增加children属性
+        console.info('返回的数据为',res.data);
         var rltData = res.data.map((item,index)=>{
-          if (item.hasData){
+          if (item.state=='closed'){
             return Object.assign({},item,{key:item.id,children:[]});
           }else {
             return Object.assign({},item,{key:item.id});
@@ -762,7 +772,6 @@ class InnerTable extends React.PureComponent {
 
         var data = this.state.data.slice();
         this.genTreeData(data,treeNode.id,rltData);
-        debugger;
         this.setState({
           data:data //不能直接操作state 否则不会render()
         });

@@ -22,7 +22,7 @@ module.exports = [
     title:'层级',
     dataType:'int',
     showType:'select',
-    options:[{value:'全国级',key:1},{value:'省级',key:2},{value:'地市级',key:3},{value:'经营部级',key:4},{value:'其他',key:100}],
+    options:[{value:'全国级',key:'1'},{value:'省级',key:'2'},{value:'地市级',key:'3'},{value:'经营部级',key:'4'},{value:'其他',key:'100'}],
     validator:[{required:true,message:'必填'}]
   },
   {
