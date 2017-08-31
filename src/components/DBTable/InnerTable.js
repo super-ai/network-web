@@ -728,44 +728,77 @@ class InnerTable extends React.PureComponent {
   * 页面展开和初始事件
   * 这个事件只在 type:'tree',lazyMode:true,  有效
   */
-  handleOnExpand(expanded,treeNode){
+  async handleOnExpand(expanded,treeNode){
     const {tableName, schema, tableLoading, tableConfig} = this.props;
     if (!(tableConfig.type=='tree' && tableConfig.lazyMode)){
       console.warn('非懒加载表格');
       return;
     }
+    // 关闭时候 不发起请求; 已经有子节点了 也不发出请求;
+    if(!expanded || (treeNode.children && treeNode.length > 0)){
+      return;
+    }
 
-    return new Promise((resolve) => {
-      var fetchOpts = {credentials:'include'};
-      var url = '/api/ou/list';
-      var curKey = undefined;
-      if(treeNode!=undefined){
-        url += '?id=' + treeNode.props.eventKey;  // key相当于easyUI中的 id
-        curKey = treeNode.props.eventKey;
-      }
-      /* 发起数据请求 */
-      fetch(url,fetchOpts)
-      .then((res) => res.text())
-      .then((result) => {
-        var obj = eval('(' + result + ')');   //不能使用JSON.parse
-        // 获取到数据
-        var children = [];
-        // obj.forEach((item) => {children.push({label:item.text,value:item.id,key:item.id,isLeaf:item.state=='closed'?false:true})} ); //并转化为tree格式
-        if (item.state=='closed'){
-            obj.forEach((item) => {children.push(Object.assign({},item,children:[]))});
-        }else {
-          obj.forEach((item) => {children.push(item)} );
-        }
+    const CRUD = ajax.CRUD(this.props.tableName);
+    const hide = message.loading('正在取数...', 0);
+    try {
+      const res = await CRUD.select({id:treeNode.id});
+      hide();
+      if (res.success) {
+        debugger;
+        // 如果有子节点 则增加children属性
+        var rltData = res.data.map((item,index)=>{
+          if (item.hasData){
+            return Object.assign({},item,{children:[]});
+          }else {
+            return Object.assign({},item);
+          }
+        })
 
         var data = this.state.data.slice();
-        this.genTreeData(data,curKey,children);
+        this.genTreeData(data,treeNode.id,rltData);
         this.setState({
           data:data //不能直接操作state 否则不会render()
         });
-        resolve();
-      })
-      .catch((e) => {message.error('获取部门树失败');});
-    })
+      }
+
+    } catch (ex) {
+      hide();
+      this.error(`网络请求出错: ${ex.message}`);
+    }
+
+    // return new Promise((resolve) => {
+    //   var fetchOpts = {credentials:'include'};
+    //   var url = '/api/ou/list';
+    //   var curKey = undefined;
+    //   if(treeNode!=undefined){
+    //     url += '?id=' + treeNode.id;  // key相当于easyUI中的 id
+    //     curKey = treeNode.id;
+    //   }
+    //   /* 发起数据请求 */
+    //   fetch(url,fetchOpts)
+    //   .then((res) => res.text())
+    //   .then((result) => {
+    //     debugger;
+      //   var obj = eval('(' + result.data + ')');   //不能使用JSON.parse
+      //   // 获取到数据
+      //   var children = [];
+      //   // obj.forEach((item) => {children.push({label:item.text,value:item.id,key:item.id,isLeaf:item.state=='closed'?false:true})} ); //并转化为tree格式
+      //   if (item.state=='closed'){
+      //       obj.forEach((item) => {children.push(Object.assign({},item,children:[]))});
+      //   }else {
+      //     obj.forEach((item) => {children.push(item)} );
+      //   }
+      //
+      //   var data = this.state.data.slice();
+      //   this.genTreeData(data,curKey,children);
+      //   this.setState({
+      //     data:data //不能直接操作state 否则不会render()
+      //   });
+      //   resolve();
+      // })
+      // .catch((e) => {message.error('获取部门树失败');});
+    // })
   }
 
 
