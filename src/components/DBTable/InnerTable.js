@@ -200,9 +200,8 @@ class InnerTable extends React.PureComponent {
    * 主要是处理日期字段, 必须是moment对象
    */
   transformRawDataToForm(obj) {
-
+    debugger;
     const newObj = {};
-
     for (const key in obj) {
       // rawData中可能有些undefined或null的字段, 过滤掉
       if (!obj[key])
@@ -217,6 +216,8 @@ class InnerTable extends React.PureComponent {
         newObj[key] = obj[key];
       }
     }
+
+    console.warn('需要转换成form的数据为%o，转换后的form数据为%o',obj,newObj);
     return newObj;
   }
 
@@ -286,12 +287,19 @@ class InnerTable extends React.PureComponent {
       // 在所有节点查找
       // 注意不是this.state.data
       // tree时候 this.state.data 只包含根节点
-      for (const record of this.state.flatData) {  // 找到被选择的那条记录
-        if (record.key === selectedKey) {
-          Object.assign(newData, this.transformTableDataToForm(record));
-          break;
-        }
-      }
+      // useless
+      // for (const record of this.state.flatData) {  // 找到被选择的那条记录
+      //   if (record.key === selectedKey) {
+      //     Object.assign(newData, this.transformTableDataToForm(record));
+      //     break;
+      //   }
+      // }
+
+      // 该是写个方法了 用来查找 this.state.data中指定selectedKey 的记录
+      var selectedRow = this.findSelectedRow(selectedKey);
+      debugger;
+      Object.assign(newData, this.transformTableDataToForm(selectedRow));
+
     } else {
       newData[this.primaryKey] = this.state.selectedRowKeys.join(', ');
       logger.debug('update multiple records, keys = %s', newData[this.primaryKey]);
@@ -309,6 +317,32 @@ class InnerTable extends React.PureComponent {
       this.setState({modalVisible: true, modalTitle: '更新', modalInsert: false}, () => this.setFormData(newData));
     }
   };
+
+  /**
+  * 查找 this.state.data中指定selectedKey 的记录
+  */
+  findSelectedRow(selectedKey){
+    debugger;
+    var stackRows = this.state.data.slice();
+    while(stackRows && stackRows.length >0 ){
+      var row = stackRows.shift();
+      if (row.key == selectedKey){
+        return row;
+      }else{ //如果有children 并且长度大于0  则推入stackRows
+        if(row.children && row.children.length > 0){
+          // var children = row.children.slice();
+          row.children.forEach((item)=>{
+            stackRows.push(item);
+          });
+        }
+      }
+
+    }
+
+
+
+  }
+
 
 
   /**
