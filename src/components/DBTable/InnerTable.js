@@ -15,7 +15,6 @@ import moment from 'moment';
 import ImageSlider from '../ImageSlider';
 import InnerTableSchemaUtils from './InnerTableSchemaUtils';
 import InnerTableRenderUtils, {ACTION_KEY} from './InnerTableRenderUtils';
-import globalConfig from 'config.js';
 import { Promise } from 'es6-promise';
 import fetch from 'isomorphic-fetch';
 
@@ -50,18 +49,11 @@ class InnerTable extends React.PureComponent {
    * 组件初次挂载时parse schema
    */
   componentWillMount() {
-    debugger;
     this.parseTableSchema(this.props);
     this.parseTableData(this.props);
-
-
   }
 
-  componentDidMount(){
-    // 如果是懒加载 则先发起一次请求
-    debugger;
-    globalConfig.DBTable.lazyMode && this.handleOnExpand(undefined);
-  }
+
 
   /**
    * InnerTable组件的re-render有两种情况: 自身状态变化导致的render vs 父组件导致的render
@@ -125,7 +117,6 @@ class InnerTable extends React.PureComponent {
     // tableSchema是转换后的Table组件可用的schema
     // 对于tableSchema, 即使命中了缓存, 也要重新设置下render函数
     this.tableSchema = InnerTableRenderUtils.bindRender(parseResult.tableSchema, tableName, this);
-
     // console.warn('当前表格的schema为：%o',);
   }
 
@@ -735,9 +726,15 @@ class InnerTable extends React.PureComponent {
   }
   /**
   * 页面展开和初始事件
+  * 这个事件只在 type:'tree',lazyMode:true,  有效
   */
   handleOnExpand(expanded,treeNode){
-    debugger;
+    const {tableName, schema, tableLoading, tableConfig} = this.props;
+    if (!(tableConfig.type=='tree' && tableConfig.lazyMode)){
+      console.warn('非懒加载表格');
+      return;
+    }
+
     return new Promise((resolve) => {
       var fetchOpts = {credentials:'include'};
       var url = '/api/ou/list';
@@ -788,7 +785,6 @@ class InnerTable extends React.PureComponent {
     const multiSelected = this.state.selectedRowKeys.length > 1;  // 是否选择了多项
     const UpdateComponent = this.updateComponent;
 
-
     return (
       <div>
         <div className="db-table-button">
@@ -833,13 +829,8 @@ class InnerTable extends React.PureComponent {
         </Modal>
 
         {/* 分为正常加载和懒加载两种类型表格 */}
-        {
-          !globalConfig.DBTable.lazyMode ?
-          <Table bordered rowSelection={rowSelection} columns={this.tableSchema} dataSource={this.state.data} pagination={false}
-               loading={tableLoading}/> :
-          <Table bordered rowSelection={rowSelection} columns={this.tableSchema} dataSource={this.state.data} pagination={false}
-                loading={tableLoading} onExpand={this.handleOnExpand}/>
-        }
+        <Table bordered rowSelection={rowSelection} columns={this.tableSchema} dataSource={this.state.data} pagination={false}
+                loading={tableLoading} onExpand={this.handleOnExpand.bind(this)}/>
       </div>
     );
   }
