@@ -118,7 +118,7 @@ const Utils = {
   /**
   * 行结构转变成树形结构
   * parentId 指向 id
-  * 给树形表格使用
+  * 给树形表格使用(非懒加载)
   */
   transformToTreeData(res){
     var rows = res;

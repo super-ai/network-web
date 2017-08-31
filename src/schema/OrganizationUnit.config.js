@@ -1,4 +1,3 @@
 module.exports = {
-  type:'tree',
-  lazyMode:true, //动态生成
+  type:'lazyTree',
 }

@@ -121,13 +121,14 @@ class InnerTable extends React.PureComponent {
   }
 
   /**
-   * 解析表格要显示的数据
    * 后端返回的数据不能直接在table中显示
    * 把后端的数据解析成表格能显示的数据
+   * rowData => tableData => state.data
    */
   parseTableData(props) {
     // 每行数据都必须有个key属性, 如果指定了主键, 就以主键为key
     // 否则直接用个自增数字做key
+    console.warn('后台数据转换为表格数据！');
     const newData = [];
     let i = 0;
     props.data.forEach((obj) => {
@@ -147,16 +148,17 @@ class InnerTable extends React.PureComponent {
     const {tableName, schema, tableLoading, tableConfig} = this.props;
     this.state.flatData = newData;
 
-    
     if (tableConfig.type == 'normal'){
       this.state.data = newData;
-    }else{ //非懒加载状态
-      if(!tableConfig.lazyMode){
-        var tmp = Utils.transformToTreeData(newData);
-        this.setState({data:tmp});
-      }else{
-        this.state.data = newData;
-      }
+    }
+
+    if (tableConfig.type == 'tree'){
+      var tmp = Utils.transformToTreeData(newData);
+      this.setState({data:tmp});
+    }
+
+    if (tableConfig.type == 'lazyTree'){
+      this.state.data = newData;
     }
   }
 
@@ -735,11 +737,11 @@ class InnerTable extends React.PureComponent {
   }
   /**
   * 页面展开和初始事件
-  * 这个事件只在 type:'tree',lazyMode:true,  有效
+  * 这个事件只在 type:'lazyTree' 有效
   */
   async handleOnExpand(expanded,treeNode){
     const {tableName, schema, tableLoading, tableConfig} = this.props;
-    if (!(tableConfig.type=='tree' && tableConfig.lazyMode)){
+    if (!(tableConfig.type=='lazyTree')){
       console.warn('非懒加载表格');
       return;
     }
