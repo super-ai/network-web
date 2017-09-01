@@ -19,7 +19,16 @@ module.exports = [
     title:'菜单名称',
     dataType:'varchar',
     placeholder:'菜单名称'
-  }
+  },
+  {
+    key:'type',
+    title:'类型',
+    dataType:'varchar',
+    showType:'multiSelect',
+    placeholder:'类型',
+    options:[{key:'sidebar',value:'sidebar'},{key:'header',value:'header'}],
+  },
+
   // ,
   // {
   //   key:'dt',

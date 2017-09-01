@@ -42,6 +42,6 @@ module.exports = [
     key:'parentId',
     title:'父节点',
     dataType:'int',
-    showType:'treeSelect',
+    showType:'ou',
   }
 ]
