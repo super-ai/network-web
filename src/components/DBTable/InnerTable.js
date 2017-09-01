@@ -200,15 +200,13 @@ class InnerTable extends React.PureComponent {
    * 主要是处理日期字段, 必须是moment对象
    */
   transformRawDataToForm(obj) {
-    debugger;
     const newObj = {};
+
     for (const key in obj) {
-      // rawData中可能有些undefined或null的字段, 过滤掉
-      if (!obj[key])
-        continue;
+      // rawData中可能有些undefined或null的字段 跳过
       // 没有定义的字段 也直接跳过
-      if (!this.fieldMap.get(key))
-          continue;
+      if (!obj[key] || !this.fieldMap.get(key))
+        continue;
 
       if (this.fieldMap.get(key).dataType === 'datetime') {  // 判断是否是日期类型的字段
         newObj[key] = moment(obj[key]);
@@ -283,23 +281,8 @@ class InnerTable extends React.PureComponent {
     if (!multiSelected) { //单选
       logger.debug('update single record, and fill original values');
       const selectedKey = this.state.selectedRowKeys[0];
-
-      // 在所有节点查找
-      // 注意不是this.state.data
-      // tree时候 this.state.data 只包含根节点
-      // useless
-      // for (const record of this.state.flatData) {  // 找到被选择的那条记录
-      //   if (record.key === selectedKey) {
-      //     Object.assign(newData, this.transformTableDataToForm(record));
-      //     break;
-      //   }
-      // }
-
-      // 该是写个方法了 用来查找 this.state.data中指定selectedKey 的记录
-      var selectedRow = this.findSelectedRow(selectedKey);
-      debugger;
+      var selectedRow = Utils.getSelectedRow(this.state.data,selectedKey); // 该是写个方法了 用来查找 this.state.data中指定selectedKey 的记录
       Object.assign(newData, this.transformTableDataToForm(selectedRow));
-
     } else {
       newData[this.primaryKey] = this.state.selectedRowKeys.join(', ');
       logger.debug('update multiple records, keys = %s', newData[this.primaryKey]);
@@ -317,33 +300,6 @@ class InnerTable extends React.PureComponent {
       this.setState({modalVisible: true, modalTitle: '更新', modalInsert: false}, () => this.setFormData(newData));
     }
   };
-
-  /**
-  * 查找 this.state.data中指定selectedKey 的记录
-  */
-  findSelectedRow(selectedKey){
-    debugger;
-    var stackRows = this.state.data.slice();
-    while(stackRows && stackRows.length >0 ){
-      var row = stackRows.shift();
-      if (row.key == selectedKey){
-        return row;
-      }else{ //如果有children 并且长度大于0  则推入stackRows
-        if(row.children && row.children.length > 0){
-          // var children = row.children.slice();
-          row.children.forEach((item)=>{
-            stackRows.push(item);
-          });
-        }
-      }
-
-    }
-
-
-
-  }
-
-
 
   /**
    * 点击删除按钮, 弹出一个确认对话框
@@ -774,20 +730,10 @@ class InnerTable extends React.PureComponent {
   */
   async handleOnExpand(expanded,treeNode){
     const {tableName, schema, tableLoading, tableConfig} = this.props;
-    if (!(tableConfig.type=='lazyTree')){
-      console.warn('非懒加载表格');
-      return;
-    }
-    // 关闭时候 不发起请求; 已经有子节点了 也不发出请求;
-    if(!expanded){
-      console.warn('折叠操作 不再请求');
-      return;
-    }
 
-    if (treeNode.children && treeNode.children.length > 0){
-      console.warn('已有数据 不再请求');
-      return;
-    }
+    if (!(tableConfig.type=='lazyTree')){return;}                   //非懒加载树
+    if(!expanded){return;}                                          //折叠时候
+    if (treeNode.children && treeNode.children.length > 0){return;} //已有children
 
     const CRUD = ajax.CRUD(this.props.tableName);
     const hide = message.loading('正在取数...', 0);
@@ -822,7 +768,6 @@ class InnerTable extends React.PureComponent {
       hide();
       this.error(`网络请求出错: ${ex.message}`);
     }
-
   }
 
 
@@ -886,8 +831,8 @@ class InnerTable extends React.PureComponent {
         </Modal>
 
         {/* 分为正常加载和懒加载两种类型表格 */}
-        <Table bordered rowSelection={rowSelection} columns={this.tableSchema} dataSource={this.state.data} pagination={false}
-                loading={tableLoading} onExpand={this.handleOnExpand.bind(this)}/>
+        <Table bordered rowSelection={rowSelection} columns={this.tableSchema} dataSource={this.state.data} pagination={false} loading={tableLoading}
+          onExpand={this.handleOnExpand.bind(this)}/>
       </div>
     );
   }

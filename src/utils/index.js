@@ -165,6 +165,25 @@ const Utils = {
     return nodes;
   },
 
+  /**
+  * 查找data中指定selectedKey的记录
+  */
+  getSelectedRow(data,selectedKey){
+    var stackRows = data.slice();
+    while(stackRows && stackRows.length >0 ){
+      var row = stackRows.shift();
+      if (row.key == selectedKey){
+        return row;
+      }else{ //如果有children 并且长度大于0  则推入stackRows
+        if(row.children && row.children.length > 0){
+          // var children = row.children.slice();
+          row.children.forEach((item)=>{
+            stackRows.push(item);
+          });
+        }
+      }
+    }
+  },
 
   isString(s) {
     return typeof(s) === 'string' || s instanceof String;
