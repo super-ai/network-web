@@ -67,7 +67,8 @@ module.exports = {
     pageSize: 50, // 表格每页显示多少条数据
 
     default: {  // 针对每个表格的默认配置
-      showInnerForm:true,    // 显示查询Form 默认为true
+      showInnerForm:true,   // 显示查询Form 默认为true
+      showInnerPagination:true, // 显示分页 默认为true
       showExport: true,  // 显示导出按钮, 默认true
       showImport: false,  // 显示导入按钮, 默认true
       showInsert: true,  // 显示新增按钮, 默认true

@@ -374,14 +374,16 @@ class DBTable extends React.PureComponent {
     return (
       <Spin spinning={this.state.loadingSchema} delay={500}>
         {this.tableConfig.showInnerForm &&
-          <InnerForm parentHandleSubmit={this.handleFormSubmit} schema={this.querySchema} tableConfig={this.tableConfig}
+        <InnerForm parentHandleSubmit={this.handleFormSubmit} schema={this.querySchema} tableConfig={this.tableConfig}
                    tableName={this.tableName}/>}
         <InnerTable data={this.state.data} tableLoading={this.state.tableLoading}
                     schema={this.dataSchema} refresh={this.refresh}
                     tableConfig={this.tableConfig} tableName={this.tableName}/>
+        {this.tableConfig.showInnerPagination &&
         <InnerPagination currentPage={this.state.currentPage} total={this.state.total} pageSize={this.state.pageSize}
                          parentHandlePageChange={this.handlePageChange} tableConfig={this.tableConfig}
-                         tableName={this.tableName}/>
+                         tableName={this.tableName}/>}
+
       </Spin>
     );
   }
