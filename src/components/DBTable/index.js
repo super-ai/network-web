@@ -373,8 +373,9 @@ class DBTable extends React.PureComponent {
 
     return (
       <Spin spinning={this.state.loadingSchema} delay={500}>
-        <InnerForm parentHandleSubmit={this.handleFormSubmit} schema={this.querySchema} tableConfig={this.tableConfig}
-                   tableName={this.tableName}/>
+        {this.tableConfig.showInnerForm &&
+          <InnerForm parentHandleSubmit={this.handleFormSubmit} schema={this.querySchema} tableConfig={this.tableConfig}
+                   tableName={this.tableName}/>}
         <InnerTable data={this.state.data} tableLoading={this.state.tableLoading}
                     schema={this.dataSchema} refresh={this.refresh}
                     tableConfig={this.tableConfig} tableName={this.tableName}/>
