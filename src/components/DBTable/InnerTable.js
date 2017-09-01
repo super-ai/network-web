@@ -152,13 +152,16 @@ class InnerTable extends React.PureComponent {
       this.state.data = newData;
     }
 
+    // 处理成树形结构
     if (tableConfig.type == 'tree'){
-      var tmp = Utils.transformToTreeData(newData);
-      this.setState({data:tmp});
+      // var tmp = Utils.transformToTreeData(newData);
+      // this.setState({data:tmp});
+      this.state.data = Utils.transformToTreeData(newData);
     }
 
+    // 增加children属性
     if (tableConfig.type == 'lazyTree'){
-      this.state.data = newData;
+      this.state.data = this.addKeydChildrendAtts(newData);
     }
   }
 
@@ -724,31 +727,42 @@ class InnerTable extends React.PureComponent {
 
     loop(treeData);
   }
+
+  /**
+  * 增加key属性
+  * 如果有子节点 则增加children属性
+  */
+  addKeydChildrendAtts(data){
+    var newRawData = data.map((item,index)=>{
+      if (item.state=='closed'){ // closed / open
+        return Object.assign({},item,{key:item.id,children:[]});
+      }else {
+        return Object.assign({},item,{key:item.id});
+      }
+    });
+    return newRawData;
+  }
+
   /**
   * 页面展开和初始事件
   * 这个事件只在 type:'lazyTree' 有效
   */
   async handleOnExpand(expanded,treeNode){
     const {tableName, schema, tableLoading, tableConfig} = this.props;
-
     if (!(tableConfig.type=='lazyTree')){return;}                   //非懒加载树
     if(!expanded){return;}                                          //折叠时候
     if (treeNode.children && treeNode.children.length > 0){return;} //已有children
 
+    // 以下处理只出现在 懒加载 && 展开节点 && 无children数据
     const CRUD = ajax.CRUD(this.props.tableName);
     const hide = message.loading('正在取数...', 0);
     try {
       const res = await CRUD.select({id:treeNode.id});
       hide();
       if (res.success) {
-        // 如果有子节点 则增加children属性
-        var newRawData = res.data.map((item,index)=>{
-          if (item.state=='closed'){
-            return Object.assign({},item,{key:item.id,children:[]});
-          }else {
-            return Object.assign({},item,{key:item.id});
-          }
-        })
+        // 如果有子节点 则增加children和key属性
+        var newRawData = this.addKeydChildrendAtts(res.data);
+
         // 处理成表格数据
         var newTableData = [];
         newRawData.forEach((obj) => {
