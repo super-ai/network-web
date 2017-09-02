@@ -15,12 +15,12 @@ import {
 import TableUtils from './TableUtils.js';
 import moment from 'moment';
 import Logger from '../../utils/Logger';
+import Ou from '../Custom/OuTreeSelect';
 
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
 const Option = Select.Option;
-
 const logger = Logger.getLogger('InnerFormSchemaUtils');
 
 // TODO: 其实这里缺少对schema的校验
@@ -141,6 +141,9 @@ const SchemaUtils = {
           break;
         case 'cascader':
           cols.push(this.transformCascader(field));
+          break;
+        case 'ou':
+          cols.push(this.transformOu(field));
           break;
         default:
           cols.push(this.transformNormal(field));
@@ -273,6 +276,19 @@ const SchemaUtils = {
     logger.debug('transform field %o to Cascader component', field);
     return this.colWrapper(getFieldDecorator => getFieldDecorator(field.key, {initialValue: field.defaultValue})(
       <Cascader options={field.options} expandTrigger="hover" placeholder={field.placeholder || '请选择'} size="default"/>
+    ), field);
+  },
+
+  /**
+   * 转换为组织机构
+   *
+   * @param field
+   * @returns {XML}
+   */
+  transformOu(field) {
+    logger.debug('transform field %o to Ou component', field);
+    return this.colWrapper((getFieldDecorator) => getFieldDecorator(field.key, {initialValue:field.defaultValue,})(
+      <Ou placeholder={'老子就是部门'} disabled={field.disabled} />
     ), field);
   },
 

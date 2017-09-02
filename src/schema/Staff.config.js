@@ -1,0 +1,3 @@
+module.exports = {
+  asyncSchema: fasle,
+}

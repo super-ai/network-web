@@ -53,9 +53,11 @@ const routes = (
           <Route path='res-meter' tableName='ResMeter' getComponent={DBTableContainer}/>
         </Route>
 
-        <Route path='system-manage'>
+        <Route path='sm'>
+          <Route path='user' tableName='Staff' getComponent={DBTableContainer}/>
           <Route path='ou' tableName='OrganizationUnit' getComponent={DBTableContainer}/>
           <Route path='menu' tableName='Menu' getComponent={DBTableContainer}/>
+
         </Route>
 
         <Route path='help'>
