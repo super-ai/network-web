@@ -131,7 +131,8 @@ class InnerTable extends React.PureComponent {
     console.warn('后台数据转换为表格数据！');
     const newData = [];
     let i = 0;
-    props.data.forEach((obj) => {
+    
+    props.data && props.data.forEach((obj) => {
       const newObj = this.transformRawDataToTable(obj);
       if (this.primaryKey) {
         newObj.key = obj[this.primaryKey];
