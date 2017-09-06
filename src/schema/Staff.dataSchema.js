@@ -37,12 +37,14 @@ module.exports = [
     key:'name',
     title:'姓名',
     dataType:'varchar',
+    disabled:true,
     validator:[{required:true,message:'必填'}]
   },
   {
     key:'phoneNumber',
     title:'电话登录名',
     dataType:'varchar',
+    disabled:true,
     validator:[{required:true,message:'必填'}]
   },
   {
@@ -60,7 +62,7 @@ module.exports = [
     title:'所属部门名称',
     dataType:'varchar',
     showInTable:false,
-    showInnerForm:false,
+    showInForm:false,
   },
   {
     key:'dataOuId',
@@ -77,14 +79,16 @@ module.exports = [
     title:'可操作部门名称',
     dataType:'varchar',
     showInTable:false,
-    showInnerForm:false,
+    showInForm:false,
   },
   {
     key:'dataPermission',
     title:'操作权限',
     dataType:'varchar',
+    showType:'select',
     validator:[{required:true,message:'必填'}],
-    options:[{key:'B',value:'可读'},{key:'A',value:'可管理'}]
+    options:[{key:'R',value:'可读'},{key:'A',value:'可管理'}]
+    // {dataPermission:"R",dataPermissionText:"可读"},{dataPermission:"A",dataPermissionText:"可管理"}
   },
   {
     key:'authorities',
