@@ -37,14 +37,14 @@ module.exports = [
     key:'name',
     title:'姓名',
     dataType:'varchar',
-    disabled:true,
+    // disabled:true,
     validator:[{required:true,message:'必填'}]
   },
   {
     key:'phoneNumber',
     title:'电话登录名',
     dataType:'varchar',
-    disabled:true,
+    // disabled:true,
     validator:[{required:true,message:'必填'}]
   },
   {
