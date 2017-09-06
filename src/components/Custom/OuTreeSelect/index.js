@@ -22,12 +22,14 @@ class OuTreeSelect extends React.Component{
   componentDidMount(){
     //此时竟然没有this.props.value值
     this.onLoadData(undefined);
+
   }
 
   componentWillReceiveProps(nextProps){
     //清空
     var {value} = nextProps;
     this.state.value = value;
+    debugger;
   }
 
   /**

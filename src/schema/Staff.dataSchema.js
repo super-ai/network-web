@@ -29,7 +29,7 @@ module.exports = [
     // 会把primary 处理成表格 key
     primary:'true',
     width:100,
-    showInTable:false,
+    showInTable:true,
     disabled:true,
     sorter:(a,b)=>a.id - b.id
   },
