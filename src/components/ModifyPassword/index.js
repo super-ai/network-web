@@ -50,13 +50,17 @@ class ModifyPassword extends Component{
   render(){
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
+      // 1. 每个FormItem包含标签col和包装列
+      // 2. xs为小于768px配置；sm为大于768px配置
+      // 3. span表示控件的跨度；offset表示控件的偏移
+      // 4. 所有的属性 都是相对于Form(父容器)
       labelCol: {
         xs: { span: 24 },
         sm: { span: 6 },
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 14 },
+        sm: { span: 12 },
       },
     };
     // 怎么能使得提交按钮缩进排列
@@ -67,7 +71,7 @@ class ModifyPassword extends Component{
           offset: 0,
         },
         sm: {
-          span: 14,
+          span: 18,
           offset: 6,
         },
       },
