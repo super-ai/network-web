@@ -60,8 +60,11 @@ const routes = (
           <Route path='auth' tableName='Authority' getComponent={DBTableContainer}/>
         </Route>
 
-        <Route path='help'>
-          <Route path='normal_question' component={Welcome}/>
+        <Route path='help' component={Welcome}>
+        </Route>
+
+        <Route path='userMenu' >
+          <Route path='modifyPassword' component={Welcome}/>
         </Route>
 
         <Route path="*" component={Error}/>

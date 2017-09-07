@@ -146,6 +146,6 @@ export const headerMenu = [
     key: 'help',
     name: '帮助',
     icon: 'team',
-    url: 'https://github.com/facebook/react',
+    path:'help',
   },
 ];
