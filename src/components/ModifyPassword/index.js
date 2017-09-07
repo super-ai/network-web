@@ -40,30 +40,28 @@ class ModifyPassword extends Component{
   */
   async handleSubmit(e){
    e.preventDefault();
-   this.props.form.validateFieldsAndScroll((err, values) => {
-     if (err) {
-       return;
+   let rlt = this.props.form.validateFields(
+     async function cb(err, values){
+     if (!err) {
+       try{ // 提交数据
+         console.log('提交的表单数据为: ',this.props.form.getFieldsValue());
+         const res = await ajax.get('/api/staff/password',this.props.form.getFieldsValue());
+
+         if (res.success) {
+           notification.success({
+             message: '修改密码成功',
+            //  description: this.primaryKey ? `新增数据行 主键=${res.data[this.primaryKey]}` : '',
+             duration: 3,
+           });
+           this.props.form.resetFields();
+         } else {
+           this.error(res.failInfo.errorMessage);
+         }
+       }catch(ex){
+         this.error(`网络请求出错: ${ex.message}`);
+       }
      }
-   });
-
-   try{ // 提交数据
-     console.log('提交的表单数据为: ',this.props.form.getFieldsValue());
-
-     const res = await ajax.get('/api/staff/password',this.props.form.getFieldsValue());
-
-     if (res.success) {
-       notification.success({
-         message: '修改密码成功',
-        //  description: this.primaryKey ? `新增数据行 主键=${res.data[this.primaryKey]}` : '',
-         duration: 3,
-       });
-       this.props.form.resetFields();
-     } else {
-       this.error(res.failInfo.errorMessage);
-     }
-   }catch(ex){
-     this.error(`网络请求出错: ${ex.message}`);
-   }
+   }.bind(this));
   }
 
   error(errorMsg) {
