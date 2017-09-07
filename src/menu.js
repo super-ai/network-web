@@ -141,7 +141,7 @@ export const headerMenu = [
       {
         key: 'modify-password',
         name: '修改密码',
-        icon: 'rocket',
+        icon: 'unlock',
       },
     ],
   },

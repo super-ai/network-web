@@ -37,6 +37,8 @@ class ModifyPassword extends Component{
   /**
   * 提交密码修改
   * 不能使用箭头函数
+  * 1. 使用await 就不能使用箭头函数
+  * 2. 回调函数中 要使用类方法 需要把回调函数也绑定到this
   */
   async handleSubmit(e){
    e.preventDefault();
@@ -132,7 +134,7 @@ class ModifyPassword extends Component{
           }
         </FormItem>
         <FormItem {...tailFormItemLayout}>
-          <Button  type="primary" htmlType='submit'>保存</Button>
+          <Button  type="primary" htmlType="submit" icon="save">保存</Button>
         </FormItem>
       </Form>
   )
