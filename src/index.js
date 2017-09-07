@@ -57,7 +57,7 @@ const routes = (
           <Route path='user' tableName='Staff' getComponent={DBTableContainer}/>
           <Route path='ou' tableName='OrganizationUnit' getComponent={DBTableContainer}/>
           <Route path='menu' tableName='Menu' getComponent={DBTableContainer}/>
-
+          <Route path='auth' tableName='Authority' getComponent={DBTableContainer}/>
         </Route>
 
         <Route path='help'>

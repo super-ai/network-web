@@ -131,7 +131,7 @@ class InnerTable extends React.PureComponent {
     console.warn('后台数据转换为表格数据！');
     const newData = [];
     let i = 0;
-    
+
     props.data && props.data.forEach((obj) => {
       const newObj = this.transformRawDataToTable(obj);
       if (this.primaryKey) {
@@ -796,7 +796,10 @@ class InnerTable extends React.PureComponent {
     const rowSelection = {
       selectedRowKeys: this.state.selectedRowKeys,
       onChange: this.onTableSelectChange,
+      type:tableConfig.rowSelectionType,
     };
+
+    console.warn('表格选择类型为',tableConfig.rowSelectionType);
 
     const hasSelected = this.state.selectedRowKeys.length > 0;  // 是否选择
     const multiSelected = this.state.selectedRowKeys.length > 1;  // 是否选择了多项
