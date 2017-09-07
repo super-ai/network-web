@@ -125,7 +125,10 @@ export default sidebarMenu;
 export const headerMenu = [
   {
     // 一个特殊的key, 定义用户菜单, 在这个submenu下面设置icon/name不会生效
+    // 这个名字不能修改 否则child下面的内容 不会放到和注销一起
     key: 'userMenu',
+    name:'xxx',
+    icon:'team',
     child: [
       {
         key: 'modifyUser',
@@ -136,7 +139,7 @@ export const headerMenu = [
         url: 'https://github.com/facebook/react',
       },
       {
-        key: 'modifyPassword',
+        key: 'modify-password',
         name: '修改密码',
         icon: 'rocket',
       },
