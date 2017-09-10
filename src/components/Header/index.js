@@ -25,7 +25,7 @@ class Header extends React.PureComponent {
 
     return (
       <MenuItem key={obj.key}>
-        {obj.icon && <Icon type={obj.icon}/>}
+        {obj.icon && <Icon type={obj.icon} className="icon"/>}
         {obj.url ? <a target="_blank" href={obj.url}>{obj.name}</a> : <Link to={`/${parentPath}`}>{obj.name}</Link>}
       </MenuItem>
     );
@@ -36,7 +36,7 @@ class Header extends React.PureComponent {
 
     // 这一项菜单是必须有的, 不需要在配置文件里配置
     const logoutMenuItem = <MenuItem key="logout">
-      <Icon type="logout"/>
+      <Icon type="logout" className="icon"/>
       <a href={`${globalConfig.login.logout}`}>注销</a>
     </MenuItem>;
 
@@ -107,9 +107,9 @@ class Header extends React.PureComponent {
 
     this.menu = menu;
 
-    // 注意用户菜单的最后一项必定是注销
+    // 注意用户菜单的最后一项必定是注销 &&&
     const userMenu = (
-      <SubMenu title={<span><Icon type="user" />{this.props.userName}</span>}>
+      <SubMenu title={<span><Icon type="user" className="icon"/>{this.props.userName}</span>}>
         {userMenuItems && userMenuItems[0] ? userMenuItems : null}
         <Menu.Divider />
         {logoutMenuItem}
