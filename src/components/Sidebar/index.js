@@ -42,7 +42,7 @@ class Sidebar extends React.PureComponent {
       if(res && res.success){
         // 处理成menu.js格式 （utils方法）
         var sidebarMenu = await Utils.transformToTree(res);
-        this.setState({sidebarMenu:sidebarMenu});
+        this.setState({sidebarMenu});
         this.props.genTabsByRemote(sidebarMenu);
         // this.setState(sidebarMenu);
         // this.setState({sidebarMenu:sidebarMenu});
