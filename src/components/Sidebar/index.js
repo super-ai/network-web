@@ -32,6 +32,25 @@ class Sidebar extends React.PureComponent {
     items:[] //初始化为
   };
 
+  // 调用App获取远程sider菜单数据
+  async componentDidMount(){
+    // sidebar 动态生成
+    if (globalConfig.menu.async){
+      /* 获取后台菜单 并转为树形结构 再修改属性名称 */
+      const res = await ajax.requestWrapper('GET',`${globalConfig.menu.url}`);
+      // console.warn('当前的菜单为:%o',this.state.sidebarMenu);
+      if(res && res.success){
+        // 处理成menu.js格式 （utils方法）
+        var sidebarMenu = await Utils.transformToTree(res);
+        this.setState({items:sidebarMenu});
+        this.props.genTabsByRemote(sidebarMenu);
+        // this.setState(sidebarMenu);
+        // this.setState({sidebarMenu:sidebarMenu});
+        console.warn('后台获取的菜单为:%o',sidebarMenu);
+      }
+    }
+  }
+
   // 哪些状态组件自己维护, 哪些状态放到redux, 是需要权衡的
 
   /**
@@ -143,26 +162,7 @@ class Sidebar extends React.PureComponent {
   // 在每次组件挂载的时候parse一次菜单, 不用每次render都解析
   // 其实这个也可以放在constructor里
   async componentWillMount() {
-    // return;
-
-    if (globalConfig.menu.async){
-      /* 获取后台菜单 并转为树形结构 再修改属性名称 */
-      const res = await ajax.requestWrapper('GET',`${globalConfig.menu.url}`);
-      if(res && res.success){
-        // 处理成menu.js格式 （utils方法）
-        var remoteMenuItems = await Utils.transformToTree(res);
-        this.setState({items:remoteMenuItems});
-      }
-    }
-  }
-
-  // 收到新的sidebarMenu值(远程) 重写渲染
-  // 为什么从App中获取不到新的渲染值
-  componentWillReceiveProps(nextProps){
-    debugger;
-    var { sidebarMenu } = nextProps;
-    console.warn('sidebar中接受到新的数据:%o',sidebarMenu);
-    this.setState({items:sidebarMenu});
+    return;
   }
 
   // 我决定在class里面, 只有在碰到this问题时才使用箭头函数, 否则还是优先使用成员方法的形式定义函数

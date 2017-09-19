@@ -53,24 +53,6 @@ class App extends React.Component {
     if (globalConfig.tabMode.enable !== true) {
       return;
     }
-
-    // sidebar 动态生成
-    if (globalConfig.menu.async){
-      /* 获取后台菜单 并转为树形结构 再修改属性名称 */
-      const res = await ajax.requestWrapper('GET',`${globalConfig.menu.url}`);
-      console.warn('当前的菜单为:%o',this.state.sidebarMenu);
-      if(res && res.success){
-        // 处理成menu.js格式 （utils方法）
-        var sidebarMenu = await Utils.transformToTree(res);
-        this.setState(sidebarMenu);
-        // this.setState({sidebarMenu:sidebarMenu});
-        console.warn('后台获取的菜单为:%o',sidebarMenu);
-        this.tabTitleMap = this.parseTabTitle();
-        this.updateTab(this.props);
-      }
-    }
-
-
   }
 
   /**
@@ -194,7 +176,7 @@ class App extends React.Component {
     let key = routes[routes.length - 1].path;  // react-router传入的key
 
     // 如果key有问题, 就直接隐藏所有tab, 这样简单点
-    if (!key || !this.tabTitleMap.has(key)) {
+    if (!key || !this.tabTitleMap || !this.tabTitleMap.has(key)) {
       this.state.tabPanes.length = 0;
       return;
     }
@@ -307,9 +289,11 @@ class App extends React.Component {
     }
   }
 
-  handleClick(){
-    // 看看是否会触发componentWillReceiveProps
-    this.setState({sidebarMenu:[]});
+  async genTabsByRemote(sidebarMenu){
+    console.info('根据远程数据产生tabs%o',sidebarMenu);
+    this.setState({sidebarMenu:sidebarMenu});
+    this.tabTitleMap = this.parseTabTitle();
+    this.updateTab(this.props);
   }
 
   render() {
@@ -328,8 +312,7 @@ class App extends React.Component {
     return (
       <div className="ant-layout-base">
         {/*整个页面被一个ant-layout-base的div包围, 分为sidebar/header/footer/content等几部分*/}
-        <Button onClick={this.handleClick.bind(this)}>测试按钮</Button>
-        <Sidebar sidebarMenu={this.state.sidebarMenu}/>
+        <Sidebar genTabsByRemote={this.genTabsByRemote.bind(this)}/>
 
         <div id="main-content-div" className={this.props.collapse ? 'ant-layout-main-collapse' : 'ant-layout-main'}>
           <Header userName={this.props.userName}/>
