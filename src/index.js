@@ -14,6 +14,8 @@ import Welcome from './components/Welcome';
 import Error from './components/Error';
 import Hello from './components/Hello';
 import ModifyPassword from './components/ModifyPassword';
+import InPrgress from './components/InPrgress';
+
 //import DBTable from './components/DBTable';
 
 // 将DBTable组件做成动态路由, 减小bundle size
@@ -32,36 +34,20 @@ const routes = (
   <Provider store={store}>
     <Router history={hashHistory}>
       <Route path="/" component={App}>
-        <IndexRoute component={Welcome}/>
-
-        <Route path="index">
-          <Route path="option1" tableName="test" getComponent={DBTableContainer}/>
-          <Route path="option2" tableName="testSms" getComponent={DBTableContainer}/>
-          <Route path="option3" tableName="testAction" getComponent={DBTableContainer}/>
-        </Route>
-
-        <Route path="daohang">
-          <Route path="555" component={Hello}/>
-          <Route path="sanji">
-            <Route path="666" component={Hello}/>
-            <Route path="777" component={Hello}/>
-            <Route path="888" component={Hello}/>
-            <Route path="999" component={Hello}/>
-          </Route>
-        </Route>
 
         <Route path='resource'>
-          <Route path='res-meter' tableName='ResMeter' getComponent={DBTableContainer}/>
+          <Route path='general' tableName='ResMeter' getComponent={DBTableContainer}/>
         </Route>
 
         <Route path='sm'>
+          <Route path='menu' tableName='Menu' getComponent={DBTableContainer}/>
           <Route path='user' tableName='Staff' getComponent={DBTableContainer}/>
           <Route path='ou' tableName='OrganizationUnit' getComponent={DBTableContainer}/>
-          <Route path='menu' tableName='Menu' getComponent={DBTableContainer}/>
           <Route path='auth' tableName='Authority' getComponent={DBTableContainer}/>
         </Route>
 
-        <Route path='help' component={Welcome}>
+        <Route path='help'>
+          <Route path='question' component={ModifyPassword}/>
         </Route>
 
         <Route path='userMenu' >

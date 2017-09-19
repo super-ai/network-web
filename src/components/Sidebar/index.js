@@ -29,7 +29,7 @@ class Sidebar extends React.PureComponent {
 
   state = {
     openKeys: [],  // 当前有哪些submenu被展开
-    items:localMenuItems //初始化为
+    items:[] //初始化为
   };
 
   // 哪些状态组件自己维护, 哪些状态放到redux, 是需要权衡的
@@ -61,6 +61,7 @@ class Sidebar extends React.PureComponent {
   }
 
   genSubMenu(){
+
     const paths = [];  // 暂存各级路径, 当作stack用
     const level1KeySet = new Set();  // 暂存所有顶级菜单的key
     const level2KeyMap = new Map();  // 次级菜单与顶级菜单的对应关系
@@ -135,13 +136,15 @@ class Sidebar extends React.PureComponent {
     this.level1KeySet = level1KeySet;
     this.level2KeyMap = level2KeyMap;
 
+    console.info('子菜单为:',menu);
     return menu;
   }
 
   // 在每次组件挂载的时候parse一次菜单, 不用每次render都解析
   // 其实这个也可以放在constructor里
   async componentWillMount() {
-    // this.getRemoteMenu();
+    // return;
+
     if (globalConfig.menu.async){
       /* 获取后台菜单 并转为树形结构 再修改属性名称 */
       const res = await ajax.requestWrapper('GET',`${globalConfig.menu.url}`);
@@ -151,7 +154,15 @@ class Sidebar extends React.PureComponent {
         this.setState({items:remoteMenuItems});
       }
     }
+  }
 
+  // 收到新的sidebarMenu值(远程) 重写渲染
+  // 为什么从App中获取不到新的渲染值
+  componentWillReceiveProps(nextProps){
+    debugger;
+    var { sidebarMenu } = nextProps;
+    console.warn('sidebar中接受到新的数据:%o',sidebarMenu);
+    this.setState({items:sidebarMenu});
   }
 
   // 我决定在class里面, 只有在碰到this问题时才使用箭头函数, 否则还是优先使用成员方法的形式定义函数
@@ -229,7 +240,6 @@ class Sidebar extends React.PureComponent {
       </aside>
     );
   }
-
 }
 
 // 什么时候使用箭头函数?

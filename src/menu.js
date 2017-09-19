@@ -13,84 +13,13 @@
 // 定义siderbar菜单
 const sidebarMenu = [
   {
-    key: 'index',  // route时url中的值
-    name: '测试菜单',  // 在菜单中显示的名称
-    icon: 'dislike',  // 图标是可选的
-    child: [
-      {
-        key: 'option1',
-        name: '模拟CRUD',
-        icon: 'play-circle',   // 二级三级菜单也可以带图标
-      },
-      {
-        key: 'option2',
-        name: '图片DEMO',
-        icon: 'android',
-      },
-      {
-        key: 'option3',
-        name: '自定义操作',
-        icon: 'bulb',
-      },
-    ],
-  },
-  {
-    key: 'oa',  // route时url中的值
-    name: '在线办公',  // 在菜单中显示的名称
-    icon: 'rocket',  // 图标是可选的
-    child: [
-      {
-        key: 'option1',
-        name: '待定',
-        icon: 'file',   // 二级三级菜单也可以带图标
-      }
-    ],
-  },
-  {
-    key: 'custom',  // route时url中的值
-    name: '客户关系',  // 在菜单中显示的名称
-    icon: 'user',  // 图标是可选的
-    child: [
-      {
-        key: 'option1',
-        name: '待定',
-        icon: 'file',   // 二级三级菜单也可以带图标
-      }
-    ],
-  },
-  {
-    key: 'contract',  // route时url中的值
-    name: '合同管理',  // 在菜单中显示的名称
-    icon: 'book',  // 图标是可选的
-    child: [
-      {
-        key: 'option1',
-        name: '待定',
-        icon: 'cloud',   // 二级三级菜单也可以带图标
-      }
-    ],
-  },
-
-  {
-    key:'resource',
-    name:'备品备件',
-    icon:'like',
-    child:[
-      {
-        key:'res-meter',
-        name:'仪表仪器',
-        icon:'clock-circle'
-      }
-    ]
-  },
-  {
-    key:'system-manage',
+    key:'smx',
     name:'系统管理',
     icon:'setting',
     child:[
       {
-        key:'menu',
-        name:'菜单管理',
+        key:'menu2',
+        name:'菜单管理2',
         icon:'bars'
       },
       {

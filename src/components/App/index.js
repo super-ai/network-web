@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux'
 import {Link} from 'react-router';
 import {bindActionCreators} from 'redux'
-import {Spin, message, Tabs, Icon} from 'antd';
+import {Button,Spin, message, Tabs, Icon} from 'antd';
 import Header from '../Header';
 import Footer from '../Footer';
 import Sidebar from '../Sidebar';
@@ -13,18 +13,22 @@ import './index.less';
 import globalConfig from 'config.js';
 import ajax from '../../utils/ajax';
 import Logger from '../../utils/Logger';
-import sidebarMenu, {headerMenu} from '../../menu.js';
+import localSidebarMenu from '../../menu.js';
+import {headerMenu as localHeaderMenu} from '../../menu.js';
 import {loginSuccessCreator} from '../../redux/Login.js';
+import Utils from 'utils/index.js';
 
 const TabPane = Tabs.TabPane;
 const logger = Logger.getLogger('App');
+
+console.info('localSidebarMenu为%o',localSidebarMenu);
+console.info('localHeaderMenu为%o',localHeaderMenu);
 
 /**
  * App组件
  * 定义整个页面的布局
  */
 class App extends React.Component {
-
   // App组件还是不要做成PureComponent了, 可能会有bug, 因为无法要求所有子组件都是pure的
 
   // 要清楚登录逻辑:
@@ -34,23 +38,39 @@ class App extends React.Component {
 
   state = {
     tryingLogin: true, // App组件要尝试登录, 在屏幕正中显示一个正加载的动画
-
     // tab模式相关的状态
     currentTabKey: '',  // 当前激活的是哪个tab
     tabPanes: [],  // 当前总共有哪些tab
+    sidebarMenu : localSidebarMenu,
+    headerMenu : localHeaderMenu,
   };
 
   /**
    * 组件挂载之前判断是否要更新tab
    */
-  componentWillMount() {
+  async componentWillMount() {
     // 如果不是tab模式直接返回
     if (globalConfig.tabMode.enable !== true) {
       return;
     }
 
-    this.tabTitleMap = this.parseTabTitle();
-    this.updateTab(this.props);
+    // sidebar 动态生成
+    if (globalConfig.menu.async){
+      /* 获取后台菜单 并转为树形结构 再修改属性名称 */
+      const res = await ajax.requestWrapper('GET',`${globalConfig.menu.url}`);
+      console.warn('当前的菜单为:%o',this.state.sidebarMenu);
+      if(res && res.success){
+        // 处理成menu.js格式 （utils方法）
+        var sidebarMenu = await Utils.transformToTree(res);
+        this.setState(sidebarMenu);
+        // this.setState({sidebarMenu:sidebarMenu});
+        console.warn('后台获取的菜单为:%o',sidebarMenu);
+        this.tabTitleMap = this.parseTabTitle();
+        this.updateTab(this.props);
+      }
+    }
+
+
   }
 
   /**
@@ -106,6 +126,7 @@ class App extends React.Component {
         this.handleLoginError(`网络请求出错: ${e.message}`);
       }
     }
+
   }
 
   handleLoginError(errorMsg) {
@@ -154,8 +175,9 @@ class App extends React.Component {
     };
 
     // 又是dfs, 每次用js写这种就觉得很神奇...
-    sidebarMenu.forEach(browseMenu);
-    headerMenu.forEach(browseMenu);
+    this.state.sidebarMenu.forEach(browseMenu);
+    console.warn('被拆解的sidebarMenu:%o',this.state.sidebarMenu);
+    this.state.headerMenu.forEach(browseMenu);
 
     // 最后要手动增加一个key, 对应于404页面
     tabTitleMap.set('*', <span className="ant-layout-tab-text"><Icon type="frown-o"/>Error</span>);
@@ -285,6 +307,10 @@ class App extends React.Component {
     }
   }
 
+  handleClick(){
+    // 看看是否会触发componentWillReceiveProps
+    this.setState({sidebarMenu:[]});
+  }
 
   render() {
     // 显示一个加载中
@@ -297,11 +323,13 @@ class App extends React.Component {
       return <Login />;
     }
 
+    // console.warn('App重写渲染',this.state.sidebarMenu);
     // 正常显示
     return (
       <div className="ant-layout-base">
         {/*整个页面被一个ant-layout-base的div包围, 分为sidebar/header/footer/content等几部分*/}
-        <Sidebar />
+        <Button onClick={this.handleClick.bind(this)}>测试按钮</Button>
+        <Sidebar sidebarMenu={this.state.sidebarMenu}/>
 
         <div id="main-content-div" className={this.props.collapse ? 'ant-layout-main-collapse' : 'ant-layout-main'}>
           <Header userName={this.props.userName}/>

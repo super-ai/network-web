@@ -25,28 +25,23 @@ module.exports = [
     title:'状态',
     dataType:'varchar',
     placeholder:'状态'
+  },
+  {
+    key:'id',
+    title:'ID',
+    dataType:'int',
+    placeholder:'id '
+  },
+  {
+    key:'serial',
+    title:'序列号',
+    dataType:'varchar',
+    placeholder:'序列号'
+  },
+  {
+    key:'status',
+    title:'状态',
+    dataType:'varchar',
+    placeholder:'状态'
   }
-  // ,
-  // {
-  //   key:'dt',
-  //   title:'测试日期',
-  //   dataType:'datetime'
-  // }
-  // ,
-  // {
-  //   key:'select',
-  //   title:'测试单选',
-  //   dataType:'int',
-  //   showType:'select',
-  //   options:[{key:'male',value:'男'},{key:'female',value:'女'}],
-  //   defaultValue:['male']
-  // },
-  // {
-  //   key:'multi-select',
-  //   title:'测试多选',
-  //   dataType:'int',
-  //   showType:'multiSelect',
-  //   options:[{key:'male',value:'男'},{key:'female',value:'女'}],
-  //   defaultValue:['male','female']
-  // }
 ]

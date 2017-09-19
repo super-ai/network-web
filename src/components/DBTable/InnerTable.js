@@ -128,7 +128,6 @@ class InnerTable extends React.PureComponent {
   parseTableData(props) {
     // 每行数据都必须有个key属性, 如果指定了主键, 就以主键为key
     // 否则直接用个自增数字做key
-    console.warn('后台数据转换为表格数据！');
     const newData = [];
     let i = 0;
 
@@ -798,8 +797,6 @@ class InnerTable extends React.PureComponent {
       onChange: this.onTableSelectChange,
       type:tableConfig.rowSelectionType,
     };
-
-    console.warn('表格选择类型为',tableConfig.rowSelectionType);
 
     const hasSelected = this.state.selectedRowKeys.length > 0;  // 是否选择
     const multiSelected = this.state.selectedRowKeys.length > 1;  // 是否选择了多项
