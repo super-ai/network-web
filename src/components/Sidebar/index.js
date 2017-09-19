@@ -5,7 +5,7 @@ import {bindActionCreators} from 'redux'
 import {Menu, Icon} from 'antd';
 import Logo from '../Logo';
 import Logger from '../../utils/Logger';
-import localMenuItems from 'menu.js';  // 由于webpack中的设置, 不用写完整路径
+import localSidebarMenu为 from 'menu.js';
 import globalConfig from 'config.js';
 import './index.less';
 import {sidebarCollapseCreator} from '../../redux/Sidebar.js';
@@ -29,7 +29,7 @@ class Sidebar extends React.PureComponent {
 
   state = {
     openKeys: [],  // 当前有哪些submenu被展开
-    items:[] //初始化为
+    sidebarMenu:localSidebarMenu为 //初始化为本地菜单
   };
 
   // 调用App获取远程sider菜单数据
@@ -42,7 +42,7 @@ class Sidebar extends React.PureComponent {
       if(res && res.success){
         // 处理成menu.js格式 （utils方法）
         var sidebarMenu = await Utils.transformToTree(res);
-        this.setState({items:sidebarMenu});
+        this.setState({sidebarMenu:sidebarMenu});
         this.props.genTabsByRemote(sidebarMenu);
         // this.setState(sidebarMenu);
         // this.setState({sidebarMenu:sidebarMenu});
@@ -87,7 +87,7 @@ class Sidebar extends React.PureComponent {
 
     // 菜单项是从配置中读取的, parse过程还是有点复杂的
     // map函数很好用
-    const menu = this.state.items.map((level1) => {
+    const menu = this.state.sidebarMenu.map((level1) => {
       // parse一级菜单
       paths.push(level1.key);
       level1KeySet.add(level1.key);

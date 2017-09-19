@@ -82,6 +82,7 @@ class App extends React.Component {
   async componentDidMount() {
     // 不去获取用户
     // return;
+    this.genTabs();
 
     // redux的state
     if (!this.props.login) {
@@ -292,9 +293,14 @@ class App extends React.Component {
   async genTabsByRemote(sidebarMenu){
     console.info('根据远程数据产生tabs%o',sidebarMenu);
     this.setState({sidebarMenu:sidebarMenu});
+    this.genTabs();
+  }
+
+  genTabs(){
     this.tabTitleMap = this.parseTabTitle();
     this.updateTab(this.props);
   }
+
 
   render() {
     // 显示一个加载中

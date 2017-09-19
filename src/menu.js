@@ -13,7 +13,7 @@
 // 定义siderbar菜单
 const sidebarMenu = [
   {
-    key:'smx',
+    key:'sm',
     name:'系统管理',
     icon:'setting',
     child:[
