@@ -38,15 +38,11 @@ class Sidebar extends React.PureComponent {
     if (globalConfig.menu.async){
       /* 获取后台菜单 并转为树形结构 再修改属性名称 */
       const res = await ajax.requestWrapper('GET',`${globalConfig.menu.url}`);
-      // console.warn('当前的菜单为:%o',this.state.sidebarMenu);
       if(res && res.success){
         // 处理成menu.js格式 （utils方法）
         var sidebarMenu = await Utils.transformToTree(res);
         this.setState({sidebarMenu});
         this.props.genTabsByRemote(sidebarMenu);
-        // this.setState(sidebarMenu);
-        // this.setState({sidebarMenu:sidebarMenu});
-        console.warn('后台获取的菜单为:%o',sidebarMenu);
       }
     }
   }
@@ -155,7 +151,6 @@ class Sidebar extends React.PureComponent {
     this.level1KeySet = level1KeySet;
     this.level2KeyMap = level2KeyMap;
 
-    console.info('子菜单为:',menu);
     return menu;
   }
 

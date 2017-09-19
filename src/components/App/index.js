@@ -159,7 +159,6 @@ class App extends React.Component {
 
     // 又是dfs, 每次用js写这种就觉得很神奇...
     this.state.sidebarMenu.forEach(browseMenu);
-    console.warn('被拆解的sidebarMenu:%o',this.state.sidebarMenu);
     this.state.headerMenu.forEach(browseMenu);
 
     // 最后要手动增加一个key, 对应于404页面
@@ -291,7 +290,6 @@ class App extends React.Component {
   }
 
   async genTabsByRemote(sidebarMenu){
-    console.info('根据远程数据产生tabs%o',sidebarMenu);
     this.setState({sidebarMenu:sidebarMenu});
     this.genTabs();
   }
@@ -313,7 +311,6 @@ class App extends React.Component {
       return <Login />;
     }
 
-    // console.warn('App重写渲染',this.state.sidebarMenu);
     // 正常显示
     return (
       <div className="ant-layout-base">
