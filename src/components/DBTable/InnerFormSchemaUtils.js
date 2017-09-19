@@ -169,7 +169,7 @@ const SchemaUtils = {
         formRows.push(<Row key={i} gutter={16}>{formCols}</Row>);
       }
 
-      return (<Form horizontal>
+      return (<Form horizontal className='inner-form'>
         {formRows}
       </Form>);
     };
