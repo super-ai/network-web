@@ -184,7 +184,7 @@ const SchemaUtils = {
   colWrapper(formItem, field) {
     return getFieldDecorator => (
       <Col key={field.key} sm={8}>
-        <FormItem key={field.key} label={field.title} labelCol={{ span: 10 }} wrapperCol={{ span: 14 }}>
+        <FormItem key={field.key} label={field.title} labelCol={{ span: 5 }} wrapperCol={{ span: 19 }}>
           {formItem(getFieldDecorator)}
         </FormItem>
       </Col>

@@ -105,7 +105,7 @@ class ModifyPassword extends Component{
       },
     };
     return(
-      <Form onSubmit={this.handleSubmit.bind(this)}>
+      <Form onSubmit={this.handleSubmit.bind(this)} className='modify-password-form'>
         <FormItem label="旧密码" hasFeedBack {...formItemLayout}>
           {
             getFieldDecorator('oldPassword',{
