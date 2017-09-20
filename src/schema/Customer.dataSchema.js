@@ -73,7 +73,13 @@ module.exports = [
   {
     key:'industryId',
     title:'所属行业',
-    dataType:'int',
+    dataType:'varchar',
+    showType:'select',
+  },
+  {
+    key:'propertyId',
+    title:'客户性质',
+    dataType:'varchar',
     showType:'select',
   },
 ]

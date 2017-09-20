@@ -76,14 +76,14 @@ module.exports = [
     title:'状态',
     dataType:'varchar',
     showType:'select',
-    options:[{key:312,value:'在用'},{key:313,value:'保修'},{key:314,value:'报废'}]
+    options:[{key:14,value:'行业总分类：农、林、牧、渔业'},{key:15,value:'行业总分类：采矿业'},{key:16,value:'行业总分类：制造业'}]
   },
   {
     key:'properties',
     title:'产权',
     dataType:'varchar',
     showType:'multiSelect',
-    options:[{key:315,value:'铁通自购'},{key:316,value:'铁通租赁'},{key:317,value:'外包维护单位'}]
+    options:[{key:22,value:'行业总分类：批发和零售业'},{key:23,value:'行业总分类：住宿、餐饮业'},{key:24,value:'行业总分类：金融、保险业'}]
   },
   {
     key:'image',
