@@ -60,7 +60,8 @@ class OuTreeSelect extends React.Component{
   onLoadData(treeNode){
     return new Promise((resolve) => {
       var fetchOpts = {credentials:'include'};
-      var url = '/api/ou/tree/admin';
+      var url = this.props.url==null ? '/api/ou/tree/admin' : this.props.url;
+      console.info('ou数据请求地址为%o',url);
       var curKey = undefined;
       if(treeNode!=undefined){
         url += '?id=' + treeNode.props.eventKey;  // key相当于easyUI中的 id

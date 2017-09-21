@@ -288,7 +288,7 @@ const SchemaUtils = {
   transformOu(field) {
     logger.debug('transform field %o to Ou component', field);
     return this.colWrapper((getFieldDecorator) => getFieldDecorator(field.key, {initialValue:field.defaultValue,})(
-      <Ou placeholder={'老子就是部门'} disabled={field.disabled} />
+      <Ou disabled={field.disabled} url={field.url}/>
     ), field);
   },
 

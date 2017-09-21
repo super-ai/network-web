@@ -502,12 +502,11 @@ const SchemaUtils = {
    */
   transformOu(field) {
     logger.debug('transform field %o to Ou component', field);
-    // debugger;
     return this.colWrapper((getFieldDecorator, forUpdate) => getFieldDecorator(field.key, {
       initialValue: forUpdate ? undefined : field.defaultValue,
       rules: forUpdate ? field.$$updateValidator : field.validator,
     })(
-      <Ou placeholder={'老子就是部门'} disabled={field.disabled} />
+      <Ou disabled={field.disabled} url={field.url}/>
     ), field);
   },
 

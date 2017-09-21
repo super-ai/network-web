@@ -39,47 +39,127 @@ module.exports = [
     primary:'true',
     sorter:(a,b)=>a.id - b.id,
     showInTable:false,
-  },
-  {
-    key:'name',
-    title:'名称',
-    dataType:'varchar',
-    validator: [{required: true, message: '必填'}],
-  },
-  {
+  },{
     key:'number',
     title:'客户编码',
     dataType:'varchar',
     validator: [{required: true, message: '必填'}],
-  },
-  {
-    key:'corporateRepresentative',
-    title:'法人代表',
+  },{
+    key:'name',
+    title:'客户名称',
     dataType:'varchar',
     validator: [{required: true, message: '必填'}],
-  },
-  {
-    key:'areaId',
-    title:'所在省市',
-    dataType:'int',
-    validator: [{required: true, message: '必填'}],
-  },
-  {
-    key:'address',
-    title:'地址',
+  },{
+    key:'abbr',
+    title:'客户简称',
     dataType:'varchar',
-    validator: [{required: true, message: '必填'}],
-  },
-  {
+  },{
     key:'industryId',
     title:'所属行业',
     dataType:'varchar',
     showType:'select',
-  },
-  {
+  },{
     key:'propertyId',
     title:'客户性质',
     dataType:'varchar',
     showType:'select',
+  },{
+    key:'corporateRepresentative',
+    title:'法人代表',
+    dataType:'varchar',
+    validator: [{required: true, message: '必填'}],
+  },{
+    key:'areaId',
+    title:'所在省市',
+    dataType:'int',
+    showType:'ou',
+    url:'/api/Area/select',
+    render:(text,record)=>{
+      return record.areaName;
+    },
+    validator: [{required: true, message: '必填'}],
+  },{
+    key:'address',
+    title:'通信地址',
+    dataType:'varchar',
+    validator: [{required: true, message: '必填'}],
+  },{
+    key:'postcode',
+    title:'邮政编码',
+    dataType:'varchar',
+    showInTable:false,
+  },{
+    key:'phone',
+    title:'公司电话',
+    dataType:'varchar',
+    showInTable:false,
+  },{
+    key:'fax',
+    title:'公司传真',
+    dataType:'varchar',
+    showInTable:false,
+  },{
+    key:'email',
+    title:'公司邮箱',
+    dataType:'varchar',
+    showInTable:false,
+  },{
+    key:'website',
+    title:'公司网址',
+    dataType:'varchar',
+    showInTable:false,
+  },{
+    key:'bankingAccount',
+    title:'银行账号',
+    dataType:'varchar',
+    showInTable:false,
+  },{
+    key:'depositBank',
+    title:'开户银行',
+    dataType:'varchar',
+    showInTable:false,
+  },{
+    key:'dutyParagraph',
+    title:'税号',
+    dataType:'varchar',
+    showInTable:false,
+  },{
+    key:'createTime',
+    title:'登记时间',
+    dataType:'date',
+    showInTable:false,
+    disabled:true,  // 后台自动生成
+  },{
+    key:'createStaff',
+    title:'登记人',
+    dataType:'varchar',
+    showInTable:false,
+    disabled:true,
+  },{
+    key:'rank',
+    title:'客户等级',
+    dataType:'varchar',
+    showInTable:false,
+  },{
+    key:'status',
+    title:'客户状态',
+    dataType:'varchar',
+    showInTable:false,
+  },{
+    key:'source',
+    title:'客户来源',
+    dataType:'varchar',
+    showInTable:false,
+  },{
+    key:'cmttManager',
+    title:'铁通客户经理',
+    dataType:'varchar',
+    showInTable:false,
+  },
+  {
+    key:'remarks',
+    title:'备注',
+    dataType:'varchar',
+    showInTable:false,
   },
 ]
