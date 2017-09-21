@@ -81,16 +81,16 @@ module.exports = {
   devServer: {
     "proxy": {
       "/login": {
-        "target": "http://localhost:8080",
+        "target": `${globalConfig.api.host}`,
       },
       "/logout": {
-        "target": "http://localhost:8080",
+        "target": `${globalConfig.api.host}`,
       },
       "/api/*": {
-        "target": "http://localhost:8080",
+        "target": `${globalConfig.api.host}`,
       },
       "/upload/*": {
-        "target": "http://localhost:8080",
+        "target": `${globalConfig.api.host}`,
       }
     }
   }

@@ -1,3 +1,3 @@
 module.exports = {
-  expandQueryParams:false,
+  expandQueryParams:false,  // 收缩查询条件
 }
