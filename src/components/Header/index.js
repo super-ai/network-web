@@ -1,14 +1,16 @@
 import React from 'react';
 import {Link} from 'react-router';
-import {Icon, Menu} from 'antd';
+import {Icon, Menu,message} from 'antd';
 import Logger from '../../utils/Logger';
 import globalConfig from 'config';
 import './index.less';
 import {headerMenu} from 'menu';
+import ajax from '../../utils/ajax';
 
 const SubMenu = Menu.SubMenu;  // 为了使用方便
 const MenuItem = Menu.Item;
 const MenuItemGroup = Menu.ItemGroup;
+
 
 const logger = Logger.getLogger('Header');
 
@@ -31,21 +33,25 @@ class Header extends React.PureComponent {
     );
   }
 
+  async handleClick(){
+    // 发送退出请求 这个竟然没有返回值
+    await ajax.get(`${globalConfig.login.logout}`);
+    // 更新页面地址
+    window.location.href = '/';
+  }
+
   componentWillMount() {
     const paths = [];
 
     // 这一项菜单是必须有的, 不需要在配置文件里配置
-    const logoutMenuItem = <MenuItem key="logout">
+    const logoutMenuItem =
+    <MenuItem key="logout">
       <Icon type="logout" className="icon"/>
-      <a href={`${globalConfig.login.logout}`}>注销</a>
+      <a onClick={this.handleClick.bind(this)}>注销</a>
     </MenuItem>;
 
-  // 维护MIS退出
-	// window.location.href = "logout";
-	// sessionStorage.removeItem("username");
-	// sessionStorage.removeItem("ouname");
+  // 临时保存
   // <a href={`${globalConfig.login.logout}`}>注销</a>
-
 
     // header右侧必须是用户菜单
     let userMenuItems = null;

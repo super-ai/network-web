@@ -61,9 +61,12 @@ class Ajax {
         logger.debug('err=%o, res=%o', err, res);
         // 我本来在想, 要不要在这里把错误包装下, 即使请求失败也调用resolve, 这样上层就不用区分"网络请求成功但查询数据失败"和"网络失败"两种情况了
         // 但后来觉得这个ajax方法是很底层的, 在这里包装不合适, 应该让上层业务去包装
-        if (res && res.body) {
-          resolve(res.body);
-        } else {
+        if (res) {
+          if (res.body)
+            resolve(res.body);
+          if (res.text) // logout中 返回内容在text而不是body中
+            resolve(res.text);
+        }else{
           reject(err || res);
         }
       });
