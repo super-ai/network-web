@@ -9,39 +9,48 @@
 // between只能用于int/float/datetime, 会显示2个输入框, 用于范围查询
 module.exports = [
   {
-    key:'id',
-    title:'ID',
+    key:'number',
+    title:'客户编码',
+    dataType:'varchar',
+    validator: [{required: true, message: '必填'}],
+  },{
+    key:'name',
+    title:'客户名称',
+    dataType:'varchar',
+    validator: [{required: true, message: '必填'}],
+  },{
+    key:'abbr',
+    title:'客户简称',
+    dataType:'varchar',
+  },{
+    key:'industryId',
+    title:'所属行业',
+    dataType:'varchar',
+    showType:'select',
+  },{
+    key:'propertyId',
+    title:'客户性质',
+    dataType:'varchar',
+    showType:'select',
+  },{
+    key:'corporateRepresentative',
+    title:'法人代表',
+    dataType:'varchar',
+    validator: [{required: true, message: '必填'}],
+  },{
+    key:'areaId',
+    title:'所在省市',
     dataType:'int',
-    placeholder:'id '
-  },
-  {
-    key:'serial',
-    title:'序列号',
+    showType:'ou',
+    url:'/api/Area/select',
+    render:(text,record)=>{
+      return record.areaName;
+    },
+    validator: [{required: true, message: '必填'}],
+  },{
+    key:'address',
+    title:'通信地址',
     dataType:'varchar',
-    placeholder:'序列号'
+    validator: [{required: true, message: '必填'}],
   },
-  {
-    key:'status',
-    title:'状态',
-    dataType:'varchar',
-    placeholder:'状态'
-  },
-  {
-    key:'id',
-    title:'ID',
-    dataType:'int',
-    placeholder:'id '
-  },
-  {
-    key:'serial',
-    title:'序列号',
-    dataType:'varchar',
-    placeholder:'序列号'
-  },
-  {
-    key:'status',
-    title:'状态',
-    dataType:'varchar',
-    placeholder:'状态'
-  }
 ]

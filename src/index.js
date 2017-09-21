@@ -11,6 +11,7 @@ import store from 'redux/store.js';  // redux store
 // 开始引入各种自定义的组件
 import App from './components/App';
 import Welcome from './components/Welcome';
+import Question from './components/Question';
 import Error from './components/Error';
 import Hello from './components/Hello';
 import ModifyPassword from './components/ModifyPassword';
@@ -42,7 +43,7 @@ const routes = (
         <Route path='custom-manage'>
           <Route path='custom-maintain' tableName='Customer' getComponent={DBTableContainer}/>
         </Route>
-        
+
         <Route path='sm'>
           <Route path='menu' tableName='Menu' getComponent={DBTableContainer}/>
           <Route path='user' tableName='Staff' getComponent={DBTableContainer}/>
@@ -51,7 +52,7 @@ const routes = (
         </Route>
 
         <Route path='help'>
-          <Route path='question' component={ModifyPassword}/>
+          <Route path='question' component={Question}/>
         </Route>
 
         <Route path='userMenu' >
