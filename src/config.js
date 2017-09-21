@@ -80,6 +80,7 @@ module.exports = {
       ignoreSchemaCache: false,  // 是否忽略schema的缓存, 对于异步schema而言, 默认只会请求一次后端接口然后缓存起来
       type:'normal',   //normal为普通表格; tree为树形表格; lazyTree为懒加载tree；默认为normal
       rowSelectionType:'checkbox',   // 多选和单选（checkbox/radio） 默认为可以多选
+      expandQueryParams:true,    // 是否打开查询条件
     },
   },
 

@@ -44,7 +44,7 @@ class InnerForm extends React.PureComponent {
   // 2. 只有props会导致re-render, 但由于这个组件是pure的, 所以只有表名变化时才会re-render
 
   state={
-    expand:true
+    expand:this.props.tableConfig.expandQueryParams
   };
 
   componentDidMount() {

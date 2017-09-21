@@ -39,6 +39,7 @@ module.exports = [
     primary:'true',
     sorter:(a,b)=>a.id - b.id,
     showInTable:false,
+    disabled:true,
   },{
     key:'number',
     title:'客户编码',
