@@ -1,5 +1,5 @@
 /**
- * 程序的入口, 类似java中的main
+ * 程序的入口, 类似java中的main 这是主分支么
  */
 import React from 'react';
 import ReactDOM from 'react-dom';
