@@ -63,7 +63,7 @@
     "superagent": "2.3.0"
   },
   "scripts": {
-    "build": "webpack --progress --colors --display-error-details",
+    "build": "webpack --config webpack.config.js --progress --colors --display-error-details",
     "prod": "cross-env NODE_ENV=production webpack --progress --colors --config webpack.config.prod.js -p --display-error-details",
     "clean": "rimraf dist/*bundle* dist/*vendor* dist/*index*",
     "dev": "webpack-dev-server --devtool eval --progress --colors --content-base dist --hot --inline --display-error-details --port 3000",

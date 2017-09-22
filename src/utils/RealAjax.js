@@ -38,12 +38,15 @@ class Ajax {
       if (globalConfig.isCrossDomain()) {
         tmp.withCredentials();
       }
+
       // 设置全局的超时时间
       if (globalConfig.api.timeout && !isNaN(globalConfig.api.timeout)) {
         tmp.timeout(globalConfig.api.timeout);
       }
-      // 默认的Content-Type和Accept
-      tmp.set('Content-Type', 'application/json').set('Accept', 'application/json');
+
+      // 此话在跨域中 有问题
+      // .set('Content-Type', 'application/json')
+      tmp.set('Accept', 'application/json');
       // 如果有自定义的header
       if (headers) {
         tmp.set(headers);
@@ -95,14 +98,14 @@ class Ajax {
   */
   login(username, password){
     var params = new Object();
-    var paramsUrl = `${globalConfig.login.validate}${this.extendParams(params)}`;
+    var paramsUrl = `${globalConfig.api.host}${globalConfig.login.validate}${this.extendParams(params)}`;
     var fd = new FormData();
     fd.append('username',username);fd.append('password',password);
     var fetchOpts = {
       method:'POST',
       credentials:'include',
       cache: 'default',
-      body:fd
+      body:fd,
     };
 
     Object.keys(params).forEach(function(val){
@@ -132,7 +135,7 @@ class Ajax {
     // 呢吗 ok的时候 啥都ok了 以下这句话可以直接使用
     // return this.get(`${globalConfig.login.getCurrentUser}`);
     var params = new Object();
-    var paramsUrl = `${globalConfig.login.getCurrentUser}${this.extendParams(params)}`;
+    var paramsUrl = `${globalConfig.api.host}${globalConfig.login.getCurrentUser}${this.extendParams(params)}`;
     var fetchOpts = {
       method:'GET',
       credentials:'include',
@@ -150,6 +153,7 @@ class Ajax {
     })
     .catch((e) => {;console.log('获取currentUser异常');});
   }
+
 
   /**
   * url参数展开
@@ -196,7 +200,8 @@ class CRUDUtil {
    * @returns {*}
    */
   select(queryObj) {
-    return this.ajax.get(`${globalConfig.api.path}/${this.tableName}/select`, queryObj);
+    debugger;
+    return this.ajax.get(`${globalConfig.api.host}${globalConfig.api.path}/${this.tableName}/select`, queryObj);
     // ok
     // return this.ajax.get('/api/ResMeter/select', queryObj);
     // err
@@ -210,7 +215,7 @@ class CRUDUtil {
    * @returns {*}
    */
   insert(dataObj) {
-    return this.ajax.post(`${globalConfig.api.path}/${this.tableName}/insert`, dataObj);
+    return this.ajax.post(`${globalConfig.api.host}${globalConfig.api.path}/${this.tableName}/insert`, dataObj);
   }
 
   /**
@@ -222,7 +227,7 @@ class CRUDUtil {
    */
   update(keys = [], dataObj) {
     const tmp = keys.join(',');
-    return this.ajax.post(`${globalConfig.api.path}/${this.tableName}/update`, dataObj, {params: {keys: tmp}});
+    return this.ajax.post(`${globalConfig.api.host}${globalConfig.api.path}/${this.tableName}/update`, dataObj, {params: {keys: tmp}});
   }
 
   /**
@@ -233,7 +238,7 @@ class CRUDUtil {
    */
   delete(keys = []) {
     const tmp = keys.join(',');
-    return this.ajax.get(`${globalConfig.api.path}/${this.tableName}/delete`, {keys: tmp});
+    return this.ajax.get(`${globalConfig.api.host}${globalConfig.api.path}/${this.tableName}/delete`, {keys: tmp});
   }
 
   /**
@@ -243,7 +248,7 @@ class CRUDUtil {
    */
   getRemoteSchema() {
     // return this.ajax.get(`${globalConfig.api.path}/${this.tableName}/schema`);
-    return this.ajax.get(`/api/${this.tableName}/schema`);
+    return this.ajax.get(`${globalConfig.api.host}/api/${this.tableName}/schema`);
   }
 }
 

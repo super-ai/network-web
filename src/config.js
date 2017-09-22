@@ -8,6 +8,8 @@
 // 我可以提供尽量多的配置, 但尽量不要太个性化, 接口的路径/名称/格式之类的
 // 遵循统一的规范, 好维护, 交给其他人也比较简单
 
+// const host = 'http://10.10.64.87:8080';
+const host = 'http://localhost:8080';
 module.exports = {
   name: '互联网信息化系统',  // 项目的名字
   favicon:'/image/Male_man_face.png', // 设置网页的favicon, 可以是外链, 也可以是本地
@@ -30,7 +32,7 @@ module.exports = {
   },
 
   api: {  // 对后端请求的相关配置
-    host: 'http://localhost:8080',  // 调用ajax接口的地址, 默认值空, 如果是跨域的, 服务端要支持CORS
+    host: `${host}`,  // 调用ajax接口的地址, 默认值空, 如果是跨域的, 服务端要支持CORS
     // path: 'api',  // ajax请求的路径
     path: '/api',
     timeout: 150000,  // 请求的超时时间, 单位毫秒
@@ -86,7 +88,7 @@ module.exports = {
 
   menu:{
     async:true,  //从后台按照权限获取
-    url:'/api/Menu/select'  //async:false 无用
+    url:`${host}/api/Menu/select`  //async:false 无用
   },
 
   // 以下一些辅助的函数, 不要修改

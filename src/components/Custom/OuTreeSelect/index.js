@@ -7,6 +7,7 @@ import React from 'react';
 import { TreeSelect } from 'antd';
 import { Promise } from 'es6-promise';
 import fetch from 'isomorphic-fetch';
+import globalConfig from 'config.js';
 
 class OuTreeSelect extends React.Component{
   constructor(props){
@@ -58,9 +59,11 @@ class OuTreeSelect extends React.Component{
   * 页面展开和初始事件
   */
   onLoadData(treeNode){
+    debugger;
     return new Promise((resolve) => {
       var fetchOpts = {credentials:'include'};
       var url = this.props.url==null ? '/api/ou/tree/admin' : this.props.url;
+      url = `${globalConfig.api.host}${url}` ;
       console.info('ou数据请求地址为%o',url);
       var curKey = undefined;
       if(treeNode!=undefined){

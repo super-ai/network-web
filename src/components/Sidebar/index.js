@@ -38,6 +38,7 @@ class Sidebar extends React.PureComponent {
     if (globalConfig.menu.async){
       /* 获取后台菜单 并转为树形结构 再修改属性名称 */
       const res = await ajax.requestWrapper('GET',`${globalConfig.menu.url}`);
+      // const res = await ajax.getMenus();
       if(res && res.success){
         // 处理成menu.js格式 （utils方法）
         var sidebarMenu = await Utils.transformToTree(res);
