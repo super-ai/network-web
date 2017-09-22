@@ -43,7 +43,6 @@ class Ajax {
       if (globalConfig.api.timeout && !isNaN(globalConfig.api.timeout)) {
         tmp.timeout(globalConfig.api.timeout);
       }
-      debugger;
 
       // 此话在跨域中 有问题
       // tmp.set('Content-Type', 'application/json')
@@ -97,29 +96,23 @@ class Ajax {
   *  security 登录
   */
   login(username, password){
-    // var params = new Object();
+
     var paramsUrl = `${globalConfig.api.host}${globalConfig.login.validate}`;
-    var fd = new FormData();
-    fd.append('username',username);fd.append('password',password);
+    var fd = new FormData();fd.append('username',username);fd.append('password',password);
     var fetchOpts = {
       method:'POST',
-      credentials:'include',
-      cache: 'default',
+      credentials:'include',  //必须有 要不登录不了
       body:fd,
     };
 
-    // Object.keys(params).forEach(function(val){
-    //   paramsUrl += val + '=' + encodeURIComponent(params[val]) + '&';
-    // })
     debugger;
     return fetch(paramsUrl,fetchOpts)
     .then((res)=>{
-
-      if(res && res.redirected && res.url.indexOf('/login') > -1)
-        console.warn('用户没有登录，跳转到登录页面!');
-      else {
-        return res.json();
-      }
+      // if(res && res.redirected && res.url.indexOf('/login') > -1)
+      //   console.warn('用户没有登录，跳转到登录页面!');
+      // else {
+      //   return res.json();
+      // }
     })
     .catch((e) => {console.log('用户登录失败!');});
   }
@@ -135,8 +128,7 @@ class Ajax {
   getCurrentUser() {
     // 呢吗 ok的时候 啥都ok了 以下这句话可以直接使用
     // return this.get(`${globalConfig.login.getCurrentUser}`);
-    var params = new Object();
-    var paramsUrl = `${globalConfig.api.host}${globalConfig.login.getCurrentUser}${this.extendParams(params)}`;
+    var paramsUrl = `${globalConfig.api.host}${globalConfig.login.getCurrentUser}`;
     var fetchOpts = {
       method:'GET',
       credentials:'include',
@@ -200,7 +192,6 @@ class CRUDUtil {
    * @returns {*}
    */
   select(queryObj) {
-    debugger;
     return this.ajax.get(`${globalConfig.api.host}${globalConfig.api.path}/${this.tableName}/select`, queryObj);
     // ok
     // return this.ajax.get('/api/ResMeter/select', queryObj);
