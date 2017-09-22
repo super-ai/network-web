@@ -43,9 +43,10 @@ class Ajax {
       if (globalConfig.api.timeout && !isNaN(globalConfig.api.timeout)) {
         tmp.timeout(globalConfig.api.timeout);
       }
+      debugger;
 
       // 此话在跨域中 有问题
-      // .set('Content-Type', 'application/json')
+      // tmp.set('Content-Type', 'application/json')
       tmp.set('Accept', 'application/json');
       // 如果有自定义的header
       if (headers) {
@@ -78,7 +79,6 @@ class Ajax {
 
   // params {'id':1,'name':'llp'}
   get(url, params = {}) {
-    // return this.requestWrapper('GET', url, {params});
     return this.requestWrapper('GET', url, {params});
   }
 
@@ -97,8 +97,8 @@ class Ajax {
   *  security 登录
   */
   login(username, password){
-    var params = new Object();
-    var paramsUrl = `${globalConfig.api.host}${globalConfig.login.validate}${this.extendParams(params)}`;
+    // var params = new Object();
+    var paramsUrl = `${globalConfig.api.host}${globalConfig.login.validate}`;
     var fd = new FormData();
     fd.append('username',username);fd.append('password',password);
     var fetchOpts = {
@@ -108,12 +108,13 @@ class Ajax {
       body:fd,
     };
 
-    Object.keys(params).forEach(function(val){
-      paramsUrl += val + '=' + encodeURIComponent(params[val]) + '&';
-    })
-
+    // Object.keys(params).forEach(function(val){
+    //   paramsUrl += val + '=' + encodeURIComponent(params[val]) + '&';
+    // })
+    debugger;
     return fetch(paramsUrl,fetchOpts)
     .then((res)=>{
+
       if(res && res.redirected && res.url.indexOf('/login') > -1)
         console.warn('用户没有登录，跳转到登录页面!');
       else {
@@ -153,7 +154,6 @@ class Ajax {
     })
     .catch((e) => {;console.log('获取currentUser异常');});
   }
-
 
   /**
   * url参数展开

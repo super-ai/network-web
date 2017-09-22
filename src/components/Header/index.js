@@ -35,7 +35,8 @@ class Header extends React.PureComponent {
 
   async handleClick(){
     // 发送退出请求 这个竟然没有返回值
-    await ajax.get(`${globalConfig.login.logout}`);
+    await ajax.get(`${globalConfig.api.host}${globalConfig.login.logout}`);
+
     // 更新页面地址
     window.location.href = '/';
   }
