@@ -51,10 +51,10 @@ class Login extends React.PureComponent {
 
     try {
       // 服务端验证
-      // const res = await ajax.login(username, password);
       const res = await ajax.login(username, password);
       hide();
       logger.debug('login validate return: result %o', res);
+
 
       if (res && res.status == 'success' && !globalConfig.debug) {
         // 这里不需要setState了, 因为setState的目的是为了re-render, 而下一句会触发redux的状态变化, 也会re-render

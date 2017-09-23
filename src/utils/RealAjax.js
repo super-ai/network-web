@@ -45,7 +45,7 @@ class Ajax {
       }
 
       // 此话在跨域中 有问题
-      // tmp.set('Content-Type', 'application/json')
+      // tmp.set('Content-Type', 'application/json');
       tmp.set('Accept', 'application/json');
       // 如果有自定义的header
       if (headers) {
@@ -99,23 +99,45 @@ class Ajax {
 
     var paramsUrl = `${globalConfig.api.host}${globalConfig.login.validate}`;
     var fd = new FormData();fd.append('username',username);fd.append('password',password);
+
+    let myHeaders = new Headers({
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'text/plain'
+    });
+
     var fetchOpts = {
       method:'POST',
       credentials:'include',  //必须有 要不登录不了
       body:fd,
     };
 
-    debugger;
     return fetch(paramsUrl,fetchOpts)
     .then((res)=>{
-      // if(res && res.redirected && res.url.indexOf('/login') > -1)
-      //   console.warn('用户没有登录，跳转到登录页面!');
-      // else {
-      //   return res.json();
-      // }
+      console.info('为啥看不到login的返回呢');
+      if(res && res.redirected && res.url.indexOf('/login') > -1)
+        console.warn('用户没有登录，跳转到登录页面!');
+      else {
+        return res.json();
+      }
     })
     .catch((e) => {console.log('用户登录失败!');});
   }
+
+  loginTest(username, password){
+    var paramsUrl = `${globalConfig.api.host}${globalConfig.login.validate}`;
+    var fd = new FormData();fd.append('username',username);fd.append('password',password);
+
+    var fetchOpts = {
+      method:'POST',
+      credentials:'include',  //必须有 要不登录不了
+      body:fd,
+    };
+
+    // post(url, data, opts = {}) {
+    return this.post(paramsUrl,fd);
+
+  }
+
 
   // 业务方法
 
