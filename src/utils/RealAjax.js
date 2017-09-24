@@ -70,6 +70,7 @@ class Ajax {
           if (res.text) // logout中 返回内容在text而不是body中
             resolve(res.text);
         }else{
+          // debugger;
           reject(err || res);
         }
       });
@@ -96,24 +97,24 @@ class Ajax {
   *  security 登录
   */
   login(username, password){
-
-    var paramsUrl = `${globalConfig.api.host}${globalConfig.login.validate}`;
-    var fd = new FormData();fd.append('username',username);fd.append('password',password);
-
-    let myHeaders = new Headers({
-      'Access-Control-Allow-Origin': '*',
-      'Content-Type': 'text/plain'
-    });
-
+    var params = new Object();
+    var paramsUrl = `${globalConfig.login.validate}`;
+    var fd = new FormData();
+    fd.append('username',username);fd.append('password',password);
     var fetchOpts = {
       method:'POST',
-      credentials:'include',  //必须有 要不登录不了
+      credentials:'include',
+      cache: 'default',
       body:fd,
+      // mode:'no-cors',
     };
+
+    Object.keys(params).forEach(function(val){
+      paramsUrl += val + '=' + encodeURIComponent(params[val]) + '&';
+    })
 
     return fetch(paramsUrl,fetchOpts)
     .then((res)=>{
-      console.info('为啥看不到login的返回呢');
       if(res && res.redirected && res.url.indexOf('/login') > -1)
         console.warn('用户没有登录，跳转到登录页面!');
       else {
@@ -126,7 +127,7 @@ class Ajax {
   loginTest(username, password){
     var paramsUrl = `${globalConfig.api.host}${globalConfig.login.validate}`;
     var fd = new FormData();fd.append('username',username);fd.append('password',password);
-
+    fd.append('username',username);fd.append('password',password);
     var fetchOpts = {
       method:'POST',
       credentials:'include',  //必须有 要不登录不了
@@ -138,6 +139,21 @@ class Ajax {
 
   }
 
+  loginXml(username, password){
+    var paramsUrl=`${globalConfig.api.host}${globalConfig.login.validate}`;
+    var fd = new FormData();fd.append('username',username);fd.append('password',password);
+    // 使用xhr提交
+    var xhr = new XMLHttpRequest();
+    xhr.addEventListener("load",  (data)=>{this.getListDataAfterLogin()}, false);
+    xhr.addEventListener("error", (data)=>{console.log('xhr fail!!!')}, false);
+    xhr.open("POST", paramsUrl);
+    xhr.setRequestHeader('Access-Control-Allow-Origin', '*'); // 必须有
+    xhr.send(fd);
+  }
+
+  getListDataAfterLogin(){
+    console.warn('cnm 登陆成功了！');
+  }
 
   // 业务方法
 
@@ -150,7 +166,7 @@ class Ajax {
   getCurrentUser() {
     // 呢吗 ok的时候 啥都ok了 以下这句话可以直接使用
     // return this.get(`${globalConfig.login.getCurrentUser}`);
-    var paramsUrl = `${globalConfig.api.host}${globalConfig.login.getCurrentUser}`;
+    var paramsUrl = `${globalConfig.login.getCurrentUser}`;
     var fetchOpts = {
       method:'GET',
       credentials:'include',

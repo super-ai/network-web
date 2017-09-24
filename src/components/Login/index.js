@@ -55,7 +55,7 @@ class Login extends React.PureComponent {
       hide();
       logger.debug('login validate return: result %o', res);
 
-
+      console.info('login返回的res为%o',res);
       if (res && res.status == 'success' && !globalConfig.debug) {
         // 这里不需要setState了, 因为setState的目的是为了re-render, 而下一句会触发redux的状态变化, 也会re-render
         // 所以直接修改状态, 就是感觉这么做有点奇怪...
@@ -75,7 +75,7 @@ class Login extends React.PureComponent {
       }
     } catch (exception) {
       hide();
-      message.error(`网络请求出错: ${exception.message}`);
+      message.error(`网络请求出错xx: ${exception.message}`);
       logger.error('login error, %o', exception);
       this.setState({requesting: false});
     }
