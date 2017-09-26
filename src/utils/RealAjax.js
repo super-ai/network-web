@@ -47,8 +47,13 @@ class Ajax {
       // 此话在跨域中 有问题
       // tmp.set('Content-Type', 'application/json');
       tmp.set('Accept', 'application/json');
+
+      // 试着增加跨域访问需要的头
+      // tmp.set('Access-Control-Request-Method','*');
+
       // 如果有自定义的header
       if (headers) {
+        debugger;
         tmp.set(headers);
       }
       // url中是否有附加的参数?
@@ -84,6 +89,7 @@ class Ajax {
 
   //data body传递 ; opts params接收
   post(url, data, opts = {}) {
+
     return this.requestWrapper('POST', url, {...opts, data});
   }
 
@@ -177,7 +183,6 @@ class Ajax {
 
     return fetch(paramsUrl,fetchOpts)
     .then((res)=>{
-      debugger;
       if(res && res.redirected && res.url.indexOf('/login') > -1){
         return undefined;
       }
@@ -258,8 +263,10 @@ class CRUDUtil {
    * @returns {*}
    */
   update(keys = [], dataObj) {
+    // 增加跨域试试 否则update和insert都不能使用
+    var headers ;
     const tmp = keys.join(',');
-    return this.ajax.post(`${globalConfig.api.host}${globalConfig.api.path}/${this.tableName}/update`, dataObj, {params: {keys: tmp}});
+    return this.ajax.post(`${globalConfig.api.host}${globalConfig.api.path}/${this.tableName}/update`, dataObj, {headers,params: {keys: tmp}});
   }
 
   /**
