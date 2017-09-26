@@ -171,12 +171,13 @@ class Ajax {
     var paramsUrl = `${globalConfig.api.host}${globalConfig.login.getCurrentUser}`;
     var fetchOpts = {
       method:'GET',
-      // credentials:'include',
+      credentials:'include',
       cache: 'default',
     };
 
     return fetch(paramsUrl,fetchOpts)
     .then((res)=>{
+      debugger;
       if(res && res.redirected && res.url.indexOf('/login') > -1){
         return undefined;
       }
