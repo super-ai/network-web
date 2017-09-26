@@ -78,26 +78,26 @@ module.exports = {
     }),
   ],
   // 代理 （已经废弃 build后 不能使用）
-
-  devServer: {
-    "proxy": {
-      "/login": {
-        "target": `${globalConfig.api.host}`,
-      },
-      "/logout": {
-        "target": `${globalConfig.api.host}`,
-      },
-      "/api/*": {
-        "target": `${globalConfig.api.host}`,
-      },
-      "/upload/*": {
-        "target": `${globalConfig.api.host}`,
-      }
-      // 跟踪测试
-      ,
-      "/yyy/xxxxxx": {
-        "target": `${globalConfig.api.host}`,
-      }
-    }
-  }
+  //
+  // devServer: {
+  //   "proxy": {
+  //     "/login": {
+  //       "target": `${globalConfig.api.host}`,
+  //     },
+  //     "/logout": {
+  //       "target": `${globalConfig.api.host}`,
+  //     },
+  //     "/api/*": {
+  //       "target": `${globalConfig.api.host}`,
+  //     },
+  //     "/upload/*": {
+  //       "target": `${globalConfig.api.host}`,
+  //     }
+  //     // 跟踪测试
+  //     ,
+  //     "/yyy/xxxxxx": {
+  //       "target": `${globalConfig.api.host}`,
+  //     }
+  //   }
+  // }
 };

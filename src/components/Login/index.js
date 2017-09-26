@@ -54,9 +54,7 @@ class Login extends React.PureComponent {
       const res = await ajax.login(username, password);
       hide();
       logger.debug('login validate return: result %o', res);
-
-      console.info('login返回的res为%o',res);
-      if (res && res.status == 'success' && !globalConfig.debug) {
+      if (res && res == 'LOGIN_SUCCESS' && !globalConfig.debug) {
         // 这里不需要setState了, 因为setState的目的是为了re-render, 而下一句会触发redux的状态变化, 也会re-render
         // 所以直接修改状态, 就是感觉这么做有点奇怪...
         this.state.tryingLogin = false;
@@ -99,7 +97,7 @@ class Login extends React.PureComponent {
         <div className="login">
           <h1>{globalConfig.name}</h1>
 
-          <Form onSubmit={this.handleSubmit} style={{maxWidth: '300px'}}>
+          <Form onSubmit={this.handleSubmit} style={{maxWidth: '300px'}} method='POST'>
               <FormItem>
                   {getFieldDecorator('userName', {
                       initialValue:this.state.username,

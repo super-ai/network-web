@@ -98,7 +98,7 @@ class Ajax {
   */
   login(username, password){
     var params = new Object();
-    var paramsUrl = `${globalConfig.login.validate}`;
+    var paramsUrl = `${globalConfig.api.host}${globalConfig.login.validate}`;
     var fd = new FormData();
     fd.append('username',username);fd.append('password',password);
     var fetchOpts = {
@@ -115,13 +115,15 @@ class Ajax {
 
     return fetch(paramsUrl,fetchOpts)
     .then((res)=>{
-      if(res && res.redirected && res.url.indexOf('/login') > -1)
-        console.warn('用户没有登录，跳转到登录页面!');
-      else {
-        return res.json();
-      }
+      if(res && res.ok)
+        return res.text();
+      // if(res && !res.redirected && res.url.indexOf('/login') > -1)
+      //   console.warn('用户没有登录，跳转到登录页面!');
+      // else {
+      //   return res.json();
+      // }
     })
-    .catch((e) => {console.log('用户登录失败!');});
+    .catch((e) => {console.log('用户登录失败!%o',e);});
   }
 
   loginTest(username, password){
@@ -147,7 +149,7 @@ class Ajax {
     xhr.addEventListener("load",  (data)=>{this.getListDataAfterLogin()}, false);
     xhr.addEventListener("error", (data)=>{console.log('xhr fail!!!')}, false);
     xhr.open("POST", paramsUrl);
-    xhr.setRequestHeader('Access-Control-Allow-Origin', '*'); // 必须有
+    // xhr.setRequestHeader('Access-Control-Allow-Origin', '*'); // 必须有
     xhr.send(fd);
   }
 
@@ -166,10 +168,10 @@ class Ajax {
   getCurrentUser() {
     // 呢吗 ok的时候 啥都ok了 以下这句话可以直接使用
     // return this.get(`${globalConfig.login.getCurrentUser}`);
-    var paramsUrl = `${globalConfig.login.getCurrentUser}`;
+    var paramsUrl = `${globalConfig.api.host}${globalConfig.login.getCurrentUser}`;
     var fetchOpts = {
       method:'GET',
-      credentials:'include',
+      // credentials:'include',
       cache: 'default',
     };
 
