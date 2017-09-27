@@ -53,7 +53,6 @@ class Ajax {
 
       // 如果有自定义的header
       if (headers) {
-        debugger;
         tmp.set(headers);
       }
       // url中是否有附加的参数?
@@ -75,7 +74,6 @@ class Ajax {
           if (res.text) // logout中 返回内容在text而不是body中
             resolve(res.text);
         }else{
-          // debugger;
           reject(err || res);
         }
       });
@@ -112,7 +110,6 @@ class Ajax {
       credentials:'include',
       cache: 'default',
       body:fd,
-      // mode:'no-cors',
     };
 
     Object.keys(params).forEach(function(val){
@@ -123,31 +120,31 @@ class Ajax {
     .then((res)=>{
       if(res && res.ok)
         return res.text();
-      // if(res && !res.redirected && res.url.indexOf('/login') > -1)
-      //   console.warn('用户没有登录，跳转到登录页面!');
-      // else {
-      //   return res.json();
-      // }
     })
     .catch((e) => {console.log('用户登录失败!%o',e);});
   }
 
-  loginTest(username, password){
-    var paramsUrl = `${globalConfig.api.host}${globalConfig.login.validate}`;
-    var fd = new FormData();fd.append('username',username);fd.append('password',password);
-    fd.append('username',username);fd.append('password',password);
+  /**
+  *
+  *  security 退出
+  */
+  logout(){
+    var paramsUrl = `${globalConfig.api.host}${globalConfig.login.logout}`;
     var fetchOpts = {
-      method:'POST',
-      credentials:'include',  //必须有 要不登录不了
-      body:fd,
+      credentials:'include',
+      cache: 'default',
     };
 
-    // post(url, data, opts = {}) {
-    return this.post(paramsUrl,fd);
-
+    return fetch(paramsUrl,fetchOpts)
+    .then((res)=>{
+      if(res && res.ok)
+        return res.text();
+    })
+    .catch((e) => {console.log('用户退出失败!%o',e);});
   }
 
-  loginXml(username, password){
+  // useless
+  loginXhr(username, password){
     var paramsUrl=`${globalConfig.api.host}${globalConfig.login.validate}`;
     var fd = new FormData();fd.append('username',username);fd.append('password',password);
     // 使用xhr提交
