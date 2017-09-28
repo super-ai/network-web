@@ -118,8 +118,11 @@ class Ajax {
 
     return fetch(paramsUrl,fetchOpts)
     .then((res)=>{
-      if(res && res.ok)
+      if(res && res.ok){
+        // 获取当前用户
+        this.getCurrentUser();
         return res.text();
+      }
     })
     .catch((e) => {console.log('用户登录失败!%o',e);});
   }

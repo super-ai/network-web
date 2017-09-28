@@ -75,6 +75,8 @@ module.exports = {
       // 这个属性也是我自己定义的, dev模式下要加载一些额外的js
       // 设置为false 否则index.html.template 回去获取 webpack-dev-server.js文件
       devMode: false,
+      // 增加主机ip
+      host:globalConfig.api.host,
     }),
   ],
   // 代理 （已经废弃 build后 不能使用）

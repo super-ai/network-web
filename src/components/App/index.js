@@ -81,7 +81,6 @@ class App extends React.Component {
    */
   async componentDidMount() {
     // 不去获取用户
-    // return;
     this.genTabs();
 
     // redux的state
@@ -109,7 +108,6 @@ class App extends React.Component {
         this.handleLoginError(`网络请求出错: ${e.message}`);
       }
     }
-
   }
 
   handleLoginError(errorMsg) {
