@@ -68,7 +68,7 @@ module.exports = [
   },{
     key:'createTime',
     title:'登记时间',
-    dataType:'date',
+    dataType:'datetime',
     showInTable:false,
     disabled:true,  // 后台自动生成
   },{
