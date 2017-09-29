@@ -48,6 +48,7 @@ const routes = (
           <Route path='contract' tableName='Contract' getComponent={DBTableContainer}/>
           <Route path='contract-business' tableName='ContractBusiness' getComponent={DBTableContainer}/>
           <Route path='business-volumn' tableName='BusinessVolumn' getComponent={DBTableContainer}/>
+          <Route path='income-cost' tableName='IncomeCost' getComponent={DBTableContainer}/>
         </Route>
 
         <Route path='sm'>
