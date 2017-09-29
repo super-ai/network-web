@@ -604,7 +604,7 @@ class InnerTable extends React.PureComponent {
 
         this.setState({selectedRowKeys: [], data: newData});
       } else {
-        this.error(res.message);
+        this.error(res.failInfo.errorMessage);
       }
     } catch (ex) {
       logger.error('insert exception, %o', ex);
@@ -654,7 +654,7 @@ class InnerTable extends React.PureComponent {
 
         this.setState({selectedRowKeys: [], data: newData});
       } else {
-        this.error(res.message);
+        this.error(res.failInfo.errorMessage);
       }
     } catch (ex) {
       logger.error('update exception, %o', ex);
@@ -672,6 +672,7 @@ class InnerTable extends React.PureComponent {
     try {
       const res = await CRUD.delete(keys);
       hide();
+      debugger;
       if (res.success) {
         notification.success({
           message: '删除成功',
@@ -694,7 +695,7 @@ class InnerTable extends React.PureComponent {
         }
         this.setState({selectedRowKeys: [], data: newData});
       } else {
-        this.error(res.message);
+        this.error(res.failInfo.errorMessage);
       }
     } catch (ex) {
       logger.error('delete exception, %o', ex);

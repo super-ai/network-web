@@ -41,7 +41,8 @@ const routes = (
         </Route>
 
         <Route path='custom-manage'>
-          <Route path='custom-maintain' tableName='Customer' getComponent={DBTableContainer}/>
+          <Route path='custom' tableName='Customer' getComponent={DBTableContainer}/>
+          <Route path='contact' tableName='Contact' getComponent={DBTableContainer}/>
         </Route>
 
         <Route path='sm'>
