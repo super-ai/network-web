@@ -99,11 +99,14 @@ class InnerForm extends React.PureComponent {
     e.preventDefault();
     // 这种用法是非官方的, 直接从代码里扒出来的...
     // this.formComponent是通过ref方式获取到的一个react组件
-    const oldObj = this.formComponent.getFieldsValue();
-    const newObj = this.filterQueryObj(oldObj);
-
-    // 还是要交给上层组件处理, 因为要触发table组件的状态变化...
-    this.props.parentHandleSubmit(newObj);
+    if (this.formComponent){
+      const oldObj = this.formComponent.getFieldsValue();
+      const newObj = this.filterQueryObj(oldObj);
+      // 还是要交给上层组件处理, 因为要触发table组件的状态变化...
+      this.props.parentHandleSubmit(newObj);
+    }else{ //组件折叠时候
+      this.props.parentHandleSubmit(null);
+    }
   };
 
   /**

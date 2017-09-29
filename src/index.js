@@ -43,6 +43,7 @@ const routes = (
         <Route path='custom-manage'>
           <Route path='custom' tableName='Customer' getComponent={DBTableContainer}/>
           <Route path='contact' tableName='Contact' getComponent={DBTableContainer}/>
+          <Route path='financial-subjects' tableName='FinancialSubjects' getComponent={DBTableContainer}/>
         </Route>
 
         <Route path='sm'>

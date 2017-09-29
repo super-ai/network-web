@@ -103,7 +103,7 @@ module.exports = [
     showInTable:false,
     disabled:true,  // 后台自动生成
   },{
-    key:'createStaff',
+    key:'createUserName',
     title:'登记人',
     dataType:'varchar',
     showInTable:false,
