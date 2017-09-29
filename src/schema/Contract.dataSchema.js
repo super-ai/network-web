@@ -41,17 +41,15 @@ module.exports = [
     disabled:true,
   },{
     key:'name',
-    title:'姓名',
+    title:'合同名称',
     dataType:'varchar',
     validator: [{required: true, message: '必填'}],
-  },{
-    key:'sex',
-    title:'性别',
+  },{ // 一个财务科目 对应多个业务类型
+    key:'number',
+    title:'合同编号',
     dataType:'varchar',
-    defaultValue:'male',
-    showType:'radio',
-    options: [{key: 'male', value: '男'}, {key: 'female', value: '女'}],
-  },{
+    validator: [{required: true, message: '必填'}],
+  },{ // 一个客户对应多个合同
     key:'customerId',
     title:'客户',
     dataType:'varchar',
@@ -59,41 +57,25 @@ module.exports = [
     render:(text,record)=>{
       return record.customerName;
     },
+  },{
+    key:'ouId',
+    title:'签约对象',
+    dataType:'int',
+    showType:'ou',
+    render:(text,record)=>{
+      return record.ouName;
+    },
     validator: [{required: true, message: '必填'}],
   },{
-    key:'post',
-    title:'职务',
-    dataType:'varchar',
+    key:'beginDate',
+    title:'生效日期',
+    dataType:'datetime',
+    validator: [{required: true, message: '必填'}],
   },{
-    key:'phone',
-    title:'公司电话',
-    dataType:'varchar',
-  },{
-    key:'mobile',
-    title:'手机号',
-    dataType:'varchar',
-  },{
-    key:'email',
-    title:'电邮',
-    dataType:'varchar',
-  },{
-    key:'otherContactWay',
-    title:'其他联系方式',
-    dataType:'varchar',
-  },{
-    key:'status',
-    title:'联系人状态',
-    dataType:'varchar',
-  },{
-    key:'invalidTime',
-    title:'失效时间',
-    dataType:'date',
-  },{
-    key:'invalidStaff',
-    title:'失效操作人',
-    dataType:'varchar',
-    showInTable:false,
-    disabled:true,
+    key:'endDate',
+    title:'到期日期',
+    dataType:'datetime',
+    validator: [{required: true, message: '必填'}],
   },{
     key:'remarks',
     title:'备注',
@@ -102,7 +84,7 @@ module.exports = [
   },{
     key:'createTime',
     title:'登记时间',
-    dataType:'date',
+    dataType:'datetime',
     showInTable:false,
     disabled:true,  // 后台自动生成
   },{
@@ -112,5 +94,4 @@ module.exports = [
     showInTable:false,
     disabled:true,
   },
-
 ]
