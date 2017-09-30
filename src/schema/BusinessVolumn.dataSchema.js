@@ -53,6 +53,14 @@ module.exports = [
     dataType:'varchar',
     validator: [{required: true, message: '必填'}],
   },{
+    key:'businessId',
+    title:'业务名称',
+    dataType:'varchar',
+    showType:'select',
+    render:(text,record)=>{
+      return record.businessName;
+    },
+  },{
     key:'unit',
     title:'计费单位',
     dataType:'varchar',

@@ -44,6 +44,7 @@ module.exports = [
     title:'合同名称',
     dataType:'varchar',
     showType:'select',
+    validator: [{required: true, message: '必填'}],
     render:(text,record)=>{
       return record.contractName;
     },
@@ -52,6 +53,7 @@ module.exports = [
     title:'业务名称',
     dataType:'varchar',
     showType:'select',
+    validator: [{required: true, message: '必填'}],
     render:(text,record)=>{
       return record.contractName;
     },
