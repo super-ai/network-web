@@ -20,7 +20,7 @@ class Login extends React.PureComponent {
   // 一般而言公司内部都会提供基于LDAP的统一登录, 用到这个登录组件的场景应该挺少的
 
   state = {
-    username: '51847525',  // 当前输入的用户名
+    username: '5184752',  // 当前输入的用户名
     password: 'Crcnet123456',  // 当前输入的密码
     requesting: false, // 当前是否正在请求服务端接口
   };
@@ -51,22 +51,18 @@ class Login extends React.PureComponent {
 
     try {
       // 服务端验证
-      const res = await ajax.login(username, password);
+      const res = await ajax.loginBySuperagent(username, password);
       hide();
       logger.debug('login validate return: result %o', res);
-      if (res && res == 'LOGIN_SUCCESS' && !globalConfig.debug) {
+      console.info('返回的登录数据为:%o',res);
+      if (res && res.success && res.data == 'LOGIN_SUCCESS' && !globalConfig.debug) {
         // 这里不需要setState了, 因为setState的目的是为了re-render, 而下一句会触发redux的状态变化, 也会re-render
         // 所以直接修改状态, 就是感觉这么做有点奇怪...
         this.state.tryingLogin = false;
         // App组件也可能触发loginSuccess action
         // handleLoginSuccess 是何方神圣
-        this.props.handleLoginSuccess(res.data);
+        this.props.handleLoginSuccess(this.state.username);
       }
-      // if (res.success) {
-      //   message.success('登录成功');
-      //   // 如果登录成功, 触发一个loginSuccess的action, payload就是登录后的用户名
-      //   this.props.handleLoginSuccess(res.data);
-      // }
       else {
         message.error(`登录失败, 请联系管理员`);
         this.setState({requesting: false});

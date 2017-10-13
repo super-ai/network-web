@@ -81,13 +81,15 @@ class Ajax {
   }
 
   // params {'id':1,'name':'llp'}
+  /**
+  * 此处包装后 只用给get传递具体内容 在此把具体内容包装到params参数
+  */
   get(url, params = {}) {
     return this.requestWrapper('GET', url, {params});
   }
 
   //data body传递 ; opts params接收
   post(url, data, opts = {}) {
-
     return this.requestWrapper('POST', url, {...opts, data});
   }
 
@@ -97,7 +99,7 @@ class Ajax {
   // 这封装太烂了 还是使用requestWrapper 合适
 
   /**
-  *
+  *  fetch 实现
   *  security 登录
   */
   login(username, password){
@@ -126,6 +128,32 @@ class Ajax {
     })
     .catch((e) => {console.log('用户登录失败!%o',e);});
   }
+
+  /**
+  * superagent实现
+  *
+  */
+  loginBySuperagent(username,password){
+    // return fetch(paramsUrl,fetchOpts)
+    // .then((res)=>{
+    //   if(res && res.ok){
+    //     // 获取当前用户
+    //     this.getCurrentUser();
+    //     return res.text();
+    //   }
+    // })
+    // .catch((e) => {console.log('用户登录失败!%o',e);});
+
+    /*参数准备*/
+    var paramsUrl = `${globalConfig.api.host}${globalConfig.login.validate}`;
+
+    /*结果返回*/
+    var formData = new FormData();
+    formData.append('username',username);formData.append('password',password);
+    return this.post(paramsUrl,formData,{});
+    // return this.post(paramsUrl,{username,password});
+  }
+
 
   /**
   *
