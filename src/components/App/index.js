@@ -21,9 +21,6 @@ import Utils from 'utils/index.js';
 const TabPane = Tabs.TabPane;
 const logger = Logger.getLogger('App');
 
-console.info('localSidebarMenu为%o',localSidebarMenu);
-console.info('localHeaderMenu为%o',localHeaderMenu);
-
 /**
  * App组件
  * 定义整个页面的布局
@@ -124,10 +121,6 @@ class App extends React.Component {
       this.setState({tryingLogin: false});
     }
   }
-
-
-  // 下面开始是tab相关逻辑
-
 
   /**
    * 解析menu.js中的配置, 找到所有叶子节点对应的key和名称

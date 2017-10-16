@@ -34,46 +34,23 @@ class Ajax {
     logger.debug('method=%s, url=%s, params=%o, data=%o, headers=%o', method, url, params, data, headers);
     return new Promise((resolve, reject) => {
       const tmp = superagent(method, url);
-      // 是否是跨域请求
-      if (globalConfig.isCrossDomain()) {
-        tmp.withCredentials();
-      }
-
-      // 设置全局的超时时间
-      if (globalConfig.api.timeout && !isNaN(globalConfig.api.timeout)) {
-        tmp.timeout(globalConfig.api.timeout);
-      }
-
-      // 此话在跨域中 有问题
-      // tmp.set('Content-Type', 'application/json');
+      // headers一部分
       tmp.set('Accept', 'application/json');
+      // 是否是跨域请求
+      globalConfig.isCrossDomain() ? tmp.withCredentials():null;
+      // 设置全局的超时时间
+      globalConfig.api.timeout && !isNaN(globalConfig.api.timeout) ? tmp.timeout(globalConfig.api.timeout):null;
+      // 主参数
+      headers ? tmp.set(headers):null;
+      params ? tmp.query(params):null;
+      data ? tmp.send(data):null;
 
-      // 试着增加跨域访问需要的头
-      // tmp.set('Access-Control-Request-Method','*');
-
-      // 如果有自定义的header
-      if (headers) {
-        tmp.set(headers);
-      }
-      // url中是否有附加的参数?
-      if (params) {
-        tmp.query(params);
-      }
-      // body中发送的数据
-      if (data) {
-        tmp.send(data);
-      }
       // 包装成promise
       tmp.end((err, res) => {
         logger.debug('err=%o, res=%o', err, res);
-        // 我本来在想, 要不要在这里把错误包装下, 即使请求失败也调用resolve, 这样上层就不用区分"网络请求成功但查询数据失败"和"网络失败"两种情况了
-        // 但后来觉得这个ajax方法是很底层的, 在这里包装不合适, 应该让上层业务去包装
-        debugger;
         if (res) {
-          if (res.body)
-            resolve(res.body);
-          if (res.text) // logout中 返回内容在text而不是body中
-            resolve(res.text);
+          res.body ? resolve(res.body):null;
+          res.text ? resolve(res.text):null;
         }else{
           reject(err || res);
         }
@@ -96,110 +73,32 @@ class Ajax {
 
   //典型调用
   // get(url,{id:1,name:'llp'});
-  // post(url,{width:10,height:20},{params:{},headers:{}})
+  // post(url,FormData,{params:{},headers:{}})
   // 这封装太烂了 还是使用requestWrapper 合适
 
   /**
-  *  fetch 实现
-  *  security 登录
+  * 用户登录
   */
-  login(username, password){
-    var params = new Object();
+  login(username,password){
     var paramsUrl = `${globalConfig.api.host}${globalConfig.login.validate}`;
-    var fd = new FormData();
-    fd.append('username',username);fd.append('password',password);
-    var fetchOpts = {
-      method:'POST',
-      credentials:'include',
-      cache: 'default',
-      body:fd,
-    };
-
-    Object.keys(params).forEach(function(val){
-      paramsUrl += val + '=' + encodeURIComponent(params[val]) + '&';
-    })
-
-    return fetch(paramsUrl,fetchOpts)
-    .then((res)=>{
-      if(res && res.ok){
-        // 获取当前用户
-        this.getCurrentUser();
-        return res.text();
-      }
-    })
-    .catch((e) => {console.log('用户登录失败!%o',e);});
-  }
-
-  /**
-  * superagent实现
-  *
-  */
-  loginBySuperagent(username,password){
-    // return fetch(paramsUrl,fetchOpts)
-    // .then((res)=>{
-    //   if(res && res.ok){
-    //     // 获取当前用户
-    //     this.getCurrentUser();
-    //     return res.text();
-    //   }
-    // })
-    // .catch((e) => {console.log('用户登录失败!%o',e);});
-
-    /*参数准备*/
-    var paramsUrl = `${globalConfig.api.host}${globalConfig.login.validate}`;
-
     /*结果返回*/
     var formData = new FormData();
     formData.append('username',username);formData.append('password',password);
-    return this.post(paramsUrl,formData,{});
-    // return this.post(paramsUrl,{username,password});
+    return this.post(paramsUrl,formData);
   }
 
-
   /**
-  *
-  *  security 退出
+  * 用户退出
   */
   logout(){
     var paramsUrl = `${globalConfig.api.host}${globalConfig.login.logout}`;
-    var fetchOpts = {
-      credentials:'include',
-      cache: 'default',
-    };
-
-    return fetch(paramsUrl,fetchOpts)
-    .then((res)=>{
-      if(res && res.ok)
-        return res.text();
-    })
-    .catch((e) => {console.log('用户退出失败!%o',e);});
+    return this.get(paramsUrl);
   }
-
-  // useless
-  loginXhr(username, password){
-    var paramsUrl=`${globalConfig.api.host}${globalConfig.login.validate}`;
-    var fd = new FormData();fd.append('username',username);fd.append('password',password);
-    // 使用xhr提交
-    var xhr = new XMLHttpRequest();
-    xhr.addEventListener("load",  (data)=>{this.getListDataAfterLogin()}, false);
-    xhr.addEventListener("error", (data)=>{console.log('xhr fail!!!')}, false);
-    xhr.open("POST", paramsUrl);
-    // xhr.setRequestHeader('Access-Control-Allow-Origin', '*'); // 必须有
-    xhr.send(fd);
-  }
-
-  getListDataAfterLogin(){
-    console.warn('cnm 登陆成功了！');
-  }
-
-  // 业务方法
 
   /**
    * 获取当前登录的用户
-   *
    * @returns {*}
    */
-  // 使用fetch获取数据
   getCurrentUser() {
     // 呢吗 ok的时候 啥都ok了 以下这句话可以直接使用
     // return this.get(`${globalConfig.login.getCurrentUser}`);
@@ -219,14 +118,13 @@ class Ajax {
         return res.json();
       }
     })
-    .catch((e) => {;console.log('获取currentUser异常');});
+    .catch((e) => {console.log('获取currentUser异常');});
   }
 
   /**
-  * url参数展开
+  * 参数展开到url
   */
   extendParams(params){
-    // 设置提交参数
     var paramsStr='';
     Object.keys(params).forEach(function(val){
        paramsStr+= val + '=' + encodeURIComponent(params[val]) + '&';
@@ -323,11 +221,77 @@ class CRUDUtil {
 export default Ajax;
 
 
+// Useless Code
 
-// ok!
-// var paramsUrl='/api/staff/getCurrentUser';
-// error
-// var paramsUrl = 'http://localhost:8080/api/staff/getCurrentUser';
-
-
-// var myHeaders = {'Access-Control-Allow-Origin':'*'};
+//
+// /**
+// *  fetch 实现
+// *  security 登录
+// *  useless
+// */
+// loginFetch(username, password){
+//   var params = new Object();
+//   var paramsUrl = `${globalConfig.api.host}${globalConfig.login.validate}`;
+//   var fd = new FormData();
+//   fd.append('username',username);fd.append('password',password);
+//   var fetchOpts = {
+//     method:'POST',
+//     credentials:'include',
+//     cache: 'default',
+//     body:fd,
+//   };
+//
+//   Object.keys(params).forEach(function(val){
+//     paramsUrl += val + '=' + encodeURIComponent(params[val]) + '&';
+//   })
+//
+//   return fetch(paramsUrl,fetchOpts)
+//   .then((res)=>{
+//     if(res && res.ok){
+//       // 获取当前用户
+//       this.getCurrentUser();
+//       return res.text();
+//     }
+//   })
+//   .catch((e) => {console.log('用户登录失败!%o',e);});
+// }
+//
+// /**
+// *
+// *  security 退出
+// *  useless
+// */
+// logoutFetch(){
+//   var paramsUrl = `${globalConfig.api.host}${globalConfig.login.logout}`;
+//   var fetchOpts = {
+//     credentials:'include',
+//     cache: 'default',
+//   };
+//
+//   return fetch(paramsUrl,fetchOpts)
+//   .then((res)=>{
+//     if(res && res.ok)
+//       return res.text();
+//   })
+//   .catch((e) => {console.log('用户退出失败!%o',e);});
+// }
+//
+// // useless
+// loginXhr(username, password){
+//   var paramsUrl=`${globalConfig.api.host}${globalConfig.login.validate}`;
+//   var fd = new FormData();fd.append('username',username);fd.append('password',password);
+//   // 使用xhr提交
+//   var xhr = new XMLHttpRequest();
+//   xhr.addEventListener("load",  (data)=>{this.getListDataAfterLogin()}, false);
+//   xhr.addEventListener("error", (data)=>{console.log('xhr fail!!!')}, false);
+//   xhr.open("POST", paramsUrl);
+//   // xhr.setRequestHeader('Access-Control-Allow-Origin', '*'); // 必须有
+//   xhr.send(fd);
+// }
+//
+// getListDataAfterLogin(){
+//   console.warn('cnm 登陆成功了！');
+// }
+//
+//
+//

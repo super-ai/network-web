@@ -20,7 +20,7 @@ class Login extends React.PureComponent {
   // 一般而言公司内部都会提供基于LDAP的统一登录, 用到这个登录组件的场景应该挺少的
 
   state = {
-    username: '5184752',  // 当前输入的用户名
+    username: '51847525',  // 当前输入的用户名
     password: 'Crcnet123456',  // 当前输入的密码
     requesting: false, // 当前是否正在请求服务端接口
   };
@@ -51,7 +51,7 @@ class Login extends React.PureComponent {
 
     try {
       // 服务端验证
-      const res = await ajax.loginBySuperagent(username, password);
+      const res = await ajax.login(username, password);
       hide();
       logger.debug('login validate return: result %o', res);
       console.info('返回的登录数据为:%o',res);
@@ -69,7 +69,7 @@ class Login extends React.PureComponent {
       }
     } catch (exception) {
       hide();
-      message.error(`网络请求出错xx: ${exception.message}`);
+      message.error(`网络请求出错: ${exception.message}`);
       logger.error('login error, %o', exception);
       this.setState({requesting: false});
     }
