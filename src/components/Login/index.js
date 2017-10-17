@@ -60,7 +60,6 @@ class Login extends React.PureComponent {
         // 所以直接修改状态, 就是感觉这么做有点奇怪...
         this.state.tryingLogin = false;
         // App组件也可能触发loginSuccess action
-        // handleLoginSuccess 是何方神圣
         this.props.handleLoginSuccess(this.state.username);
       }
       else {

@@ -94,7 +94,6 @@ class App extends React.Component {
           // 所以直接修改状态, 就是感觉这么做有点奇怪...
           this.state.tryingLogin = false;
           // App组件也可能触发loginSuccess action
-          // handleLoginSuccess 是何方神圣
           this.props.handleLoginSuccess(res.data);
         } else {
           this.handleLoginError('获取用户信息失败, 请重新登录');
