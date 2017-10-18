@@ -42,7 +42,7 @@ const routes = (
         </Route>
 
         <Route path='oa'>
-          <Route path='announcement' component='Announcement'/>
+          <Route path='announcement' component={Announcement}/>
         </Route>
 
         <Route path='custom-manage'>

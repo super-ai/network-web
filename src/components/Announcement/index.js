@@ -1,11 +1,26 @@
-import react from 'react';
+import React from 'react';
+import TableList from './TableList'
+import Detail from './Detail'
 
-const Component = react.Component;
+const Component = React.Component;
 
 class Announcement extends Component{
+  state = {
+    activeComp:'TableList',
+  }
+
+  changeActiveComp(activeComp){
+    this.setState({activeComp});
+  }
+
   render(){
     return(
-        <span>公告List</span>
+        <div>
+          {this.state.activeComp=='TableList' && <TableList changeActiveComp={this.changeActiveComp.bind(this)}/>}
+          {this.state.activeComp == 'Detail' && <Detail changeActiveComp={this.changeActiveComp.bind(this)}/>}
+        </div>
     )
   }
 }
+
+export default Announcement;
