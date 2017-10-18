@@ -16,6 +16,7 @@ import Error from './components/Error';
 import Hello from './components/Hello';
 import ModifyPassword from './components/ModifyPassword';
 import InPrgress from './components/InPrgress';
+import Announcement from './components/Announcement'
 
 //import DBTable from './components/DBTable';
 
@@ -38,6 +39,10 @@ const routes = (
 
         <Route path='resource'>
           <Route path='general' tableName='ResMeter' getComponent={DBTableContainer}/>
+        </Route>
+
+        <Route path='oa'>
+          <Route path='announcement' component='Announcement'/>
         </Route>
 
         <Route path='custom-manage'>
