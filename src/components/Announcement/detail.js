@@ -11,13 +11,20 @@ const {TextArea} = Input;
 */
 class Detail extends Component{
 
-  componentDidMount(){
-    // 获取属性 设置到state
-    // this.setState(this.props.stateData);
+  state={
+    xxx:''
   }
 
-  componentWillReceiveProps(){
+  componentDidMount(){
+    // 获取属性 设置到state
+    console.info('###Detail完成加载：%o',this.props.stateData);
+    this.setState(this.props.stateData);
+  }
 
+  // 此函数为啥不会被执行？
+  componentWillReceiveProps(){
+    console.info('这个永远不会被调用');
+    this.setState(this.props.stateData);
   }
 
   handleReturn(){
@@ -42,16 +49,8 @@ class Detail extends Component{
 
   render(){
     const { getFieldDecorator } = this.props.form;
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 2 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 14 },
-      },
-    };
+    // selectedRow
+    // debugger;
     return(
       <div>
         <Button onClick={this.handleReturn.bind(this)}>返回</Button>
@@ -62,7 +61,7 @@ class Detail extends Component{
         <div>
           <Form >
             <FormItem label='标题' >
-              {getFieldDecorator('title',{})
+              {getFieldDecorator('title',{initialValue:this.state.selectedRow ? this.state.selectedRow.title:null})
                 (<Input />)}
             </FormItem>
             <FormItem label='内容' >
@@ -87,3 +86,14 @@ class Detail extends Component{
 const DetailForm = Form.create()(Detail);
 
 export default DetailForm;
+
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 2 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 14 },
+  },
+};
