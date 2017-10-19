@@ -5,11 +5,7 @@ const Component = React.Component;
 
 class TableList extends Component{
 
-  handleOnClick(event){
-    this.props.changeActiveComp('Detail');
-  }
-
-  handleOnRowClick(record,index,event){
+  handleOnRowClick(event){
     this.props.changeActiveComp('Detail');
   }
 
@@ -18,7 +14,6 @@ class TableList extends Component{
         <div>
           <Button>新建</Button>
           <Button>检索</Button>
-          <Button onClick={this.handleOnClick.bind(this)}>查看详细</Button>
           <br />
           <Table dataSource={data} columns={columns} onRowClick={this.handleOnRowClick.bind(this)}/>
         </div>
@@ -29,6 +24,10 @@ class TableList extends Component{
 export default TableList;
 
 const columns = [{
+  title: '标题',
+  dataIndex: 'title',
+  key: 'title',
+},{
   title: '内容',
   dataIndex: 'content',
   key: 'content',
@@ -44,31 +43,37 @@ const columns = [{
 
 const data = [{
   key: '1',
+  title:'标题1',
   content: '长江流域发现白鱀豚',
   createStaffName: '张三',
   createDateTime: '2017-10-10 09:00:00',
 }, {
   key: '2',
+  title:'标题1',
   content: '共产党十九大胜利召开',
   createStaffName: '李四',
   createDateTime: '2016-10-10 09:00:00',
 }, {
   key: '3',
+  title:'标题1',
   content: '流氓斗殴此起彼伏',
   createStaffName: '王五',
   createDateTime: '2015-10-10 09:00:00',
 },{
   key: '4',
+  title:'标题1',
   content: '长江流域发现白鱀豚',
   createStaffName: '张三',
   createDateTime: '2017-10-10 09:00:00',
 }, {
   key: '5',
+  title:'标题1',
   content: '共产党十九大胜利召开',
   createStaffName: '李四',
   createDateTime: '2016-10-10 09:00:00',
 }, {
   key: '6',
+  title:'标题1',
   content: '流氓斗殴此起彼伏',
   createStaffName: '王五',
   createDateTime: '2015-10-10 09:00:00',
