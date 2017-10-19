@@ -1,7 +1,9 @@
 import React from 'react';
-import {Button,Table} from 'antd';
+import {Button,Icon,Table,Input,Radio} from 'antd';
+import './index.less';
 
 const Component = React.Component;
+const {Search} = Input;
 
 class TableList extends Component{
 
@@ -10,7 +12,7 @@ class TableList extends Component{
   }
 
   componentDidMount(){
-    console.info('###TableList完成加载：componentDidMount');
+    // console.info('###TableList完成加载：%o',this.props.stateData);
     this.setState(this.props.stateData);
   }
 
@@ -20,12 +22,23 @@ class TableList extends Component{
     this.props.setStateData({selectedRow:record});
   }
 
+  // 范围筛选
+  handleRangeChange(){
+
+  }
+
   render(){
     return(
         <div>
-          <Button>新建</Button>
-          <Button>检索</Button>
-          <br />
+          <div className='toolbar'>
+            <Button icon='plus-circle-o' type='primary'>新增</Button>
+            <Search size='large' placeholder='关键搜索子...' className='search' onSearch={(value)=>{console.info(value)}}/>
+            <Radio.Group value='now' onChange={this.handleRangeChange.bind(this)} className='filter'>
+              <Radio.Button value="now">当前</Radio.Button>
+              <Radio.Button value="history">归档</Radio.Button>
+              <Radio.Button value="all">全部</Radio.Button>
+            </Radio.Group>
+          </div>
           <Table dataSource={this.state.data} columns={columns} onRowClick={this.handleOnRowClick.bind(this)}/>
         </div>
     )

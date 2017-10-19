@@ -26,11 +26,11 @@ class Announcement extends Component{
   render(){
     return(
         <div>
-          {this.state.activeComp=='TableList' &&
+          { this.state.activeComp=='TableList' &&
           <TableList changeActiveComp={this.changeActiveComp.bind(this)}
           stateData={this.state} setStateData={this.setStateData.bind(this)}/>}
 
-          {this.state.activeComp == 'Detail' &&
+          { this.state.activeComp == 'Detail' &&
           <Detail changeActiveComp={this.changeActiveComp.bind(this)}
           stateData={this.state} setStateData={this.setStateData.bind(this)}
           />}
