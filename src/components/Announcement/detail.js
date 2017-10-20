@@ -1,6 +1,7 @@
 import React from 'react';
 import {Button,Form,Input,Icon,Tree} from 'antd';
 import './index.less';
+import configData from './configData.js';
 
 const Component = React.Component;
 const FormItem = Form.Item;
@@ -58,12 +59,15 @@ class Detail extends Component{
     });
   }
 
-
   render(){
     const { getFieldDecorator } = this.props.form;
-    const replyTree =
+    const replysTree =
       <Tree>
-        {this.renderTreeNodes(replyTreeData)}
+        {this.renderTreeNodes(configData.replysTreeData)}
+      </Tree>;
+    const readsTree =
+      <Tree>
+        {this.renderTreeNodes(configData.readsTreeData)}
       </Tree>;
     return(
       <div>
@@ -91,12 +95,12 @@ class Detail extends Component{
                 (attachments)}
             </FormItem>
             <FormItem label='' >
-              {getFieldDecorator('replies',{initialValue:this.state.selectedRow ? this.state.selectedRow.replies:null})
-                (replyTree)}
+              {getFieldDecorator('replys',{initialValue:this.state.selectedRow ? this.state.selectedRow.replys:null})
+                (replysTree)}
             </FormItem>
-            <FormItem label='已阅' >
+            <FormItem label='' >
               {getFieldDecorator('reads',{initialValue:this.state.selectedRow ? this.state.selectedRow.reads:null})
-                (reads)}
+                (readsTree)}
             </FormItem>
             <FormItem label='创建人' >
               {getFieldDecorator('createStaffName',{initialValue:this.state.selectedRow ? this.state.selectedRow.createStaffName:null})
@@ -144,26 +148,6 @@ const replies =
     <li>习大大回复</li>
   </ul>;
 
-const replyTreeData = [{
-  title: '回复列表',
-  key: '0-0',
-  children: [{
-    title: '张三回复',
-    key: '0-0-0',
-  }, {
-    title: '李四回复',
-    key: '0-0-1',
-  }, {
-    title: 'Tom回复',
-    key: '0-0-2',
-  }, {
-    title: 'Tyson回复',
-    key: '0-1',
-  }, {
-    title: '习大大回复',
-    key: '0-2',
-  }],
-}];
 
 const formItemLayout = {
   labelCol: {
