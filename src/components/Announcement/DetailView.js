@@ -99,14 +99,26 @@ class DetailView extends Component{
 
 export default DetailView;
 
+// ul 展开折叠
+function handleExpand(e){
+  if(e.target.innerHTML=='-'){
+    e.target.innerHTML='+';
+  }else{
+    e.target.innerHTML='-';
+  }
+}
+
 const attachments =
-  <ul>
-    <li>附件一</li>
-    <li>附件二</li>
-    <li>附件三</li>
-    <li>附件四</li>
-    <li>附件五</li>
-  </ul>;
+  <div>
+    <a onClick={handleExpand}>-</a>
+    <ul id="ul">
+      <li>附件一</li>
+      <li>附件二</li>
+      <li>附件三</li>
+      <li>附件四</li>
+      <li>附件五</li>
+    </ul>
+  </div>;
 
 const reads =
   <ul>
