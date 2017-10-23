@@ -18,13 +18,11 @@ class Detail extends Component{
   }
 
   componentDidMount(){
-    console.info('###Detail完成加载：%o',this.props.stateData);
     this.setState(this.props.stateData);
   }
 
   // 此函数为啥不会被执行:因为它会在activeComp不为detail时候注销
   componentWillReceiveProps(nextProps){
-    console.info('这个永远不会被调用%o,',nextProps.stateData);
     this.setState(nextProps.stateData);
   }
 

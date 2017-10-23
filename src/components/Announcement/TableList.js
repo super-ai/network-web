@@ -12,8 +12,11 @@ class TableList extends Component{
   }
 
   componentDidMount(){
-    // console.info('###TableList完成加载：%o',this.props.stateData);
     this.setState(this.props.stateData);
+  }
+
+  componentWillReceiveProps(nextProps){
+    this.setState(nextProps.stateData);
   }
 
   handleOnRowClick(record,index,event){
@@ -28,6 +31,7 @@ class TableList extends Component{
   }
 
   render(){
+    console.error('TableList触发render');
     return(
         <div style={{display:this.state.activeComp=='TableList' ? 'inline':'none' }}>
           <div className='toolbar'>

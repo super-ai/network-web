@@ -10,6 +10,14 @@ class Reply extends Component{
 
   state={}
 
+  componentDidMount(){
+    this.setState(this.props.stateData);
+  }
+
+  componentWillReceiveProps(nextProps){
+    this.setState(nextProps.stateData);
+  }
+
   handleReturn(){
     this.props.changeActiveComp('Detail');
   }

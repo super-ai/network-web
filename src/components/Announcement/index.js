@@ -24,7 +24,6 @@ class Announcement extends Component{
   }
 
   render(){
-    console.warn('全局state为：%o',this.state);
     return(
         <div>
           <TableList changeActiveComp={this.changeActiveComp.bind(this)}
