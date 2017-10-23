@@ -101,10 +101,13 @@ export default DetailView;
 
 // ul 展开折叠
 function handleExpand(e){
+  var ul = document.getElementById('ul');
   if(e.target.innerHTML=='-'){
     e.target.innerHTML='+';
+    ul.style.visibility = 'hidden';
   }else{
     e.target.innerHTML='-';
+    ul.style.visibility = 'visible';
   }
 }
 
