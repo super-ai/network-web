@@ -20,9 +20,7 @@ class TableList extends Component{
   }
 
   handleOnRowClick(record,index,event){
-    // this.props.changeActiveComp('Detail');
-    // 修改selectedRowIndex
-    this.props.setStateData({activeComp:'Detail',selectedRow:record});
+    this.props.setStateData({activeComp:'DetailView',selectedRow:record});
   }
 
   // 范围筛选
@@ -31,13 +29,12 @@ class TableList extends Component{
   }
 
   render(){
-    console.error('TableList触发render');
     return(
         <div style={{display:this.state.activeComp=='TableList' ? 'inline':'none' }}>
           <div className='toolbar'>
             <Button icon='plus-circle-o' type='primary'>新增</Button>
             <Search size='large' placeholder='关键搜索子...' className='search' onSearch={(value)=>{console.info(value)}}/>
-            <Radio.Group value='now' onChange={this.handleRangeChange.bind(this)} className='filter'>
+            <Radio.Group defaultValue='now' onChange={this.handleRangeChange.bind(this)} className='filter'>
               <Radio.Button value="now">当前</Radio.Button>
               <Radio.Button value="history">归档</Radio.Button>
               <Radio.Button value="all">全部</Radio.Button>

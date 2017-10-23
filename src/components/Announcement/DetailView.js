@@ -9,7 +9,7 @@ const {TextArea} = Input;
 const TreeNode = Tree.TreeNode;
 
 /**
-* 单条公告查看和编辑
+* 单条公告查看
 */
 class Detail extends Component{
 
@@ -27,15 +27,15 @@ class Detail extends Component{
   }
 
   handleReturn(){
-    this.props.changeActiveComp('TableList');
+    this.props.setStateData({activeComp:'TableList'});
   }
 
   handleReply(){
-    this.props.changeActiveComp('Reply');
+    this.props.setStateData({activeComp:'Reply'});
   }
 
   handleEdit(){
-
+    this.props.setStateData({activeComp:'DetailEdit'});
   }
 
   handleDelete(){
@@ -70,7 +70,7 @@ class Detail extends Component{
         {this.renderTreeNodes(configData.readsTreeData)}
       </Tree>;
     return(
-      <div style={{display:this.state.activeComp=='Detail' ? 'inline':'none' }}>
+      <div style={{display:this.state.activeComp=='DetailView' ? 'inline':'none' }}>
         <Button type='primary' icon='left-circle-o' onClick={this.handleReturn.bind(this)}>返回</Button>
         <Button icon='plus' onClick={this.handleReply.bind(this)}>回复</Button>
         <Button icon='edit' onClick={this.handleEdit.bind(this)}>编辑</Button>

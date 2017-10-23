@@ -1,7 +1,9 @@
 import React from 'react';
-import {Button} from 'antd';
+import {Button,Form,Input} from 'antd';
 
 const Component = React.Component;
+const TextArea = Input.TextArea;
+const FormItem = Form.Item;
 
 /**
 * 查看回复
@@ -19,18 +21,27 @@ class Reply extends Component{
   }
 
   handleReturn(){
-    this.props.changeActiveComp('Detail');
+    this.props.setStateData({activeComp:'DetailView'});
   }
 
   render(){
+    const { getFieldDecorator } = this.props.form;
     return(
         <div style={{display:this.state.activeComp=='Reply' ? 'inline':'none' }}>
-          <span>回复信息</span>
+          <Button icon='left-circle-o' type='primary' onClick={this.handleReturn.bind(this)}>返回</Button>
+          <Button icon='save' onClick={this.handleReturn.bind(this)}>提交</Button>
           <br />
-          <Button onClick={this.handleReturn.bind(this)}>返回</Button>
+          <Form>
+            <FormItem label='内容' >
+              {getFieldDecorator('replyContent',)
+                (<TextArea autosize={{ minRows: 8, maxRows: 28 }} />)}
+            </FormItem>
+          </Form>
         </div>
     )
   }
 }
 
-export default Reply;
+const ReplyForm = Form.create()(Reply);
+
+export default ReplyForm;

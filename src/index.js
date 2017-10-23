@@ -17,8 +17,8 @@ import Hello from './components/Hello';
 import ModifyPassword from './components/ModifyPassword';
 import InPrgress from './components/InPrgress';
 import Announcement from './components/Announcement';
-import TableList from './components/Announcement/TableList';
-import Detail from './components/Announcement/Detail';
+// import TableList from './components/Announcement/TableList';
+// import Detail from './components/Announcement/Detail';
 
 
 //import DBTable from './components/DBTable';

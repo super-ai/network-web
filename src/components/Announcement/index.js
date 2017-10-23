@@ -1,7 +1,8 @@
 import React from 'react';
-import TableList from './TableList'
-import Detail from './Detail'
-import Reply from './Reply'
+import TableList from './TableList';
+import DetailView from './DetailView';
+import DetailEdit from './DetailEdit'
+import Reply from './Reply';
 
 const Component = React.Component;
 
@@ -10,10 +11,6 @@ class Announcement extends Component{
     activeComp:'TableList',
     data:data,
     selectedRow:{},
-  }
-
-  changeActiveComp(activeComp){
-    this.setState({activeComp});
   }
 
   /**
@@ -26,17 +23,10 @@ class Announcement extends Component{
   render(){
     return(
         <div>
-          <TableList changeActiveComp={this.changeActiveComp.bind(this)}
-          stateData={this.state} setStateData={this.setStateData.bind(this)}
-          />
-
-          <Detail changeActiveComp={this.changeActiveComp.bind(this)}
-          stateData={this.state} setStateData={this.setStateData.bind(this)}
-          />
-
-          <Reply changeActiveComp={this.changeActiveComp.bind(this)}
-          stateData={this.state}  setStateData={this.setStateData.bind(this)}
-          />
+          <TableList stateData={this.state} setStateData={this.setStateData.bind(this)}/>
+          <DetailView stateData={this.state} setStateData={this.setStateData.bind(this)}/>
+          <DetailEdit stateData={this.state} setStateData={this.setStateData.bind(this)}/>
+          <Reply stateData={this.state}  setStateData={this.setStateData.bind(this)}/>
         </div>
     )
   }
