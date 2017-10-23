@@ -24,20 +24,20 @@ class Announcement extends Component{
   }
 
   render(){
+    console.warn('全局state为：%o',this.state);
     return(
         <div>
-          { this.state.activeComp=='TableList' &&
           <TableList changeActiveComp={this.changeActiveComp.bind(this)}
-          stateData={this.state} setStateData={this.setStateData.bind(this)}/>}
+          stateData={this.state} setStateData={this.setStateData.bind(this)}
+          />
 
-          { this.state.activeComp == 'Detail' &&
           <Detail changeActiveComp={this.changeActiveComp.bind(this)}
           stateData={this.state} setStateData={this.setStateData.bind(this)}
-          />}
+          />
 
-          {this.state.activeComp == 'Reply' &&
           <Reply changeActiveComp={this.changeActiveComp.bind(this)}
-          stateData={this.state}  setStateData={this.setStateData.bind(this)}/>}
+          stateData={this.state}  setStateData={this.setStateData.bind(this)}
+          />
         </div>
     )
   }

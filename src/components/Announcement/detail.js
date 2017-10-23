@@ -18,14 +18,14 @@ class Detail extends Component{
   }
 
   componentDidMount(){
-    // console.info('###Detail完成加载：%o',this.props.stateData);
+    console.info('###Detail完成加载：%o',this.props.stateData);
     this.setState(this.props.stateData);
   }
 
   // 此函数为啥不会被执行:因为它会在activeComp不为detail时候注销
-  componentWillReceiveProps(){
-    console.info('这个永远不会被调用');
-    this.setState(this.props.stateData);
+  componentWillReceiveProps(nextProps){
+    console.info('这个永远不会被调用%o,',nextProps.stateData);
+    this.setState(nextProps.stateData);
   }
 
   handleReturn(){
@@ -72,7 +72,7 @@ class Detail extends Component{
         {this.renderTreeNodes(configData.readsTreeData)}
       </Tree>;
     return(
-      <div>
+      <div style={{display:this.state.activeComp=='Detail' ? 'inline':'none' }}>
         <Button type='primary' icon='left-circle-o' onClick={this.handleReturn.bind(this)}>返回</Button>
         <Button icon='plus' onClick={this.handleReply.bind(this)}>回复</Button>
         <Button icon='edit' onClick={this.handleEdit.bind(this)}>编辑</Button>

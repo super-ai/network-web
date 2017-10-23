@@ -17,9 +17,9 @@ class TableList extends Component{
   }
 
   handleOnRowClick(record,index,event){
-    this.props.changeActiveComp('Detail');
+    // this.props.changeActiveComp('Detail');
     // 修改selectedRowIndex
-    this.props.setStateData({selectedRow:record});
+    this.props.setStateData({activeComp:'Detail',selectedRow:record});
   }
 
   // 范围筛选
@@ -29,7 +29,7 @@ class TableList extends Component{
 
   render(){
     return(
-        <div>
+        <div style={{display:this.state.activeComp=='TableList' ? 'inline':'none' }}>
           <div className='toolbar'>
             <Button icon='plus-circle-o' type='primary'>新增</Button>
             <Search size='large' placeholder='关键搜索子...' className='search' onSearch={(value)=>{console.info(value)}}/>

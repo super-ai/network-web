@@ -8,13 +8,15 @@ const Component = React.Component;
 */
 class Reply extends Component{
 
+  state={}
+
   handleReturn(){
     this.props.changeActiveComp('Detail');
   }
 
   render(){
     return(
-        <div>
+        <div style={{display:this.state.activeComp=='Reply' ? 'inline':'none' }}>
           <span>回复信息</span>
           <br />
           <Button onClick={this.handleReturn.bind(this)}>返回</Button>
