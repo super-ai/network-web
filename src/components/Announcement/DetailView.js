@@ -78,17 +78,16 @@ class Detail extends Component{
         <Button icon='share-alt' onClick={this.handleTransmit.bind(this)}>转发</Button>
         <div>
           <Form>
-            <FormItem label='标题' >
-              {getFieldDecorator('title',{initialValue:this.state.selectedRow ? this.state.selectedRow.title:null})
-                (<Input disabled={this.state.formState!='select'}/>)}
+            <FormItem>
+                <span>{this.state.selectedRow ? this.state.selectedRow.title:null}</span>
             </FormItem>
-            <FormItem label='内容' >
-              {getFieldDecorator('content',{initialValue:this.state.selectedRow ? this.state.selectedRow.content:null})
-                (<TextArea autosize={{ minRows: 8, maxRows: 28 }} disabled={this.state.formState=='select'} />)}
+            <FormItem>
+              <span>{this.state.selectedRow ? this.state.selectedRow.content:null}</span>
             </FormItem>
-            <FormItem label='范围' >
-              {getFieldDecorator('range',{initialValue:this.state.selectedRow ? this.state.selectedRow.range:null})
-                (<TextArea autosize={{ minRows: 6, maxRows: 6 }}  disabled={this.state.formState=='select'}/>)}
+            <FormItem>
+              <span>{this.state.selectedRow ? this.state.selectedRow.createStaffName:null}</span>
+              <br />
+              <span>{this.state.selectedRow ? this.state.selectedRow.createDateTime:null}</span>
             </FormItem>
             <FormItem label='附件' >
               {getFieldDecorator('attachments',{initialValue:this.state.selectedRow ? this.state.selectedRow.attachments:null})
@@ -102,14 +101,7 @@ class Detail extends Component{
               {getFieldDecorator('reads',{initialValue:this.state.selectedRow ? this.state.selectedRow.reads:null})
                 (readsTree)}
             </FormItem>
-            <FormItem label='创建人' >
-              {getFieldDecorator('createStaffName',{initialValue:this.state.selectedRow ? this.state.selectedRow.createStaffName:null})
-                (<Input />)}
-            </FormItem>
-            <FormItem label='创建时间' >
-              {getFieldDecorator('createDateTime',{initialValue:this.state.selectedRow ? this.state.selectedRow.createDateTime:null})
-                (<Input />)}
-            </FormItem>
+
 
           </Form>
         </div>

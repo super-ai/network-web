@@ -24,12 +24,16 @@ class Reply extends Component{
     this.props.setStateData({activeComp:'DetailView'});
   }
 
+  handleSave(){
+    
+  }
+
   render(){
     const { getFieldDecorator } = this.props.form;
     return(
         <div style={{display:this.state.activeComp=='Reply' ? 'inline':'none' }}>
           <Button icon='left-circle-o' type='primary' onClick={this.handleReturn.bind(this)}>返回</Button>
-          <Button icon='save' onClick={this.handleReturn.bind(this)}>提交</Button>
+          <Button icon='save' onClick={this.handleSave.bind(this)}>保存</Button>
           <br />
           <Form>
             <FormItem label='内容' >

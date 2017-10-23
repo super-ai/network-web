@@ -38,7 +38,7 @@ export default Announcement;
 const data = [{
   key: '1',
   title:'标题1',
-  content: '长江流域发现白鱀豚',
+  content: '长江流域发现白鱀豚长江流域发现白鱀豚长江流域发现白鱀豚长江流域发现白鱀豚长江流域发现白鱀豚长江流域发现白鱀豚长江流域发现白鱀豚长江流域发现白鱀豚长江流域发现白鱀豚长江流域发现白鱀豚',
   createStaffName: '张三',
   createDateTime: '2017-10-10 09:00:00',
 }, {
