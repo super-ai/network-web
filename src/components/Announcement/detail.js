@@ -13,7 +13,9 @@ const TreeNode = Tree.TreeNode;
 */
 class Detail extends Component{
 
-  state = {}
+  state = {
+    formState:'select', //insert、edit、select
+  }
 
   componentDidMount(){
     // console.info('###Detail完成加载：%o',this.props.stateData);
@@ -80,15 +82,15 @@ class Detail extends Component{
           <Form>
             <FormItem label='标题' >
               {getFieldDecorator('title',{initialValue:this.state.selectedRow ? this.state.selectedRow.title:null})
-                (<Input />)}
+                (<Input disabled={this.state.formState!='select'}/>)}
             </FormItem>
             <FormItem label='内容' >
               {getFieldDecorator('content',{initialValue:this.state.selectedRow ? this.state.selectedRow.content:null})
-                (<TextArea autosize={{ minRows: 8, maxRows: 28 }} />)}
+                (<TextArea autosize={{ minRows: 8, maxRows: 28 }} disabled={this.state.formState=='select'} />)}
             </FormItem>
             <FormItem label='范围' >
               {getFieldDecorator('range',{initialValue:this.state.selectedRow ? this.state.selectedRow.range:null})
-                (<TextArea autosize={{ minRows: 6, maxRows: 6 }} />)}
+                (<TextArea autosize={{ minRows: 6, maxRows: 6 }}  disabled={this.state.formState=='select'}/>)}
             </FormItem>
             <FormItem label='附件' >
               {getFieldDecorator('attachments',{initialValue:this.state.selectedRow ? this.state.selectedRow.attachments:null})
