@@ -1,6 +1,6 @@
 module.exports ={
   replysTreeData : [{
-    title: '回复列表',
+    title: '回复',
     key: '0-0',
     children: [{
       title: '张三回复',
@@ -21,7 +21,7 @@ module.exports ={
   }],
 
   readsTreeData : [{
-    title: '已阅列表',
+    title: '已阅',
     key: '0-0',
     children: [{
       title: '张三已阅',

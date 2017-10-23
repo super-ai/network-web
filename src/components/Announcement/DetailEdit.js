@@ -11,7 +11,7 @@ const TreeNode = Tree.TreeNode;
 /**
 * 单条公告新增和编辑
 */
-class Detail extends Component{
+class DetailEdit extends Component{
 
   state = {
     formState:'select', //insert、edit、select
@@ -98,9 +98,9 @@ class Detail extends Component{
   }
 }
 
-const DetailForm = Form.create()(Detail);
+const DetailEditForm = Form.create()(DetailEdit);
 
-export default DetailForm;
+export default DetailEditForm;
 
 const attachments =
   <ul>

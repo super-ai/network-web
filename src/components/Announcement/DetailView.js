@@ -1,17 +1,16 @@
 import React from 'react';
-import {Button,Form,Input,Icon,Tree} from 'antd';
+import {Button,Input,Icon,Tree} from 'antd';
 import './index.less';
 import configData from './configData.js';
 
 const Component = React.Component;
-const FormItem = Form.Item;
 const {TextArea} = Input;
 const TreeNode = Tree.TreeNode;
 
 /**
 * 单条公告查看
 */
-class Detail extends Component{
+class DetailView extends Component{
 
   state = {
     formState:'select', //insert、edit、select
@@ -60,59 +59,45 @@ class Detail extends Component{
   }
 
   render(){
-    const { getFieldDecorator } = this.props.form;
     const replysTree =
-      <Tree>
+      <Tree className='announcementTree'>
         {this.renderTreeNodes(configData.replysTreeData)}
       </Tree>;
     const readsTree =
-      <Tree>
+      <Tree className='announcementTree'>
         {this.renderTreeNodes(configData.readsTreeData)}
       </Tree>;
     return(
-      <div style={{display:this.state.activeComp=='DetailView' ? 'inline':'none' }}>
+      <div style={{display:this.state.activeComp=='DetailView' ? 'inline':'none' }} className='announcement'>
         <Button type='primary' icon='left-circle-o' onClick={this.handleReturn.bind(this)}>返回</Button>
         <Button icon='plus' onClick={this.handleReply.bind(this)}>回复</Button>
         <Button icon='edit' onClick={this.handleEdit.bind(this)}>编辑</Button>
         <Button icon='delete' onClick={this.handleDelete.bind(this)}>删除</Button>
         <Button icon='share-alt' onClick={this.handleTransmit.bind(this)}>转发</Button>
         <div>
-          <Form>
-            <FormItem>
-                <span>{this.state.selectedRow ? this.state.selectedRow.title:null}</span>
-            </FormItem>
-            <FormItem>
-              <span>{this.state.selectedRow ? this.state.selectedRow.content:null}</span>
-            </FormItem>
-            <FormItem>
-              <span>{this.state.selectedRow ? this.state.selectedRow.createStaffName:null}</span>
-              <br />
-              <span>{this.state.selectedRow ? this.state.selectedRow.createDateTime:null}</span>
-            </FormItem>
-            <FormItem label='附件' >
-              {getFieldDecorator('attachments',{initialValue:this.state.selectedRow ? this.state.selectedRow.attachments:null})
-                (attachments)}
-            </FormItem>
-            <FormItem label='' >
-              {getFieldDecorator('replys',{initialValue:this.state.selectedRow ? this.state.selectedRow.replys:null})
-                (replysTree)}
-            </FormItem>
-            <FormItem label='' >
-              {getFieldDecorator('reads',{initialValue:this.state.selectedRow ? this.state.selectedRow.reads:null})
-                (readsTree)}
-            </FormItem>
-
-
-          </Form>
+          <br />
+          <span className='announcementTitle'>{this.state.selectedRow ? this.state.selectedRow.title:null}</span>
+          <div className='announcementCreate'>
+            <span>{this.state.selectedRow ? this.state.selectedRow.createStaffName:null}</span>
+            &nbsp;&nbsp;
+            <span>{this.state.selectedRow ? this.state.selectedRow.createDateTime:null}</span>
+          </div>
+          <hr className='hr'/>
+          <br />
+          <p className='announcementContent'>{this.state.selectedRow ? this.state.selectedRow.content:null}</p>
+          <br />
+          <hr />
+          <br /><br />
+          {attachments}
         </div>
+        {replysTree}
+        {readsTree}
       </div>
     )
   }
 }
 
-const DetailForm = Form.create()(Detail);
-
-export default DetailForm;
+export default DetailView;
 
 const attachments =
   <ul>
