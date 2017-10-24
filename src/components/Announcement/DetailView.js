@@ -2,6 +2,7 @@ import React from 'react';
 import {Button,Input,Icon,Tree} from 'antd';
 import './index.less';
 import configData from './configData.js';
+import ItemList from './ItemList.js';
 
 const Component = React.Component;
 const {TextArea} = Input;
@@ -88,7 +89,7 @@ class DetailView extends Component{
           <br />
           <hr />
           <br /><br />
-          {attachments}
+          <ItemList />
         </div>
         {replysTree}
         {readsTree}
@@ -101,26 +102,30 @@ export default DetailView;
 
 // ul 展开折叠
 function handleExpand(e){
-  var ul = document.getElementById('ul');
+  var divUl = document.getElementById('divUl');
   if(e.target.innerHTML=='-'){
     e.target.innerHTML='+';
-    ul.style.visibility = 'hidden';
+    divUl.style.visibility = 'hidden';
+    divUl.style.dispaly = "none";
   }else{
     e.target.innerHTML='-';
-    ul.style.visibility = 'visible';
+    divUl.style.visibility = 'visible';
+    divUl.style.dispaly = "block";
   }
 }
 
 const attachments =
   <div>
     <a onClick={handleExpand}>-</a>
-    <ul id="ul">
-      <li>附件一</li>
-      <li>附件二</li>
-      <li>附件三</li>
-      <li>附件四</li>
-      <li>附件五</li>
-    </ul>
+    <div id="divUl">
+      <ul>
+        <li>附件一</li>
+        <li>附件二</li>
+        <li>附件三</li>
+        <li>附件四</li>
+        <li>附件五</li>
+      </ul>
+    </div>
   </div>;
 
 const reads =
