@@ -3,7 +3,15 @@ import React from 'react';
 const Component = React.Component;
 
 class ItemList extends Component{
-  state = {dispaly:'block',visibility:'visible'}
+  state = {
+    dispaly:'none',
+    visibility:'hidden',
+    data:[]
+  }
+
+  componentDidMount(){
+    this.setState({data:this.props.data});
+  }
 
   // ul 展开折叠
   handleExpand(e){
@@ -19,14 +27,11 @@ class ItemList extends Component{
   render(){
     return(
       <div>
-        <a onClick={this.handleExpand.bind(this)}>-</a>
+        <a onClick={this.handleExpand.bind(this)}>+</a>
+        <a style={{fontWeight:'bold'}}>{this.props.title}</a>
         <div style={{dispaly:this.state.display,visibility:this.state.visibility}}>
           <ul>
-            <li>附件一</li>
-            <li>附件二</li>
-            <li>附件三</li>
-            <li>附件四</li>
-            <li>附件五</li>
+            {this.state.data.map((item,index)=>(<li>{item}</li>))}
           </ul>
         </div>
       </div>

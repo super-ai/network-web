@@ -70,29 +70,32 @@ class DetailView extends Component{
       </Tree>;
     return(
       <div style={{display:this.state.activeComp=='DetailView' ? 'inline':'none' }} className='announcement'>
-        <Button type='primary' icon='left-circle-o' onClick={this.handleReturn.bind(this)}>返回</Button>
-        <Button icon='plus' onClick={this.handleReply.bind(this)}>回复</Button>
-        <Button icon='edit' onClick={this.handleEdit.bind(this)}>编辑</Button>
-        <Button icon='delete' onClick={this.handleDelete.bind(this)}>删除</Button>
-        <Button icon='share-alt' onClick={this.handleTransmit.bind(this)}>转发</Button>
         <div>
-          <br />
-          <span className='announcementTitle'>{this.state.selectedRow ? this.state.selectedRow.title:null}</span>
-          <div className='announcementCreate'>
-            <span>{this.state.selectedRow ? this.state.selectedRow.createStaffName:null}</span>
-            &nbsp;&nbsp;
-            <span>{this.state.selectedRow ? this.state.selectedRow.createDateTime:null}</span>
-          </div>
-          <hr className='hr'/>
-          <br />
-          <p className='announcementContent'>{this.state.selectedRow ? this.state.selectedRow.content:null}</p>
-          <br />
-          <hr />
-          <br /><br />
-          <ItemList />
+          <Button type='primary' icon='left-circle-o' onClick={this.handleReturn.bind(this)}>返回</Button>
+          <Button icon='plus' onClick={this.handleReply.bind(this)}>回复</Button>
+          <Button icon='edit' onClick={this.handleEdit.bind(this)}>编辑</Button>
+          <Button icon='delete' onClick={this.handleDelete.bind(this)}>删除</Button>
+          <Button icon='share-alt' onClick={this.handleTransmit.bind(this)}>转发</Button>
         </div>
-        {replysTree}
-        {readsTree}
+        <div className='announcementTitle'>
+          <span>{this.state.selectedRow ? this.state.selectedRow.title:null}</span>
+        </div>
+        <div className='announcementCreate'>
+          <span>{this.state.selectedRow ? this.state.selectedRow.createStaffName:null}</span>
+          &nbsp;&nbsp;
+          <span>{this.state.selectedRow ? this.state.selectedRow.createDateTime:null}</span>
+        </div>
+        <hr className='hr'/>
+        <br />
+        <p className='announcementContent'>{this.state.selectedRow ? this.state.selectedRow.content:null}</p>
+        <br />
+        <hr />
+        <br /><br />
+        <ItemList data={attachments} title='附件'/>
+        <br />
+        <ItemList data={reads} title='阅读'/>
+        <br />
+        <ItemList data={replies} title='回复'/>
       </div>
     )
   }
@@ -100,52 +103,9 @@ class DetailView extends Component{
 
 export default DetailView;
 
-// ul 展开折叠
-function handleExpand(e){
-  var divUl = document.getElementById('divUl');
-  if(e.target.innerHTML=='-'){
-    e.target.innerHTML='+';
-    divUl.style.visibility = 'hidden';
-    divUl.style.dispaly = "none";
-  }else{
-    e.target.innerHTML='-';
-    divUl.style.visibility = 'visible';
-    divUl.style.dispaly = "block";
-  }
-}
-
-const attachments =
-  <div>
-    <a onClick={handleExpand}>-</a>
-    <div id="divUl">
-      <ul>
-        <li>附件一</li>
-        <li>附件二</li>
-        <li>附件三</li>
-        <li>附件四</li>
-        <li>附件五</li>
-      </ul>
-    </div>
-  </div>;
-
-const reads =
-  <ul>
-    <li>张三阅</li>
-    <li>李四阅</li>
-    <li>Tom阅</li>
-    <li>Tyson阅</li>
-    <li>习大大阅</li>
-  </ul>;
-const replies =
-  <ul>
-    <li>张三回复</li>
-    <li>李四回复</li>
-    <li>Tom回复</li>
-    <li>Tyson回复</li>
-    <li>习大大回复</li>
-  </ul>;
-
-
+const attachments = ['附件一','附件二','附件三','附件四','附件五'];
+const reads = ['张三阅','李四阅','Tom阅','Tyson阅','习大大阅'];
+const replies = ['张三回复','李四回复','Tom回复','Tyson回复','习大大回复'];
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
