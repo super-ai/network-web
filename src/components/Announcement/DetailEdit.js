@@ -1,12 +1,15 @@
 import React from 'react';
-import {Button,Form,Input,Icon,Tree,Row,Col} from 'antd';
+import {Button,Form,Input,Icon,Row,Col,TreeSelect} from 'antd';
 import './index.less';
 import configData from './configData.js';
+import Ou from '/components/Custom/OuTreeSelect';
 
 const Component = React.Component;
 const FormItem = Form.Item;
 const {TextArea} = Input;
-const TreeNode = Tree.TreeNode;
+const TreeNode = TreeSelect.TreeNode;
+
+
 
 /**
 * 单条公告新增和编辑
@@ -15,6 +18,7 @@ class DetailEdit extends Component{
 
   state = {
     formState:'select', //insert、edit、select
+    value: ['leaf1','leaf2','leaf3'],
   }
 
   componentDidMount(){
@@ -34,31 +38,39 @@ class DetailEdit extends Component{
 
   }
 
-  renderTreeNodes = (data) => {
-    return data.map((item) => {
-      if (item.children) {
-        return (
-          <TreeNode title={item.title} key={item.key} dataRef={item}>
-            {this.renderTreeNodes(item.children)}
-          </TreeNode>
-        );
-      }
-      return <TreeNode {...item} />;
-    });
+  onChange = (value) => {
+    console.log(arguments);
+    this.setState({ value });
   }
 
   render(){
     const { getFieldDecorator } = this.props.form;
-    const replysTree =
-      <Tree>
-        {this.renderTreeNodes(configData.replysTreeData)}
-      </Tree>;
-    const readsTree =
-      <Tree>
-        {this.renderTreeNodes(configData.readsTreeData)}
-      </Tree>;
     return(
       <div style={{display:this.state.activeComp=='DetailEdit' ? 'inline':'none'}}>
+        <Ou />
+      
+        <TreeSelect
+        showSearch
+        style={{ width: 300 }}
+        value={this.state.value}
+        dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+        placeholder="Please select"
+        allowClear
+        multiple
+        treeDefaultExpandAll
+        onChange={this.onChange}
+      >
+        <TreeNode value="parent 1" title="parent 1" key="0-1">
+          <TreeNode value="parent 1-0" title="parent 1-0" key="0-1-1">
+            <TreeNode value="leaf1" title="my leaf" key="random" />
+            <TreeNode value="leaf2" title="your leaf" key="random1" />
+          </TreeNode>
+          <TreeNode value="parent 1-1" title="parent 1-1" key="random2">
+            <TreeNode value="sss" title={<b style={{ color: '#08c' }}>sss</b>} key="random3" />
+          </TreeNode>
+        </TreeNode>
+      </TreeSelect>
+
         <Row>
           <Col span={12} offset={0} style={{ textAlign: 'left' }}>
             <Button type='primary' icon='left-circle-o' onClick={this.handleReturn.bind(this)}>返回</Button>

@@ -59,7 +59,6 @@ class OuTreeSelect extends React.Component{
   * 页面展开和初始事件
   */
   onLoadData(treeNode){
-    debugger;
     return new Promise((resolve) => {
       var fetchOpts = {credentials:'include'};
       var url = this.props.url==null ? '/api/ou/tree/admin' : this.props.url;
