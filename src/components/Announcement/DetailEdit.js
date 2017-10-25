@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button,Form,Input,Icon,Tree} from 'antd';
+import {Button,Form,Input,Icon,Tree,Row,Col} from 'antd';
 import './index.less';
 import configData from './configData.js';
 
@@ -30,6 +30,10 @@ class DetailEdit extends Component{
     this.props.setStateData({activeComp:'DetailView'});
   }
 
+  handleSave(){
+
+  }
+
   renderTreeNodes = (data) => {
     return data.map((item) => {
       if (item.children) {
@@ -54,43 +58,31 @@ class DetailEdit extends Component{
         {this.renderTreeNodes(configData.readsTreeData)}
       </Tree>;
     return(
-      <div style={{display:this.state.activeComp=='DetailEdit' ? 'inline':'none' }}>
-        <Button type='primary' icon='left-circle-o' onClick={this.handleReturn.bind(this)}>返回</Button>
+      <div style={{display:this.state.activeComp=='DetailEdit' ? 'inline':'none'}}>
+        <Row>
+          <Col span={12} offset={0} style={{ textAlign: 'left' }}>
+            <Button type='primary' icon='left-circle-o' onClick={this.handleReturn.bind(this)}>返回</Button>
+            <Button icon='save' onClick={this.handleSave.bind(this)}>保存</Button>
+          </Col>
+        </Row>
         <div>
-          <Form>
-            <FormItem label='标题' >
+          <Form style={{marginTop:'20px'}}>
+            <FormItem label='标题'  {...formItemLayout}>
               {getFieldDecorator('title',{initialValue:this.state.selectedRow ? this.state.selectedRow.title:null})
-                (<Input />)}
+                (<Input className='announcement'/>)}
             </FormItem>
-            <FormItem label='内容' >
+            <FormItem label='内容'  {...formItemLayout}>
               {getFieldDecorator('content',{initialValue:this.state.selectedRow ? this.state.selectedRow.content:null})
                 (<TextArea autosize={{ minRows: 8, maxRows: 28 }}  />)}
             </FormItem>
-            <FormItem label='范围' >
+            <FormItem label='范围'  {...formItemLayout}>
               {getFieldDecorator('range',{initialValue:this.state.selectedRow ? this.state.selectedRow.range:null})
                 (<TextArea autosize={{ minRows: 6, maxRows: 6 }} />)}
             </FormItem>
-            <FormItem label='附件' >
+            <FormItem label='附件'  {...formItemLayout}>
               {getFieldDecorator('attachments',{initialValue:this.state.selectedRow ? this.state.selectedRow.attachments:null})
                 (attachments)}
             </FormItem>
-            <FormItem label='' >
-              {getFieldDecorator('replys',{initialValue:this.state.selectedRow ? this.state.selectedRow.replys:null})
-                (replysTree)}
-            </FormItem>
-            <FormItem label='' >
-              {getFieldDecorator('reads',{initialValue:this.state.selectedRow ? this.state.selectedRow.reads:null})
-                (readsTree)}
-            </FormItem>
-            <FormItem label='创建人' >
-              {getFieldDecorator('createStaffName',{initialValue:this.state.selectedRow ? this.state.selectedRow.createStaffName:null})
-                (<Input />)}
-            </FormItem>
-            <FormItem label='创建时间' >
-              {getFieldDecorator('createDateTime',{initialValue:this.state.selectedRow ? this.state.selectedRow.createDateTime:null})
-                (<Input />)}
-            </FormItem>
-
           </Form>
         </div>
       </div>
@@ -101,6 +93,17 @@ class DetailEdit extends Component{
 const DetailEditForm = Form.create()(DetailEdit);
 
 export default DetailEditForm;
+
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 3 },
+    sm: { span: 1 },
+  },
+  wrapperCol: {
+    xs: { span: 20 },
+    sm: { span: 20 },
+  },
+};
 
 const attachments =
   <ul>
@@ -127,15 +130,3 @@ const replies =
     <li>Tyson回复</li>
     <li>习大大回复</li>
   </ul>;
-
-
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 2 },
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 14 },
-  },
-};
