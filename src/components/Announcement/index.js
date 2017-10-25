@@ -25,7 +25,7 @@ class Announcement extends Component{
         <div>
           <TableList stateData={this.state} setStateData={this.setStateData.bind(this)}/>
           <DetailView stateData={this.state} setStateData={this.setStateData.bind(this)}/>
-          <DetailEdit stateData={this.state} setStateData={this.setStateData.bind(this)}/>
+          {this.state.activeComp=='DetailEdit' && <DetailEdit stateData={this.state} setStateData={this.setStateData.bind(this)}/>}
           <Reply stateData={this.state}  setStateData={this.setStateData.bind(this)}/>
         </div>
     )
@@ -39,14 +39,14 @@ const data = [{
   key: '1',
   title:'长江流域发现白鱀豚',
   content: '长江流域发现白鱀豚长江流域发现白鱀豚长江流域发现白鱀豚长江流域发现白鱀豚长江流域发现白鱀豚长江流域发现白鱀豚长江流域发现白鱀豚长江流域发现白鱀豚长江流域发现白鱀豚长江流域发现白鱀豚',
-  range:['leaf1','leaf2','leaf3'],
+  range:['leaf1','leaf2'],
   createStaffName: '张三',
   createDateTime: '2017-10-10 09:00:00',
 }, {
   key: '2',
   title:'共产党十九大胜利召开',
   content: '共产党十九大胜利召开共产党十九大胜利召开共产党十九大胜利召开共产党十九大胜利召开共产党十九大胜利召开',
-  range:['leaf1','leaf2','leaf3','leaf4'],
+  range:['leaf2','leaf3'],
   createStaffName: '李四',
   createDateTime: '2016-10-10 09:00:00',
 }, {

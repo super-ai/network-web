@@ -21,7 +21,6 @@ class DetailView extends Component{
     this.setState(this.props.stateData);
   }
 
-  // 此函数为啥不会被执行:因为它会在activeComp不为detail时候注销
   componentWillReceiveProps(nextProps){
     this.setState(nextProps.stateData);
   }

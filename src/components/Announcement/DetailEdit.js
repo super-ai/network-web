@@ -9,8 +9,6 @@ const FormItem = Form.Item;
 const {TextArea} = Input;
 const TreeNode = TreeSelect.TreeNode;
 
-
-
 /**
 * 单条公告新增和编辑
 */
@@ -25,7 +23,6 @@ class DetailEdit extends Component{
     this.setState(this.props.stateData);
   }
 
-  // 此函数为啥不会被执行:因为它会在activeComp不为detail时候注销
   componentWillReceiveProps(nextProps){
     this.setState(nextProps.stateData);
   }
@@ -45,8 +42,9 @@ class DetailEdit extends Component{
 
   render(){
     const { getFieldDecorator } = this.props.form;
+    console.info('DetailEdit的当前state为:%o',this.state);
     return(
-      <div style={{display:this.state.activeComp=='DetailEdit' ? 'inline':'none'}}>
+      <div>
         <Row>
           <Col span={12} offset={0} style={{ textAlign: 'left' }}>
             <Button type='primary' icon='left-circle-o' onClick={this.handleReturn.bind(this)}>返回</Button>
@@ -57,7 +55,7 @@ class DetailEdit extends Component{
           <Form style={{marginTop:'20px'}}>
             <FormItem label='标题'  {...formItemLayout}>
               {getFieldDecorator('title',{initialValue:this.state.selectedRow ? this.state.selectedRow.title:null})
-                (<Input />)}
+                (<Input value={this.state.selectedRow ? this.state.selectedRow.title:null}/>)}
             </FormItem>
             <FormItem label='内容'  {...formItemLayout}>
               {getFieldDecorator('content',{initialValue:this.state.selectedRow ? this.state.selectedRow.content:null})
