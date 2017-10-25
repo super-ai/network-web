@@ -96,7 +96,6 @@ class OuTreeSelect extends React.Component{
     }
   }
 
-
   render(){
     return (
       <TreeSelect
@@ -107,6 +106,7 @@ class OuTreeSelect extends React.Component{
       loadData={this.onLoadData}
       onChange={this.onChangeHandler}
       value={this.state.value}
+      {...this.props}
       />
     )
   }

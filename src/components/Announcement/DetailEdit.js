@@ -2,7 +2,7 @@ import React from 'react';
 import {Button,Form,Input,Icon,Row,Col,TreeSelect} from 'antd';
 import './index.less';
 import configData from './configData.js';
-import Ou from '/components/Custom/OuTreeSelect';
+import Ou from 'components/Custom/OuTreeSelect';
 
 const Component = React.Component;
 const FormItem = Form.Item;
@@ -18,7 +18,7 @@ class DetailEdit extends Component{
 
   state = {
     formState:'select', //insert、edit、select
-    value: ['leaf1','leaf2','leaf3'],
+    value: [],
   }
 
   componentDidMount(){
@@ -47,30 +47,6 @@ class DetailEdit extends Component{
     const { getFieldDecorator } = this.props.form;
     return(
       <div style={{display:this.state.activeComp=='DetailEdit' ? 'inline':'none'}}>
-        <Ou />
-      
-        <TreeSelect
-        showSearch
-        style={{ width: 300 }}
-        value={this.state.value}
-        dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-        placeholder="Please select"
-        allowClear
-        multiple
-        treeDefaultExpandAll
-        onChange={this.onChange}
-      >
-        <TreeNode value="parent 1" title="parent 1" key="0-1">
-          <TreeNode value="parent 1-0" title="parent 1-0" key="0-1-1">
-            <TreeNode value="leaf1" title="my leaf" key="random" />
-            <TreeNode value="leaf2" title="your leaf" key="random1" />
-          </TreeNode>
-          <TreeNode value="parent 1-1" title="parent 1-1" key="random2">
-            <TreeNode value="sss" title={<b style={{ color: '#08c' }}>sss</b>} key="random3" />
-          </TreeNode>
-        </TreeNode>
-      </TreeSelect>
-
         <Row>
           <Col span={12} offset={0} style={{ textAlign: 'left' }}>
             <Button type='primary' icon='left-circle-o' onClick={this.handleReturn.bind(this)}>返回</Button>
@@ -89,7 +65,7 @@ class DetailEdit extends Component{
             </FormItem>
             <FormItem label='范围'  {...formItemLayout}>
               {getFieldDecorator('range',{initialValue:this.state.selectedRow ? this.state.selectedRow.range:null})
-                (<TextArea autosize={{ minRows: 6, maxRows: 6 }} />)}
+                (<Ou onChange={this.onChange} multiple style={{ width: 300 }}/>)}
             </FormItem>
             <FormItem label='附件'  {...formItemLayout}>
               {getFieldDecorator('attachments',{initialValue:this.state.selectedRow ? this.state.selectedRow.attachments:null})
