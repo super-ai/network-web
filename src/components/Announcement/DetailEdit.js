@@ -55,14 +55,14 @@ class DetailEdit extends Component{
           <Form style={{marginTop:'20px'}}>
             <FormItem label='标题'  {...formItemLayout}>
               {getFieldDecorator('title',{initialValue:this.state.selectedRow ? this.state.selectedRow.title:null})
-                (<Input value={this.state.selectedRow ? this.state.selectedRow.title:null}/>)}
+                (<Input />)}
             </FormItem>
             <FormItem label='内容'  {...formItemLayout}>
               {getFieldDecorator('content',{initialValue:this.state.selectedRow ? this.state.selectedRow.content:null})
                 (<TextArea autosize={{ minRows: 8, maxRows: 28 }}  />)}
             </FormItem>
             <FormItem label='范围'  {...formItemLayout}>
-              {getFieldDecorator('range',{initialValue:this.state.selectedRow ? this.state.selectedRow.range:null})
+              {getFieldDecorator('ouIds',{initialValue:this.state.selectedRow ? this.state.selectedRow.ouIds:null})
                 (<Ou onChange={this.onChange} multiple allowClear />)}
             </FormItem>
             <FormItem label='附件'  {...formItemLayout}>
