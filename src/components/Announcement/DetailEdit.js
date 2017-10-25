@@ -32,17 +32,18 @@ class DetailEdit extends Component{
   }
 
   handleSave(){
-
+    console.log('提交的表单数据为: ',this.props.form.getFieldsValue());
   }
 
   onChange = (value) => {
-    console.log(arguments);
+    console.log('arguments');
     this.setState({ value });
   }
 
   render(){
     const { getFieldDecorator } = this.props.form;
-    console.info('DetailEdit的当前state为:%o',this.state);
+    debugger;
+    console.info('DetailEdit的当前selectedRow为:%o',this.state.selectedRow);
     return(
       <div>
         <Row>
@@ -62,8 +63,8 @@ class DetailEdit extends Component{
                 (<TextArea autosize={{ minRows: 8, maxRows: 28 }}  />)}
             </FormItem>
             <FormItem label='范围'  {...formItemLayout}>
-              {getFieldDecorator('ouIds',{initialValue:this.state.selectedRow ? this.state.selectedRow.ouIds:null})
-                (<Ou onChange={this.onChange} multiple allowClear />)}
+              {getFieldDecorator('ouIds',{initialValue:this.state.selectedRow && this.state.selectedRow.ouIds ? this.state.selectedRow.ouIds:[]})
+                (<Ou multiple allowClear labelInValue/>)}
             </FormItem>
             <FormItem label='附件'  {...formItemLayout}>
               {getFieldDecorator('attachments',{initialValue:this.state.selectedRow ? this.state.selectedRow.attachments:null})
