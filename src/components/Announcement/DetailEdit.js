@@ -69,7 +69,7 @@ class DetailEdit extends Component{
           <Form style={{marginTop:'20px'}}>
             <FormItem label='标题'  {...formItemLayout}>
               {getFieldDecorator('title',{initialValue:this.state.selectedRow ? this.state.selectedRow.title:null})
-                (<Input className='announcement'/>)}
+                (<Input />)}
             </FormItem>
             <FormItem label='内容'  {...formItemLayout}>
               {getFieldDecorator('content',{initialValue:this.state.selectedRow ? this.state.selectedRow.content:null})
