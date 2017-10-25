@@ -63,7 +63,7 @@ class DetailEdit extends Component{
             </FormItem>
             <FormItem label='范围'  {...formItemLayout}>
               {getFieldDecorator('range',{initialValue:this.state.selectedRow ? this.state.selectedRow.range:null})
-                (<Ou onChange={this.onChange} multiple style={{ width: 300 }}/>)}
+                (<Ou onChange={this.onChange} multiple allowClear />)}
             </FormItem>
             <FormItem label='附件'  {...formItemLayout}>
               {getFieldDecorator('attachments',{initialValue:this.state.selectedRow ? this.state.selectedRow.attachments:null})

@@ -100,7 +100,7 @@ class OuTreeSelect extends React.Component{
     return (
       <TreeSelect
       placeholder="部门"
-      style={{ width: 150 }}
+      
       dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
       treeData={this.state.treeData}
       loadData={this.onLoadData}
