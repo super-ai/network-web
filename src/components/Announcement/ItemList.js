@@ -5,8 +5,8 @@ const Component = React.Component;
 class ItemList extends Component{
   state = {
     display:'none',
-    visibility:'hidden',
-    data:[]
+    data:[],
+    // visibility:'hidden',
   }
 
   componentDidMount(){
@@ -17,10 +17,10 @@ class ItemList extends Component{
   handleExpand(e){
     if(e.target.innerHTML=='-'){
       e.target.innerHTML='+';
-      this.setState({display:'none',visibility:'hidden'});
+      this.setState({display:'none'});
     }else{
       e.target.innerHTML='-';
-      this.setState({display:'block',visibility:'visible'});
+      this.setState({display:'block'});
     }
   }
 
@@ -29,7 +29,7 @@ class ItemList extends Component{
       <div>
         <a onClick={this.handleExpand.bind(this)}>+</a>
         <a style={{fontWeight:'bold'}}>{this.props.title}</a>
-        <div style={{display:this.state.display,visibility:this.state.visibility}}>
+        <div style={{display:this.state.display}}>
           <ul>
             {this.state.data.map((item,index)=>(<li key={item}>{item}</li>))}
           </ul>
