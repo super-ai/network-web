@@ -214,6 +214,30 @@ const Utils = {
 
     return res;
   },
+
+  /**
+  * 处理Form序列化形成的数据
+  * 日期和moment对象 都处理为YYYY-MM-DD HH:mm:ss格式
+  * 注意moment要作为参数传入
+  */
+  procFieldsValue(oldObj,moment){
+    const newObj = {};
+    for (const key in oldObj) {
+      if (oldObj[key] === undefined || oldObj[key] === null) {
+        continue;
+      }
+
+      if (oldObj[key] instanceof Date) {
+        newObj[key] = oldObj[key].format('yyyy-MM-dd HH:mm:ss');
+      } else if (moment.isMoment(oldObj[key])) {  // 处理moment对象
+        newObj[key] = oldObj[key].format('YYYY-MM-DD HH:mm:ss');
+      } else {
+        newObj[key] = oldObj[key];
+      }
+    }
+
+    return newObj;
+  },
 };
 
 export default Utils;

@@ -4,6 +4,7 @@ import moment from 'moment';
 import './index.less';
 import configData from './configData.js';
 import Ou from 'components/Custom/OuTreeSelect';
+import utils from 'utils';
 
 const Component = React.Component;
 const FormItem = Form.Item;
@@ -35,7 +36,7 @@ class DetailEdit extends Component{
   handleSave(){
     var oldObj = this.props.form.getFieldsValue();
     var newObj = {};
-    newObj = procFieldsValue(oldObj);
+    newObj = utils.procFieldsValue(oldObj,moment);
     console.log('处理后的表单数据为: ',newObj);
   }
 
@@ -87,29 +88,6 @@ class DetailEdit extends Component{
 const DetailEditForm = Form.create()(DetailEdit);
 
 export default DetailEditForm;
-
-/**
-* 处理Form序列化形成的数据
-* 日期和moment对象 都处理为YYYY-MM-DD HH:mm:ss格式
-*/
-function procFieldsValue(oldObj){
-  const newObj = {};
-  for (const key in oldObj) {
-    if (oldObj[key] === undefined || oldObj[key] === null) {
-      continue;
-    }
-
-    if (oldObj[key] instanceof Date) {
-      newObj[key] = oldObj[key].format('yyyy-MM-dd HH:mm:ss');
-    } else if (moment.isMoment(oldObj[key])) {  // 处理moment对象
-      newObj[key] = oldObj[key].format('YYYY-MM-DD HH:mm:ss');
-    } else {
-      newObj[key] = oldObj[key];
-    }
-  }
-
-  return newObj;
-}
 
 const formItemLayout = {
   labelCol: {
