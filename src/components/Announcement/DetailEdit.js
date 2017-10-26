@@ -1,5 +1,6 @@
 import React from 'react';
-import {Button,Form,Input,Icon,Row,Col,TreeSelect} from 'antd';
+import {Button,Form,Input,Icon,Row,Col,TreeSelect,DatePicker} from 'antd';
+import moment from 'moment';
 import './index.less';
 import configData from './configData.js';
 import Ou from 'components/Custom/OuTreeSelect';
@@ -32,7 +33,10 @@ class DetailEdit extends Component{
   }
 
   handleSave(){
-    console.log('提交的表单数据为: ',this.props.form.getFieldsValue());
+    var oldObj = this.props.form.getFieldsValue();
+    var newObj = {};
+    newObj = procFieldsValue(oldObj);
+    console.log('处理后的表单数据为: ',newObj);
   }
 
   onChange = (value) => {
@@ -42,7 +46,6 @@ class DetailEdit extends Component{
 
   render(){
     const { getFieldDecorator } = this.props.form;
-    debugger;
     console.info('DetailEdit的当前selectedRow为:%o',this.state.selectedRow);
     return(
       <div>
@@ -66,6 +69,10 @@ class DetailEdit extends Component{
               {getFieldDecorator('ouIds',{initialValue:this.state.selectedRow && this.state.selectedRow.ouIds ? this.state.selectedRow.ouIds:[]})
                 (<Ou multiple allowClear labelInValue/>)}
             </FormItem>
+            <FormItem label='归档'  {...formItemLayout}>
+              {getFieldDecorator('recordDateTime',{initialValue:this.state.selectedRow ? moment(this.state.selectedRow.recordDateTime,'YYYY-MM-DD HH:mm:ss'):null})
+                (<DatePicker showTime format="YYYY-MM-DD HH:mm:ss"/>)}
+            </FormItem>
             <FormItem label='附件'  {...formItemLayout}>
               {getFieldDecorator('attachments',{initialValue:this.state.selectedRow ? this.state.selectedRow.attachments:null})
                 (attachments)}
@@ -81,10 +88,33 @@ const DetailEditForm = Form.create()(DetailEdit);
 
 export default DetailEditForm;
 
+/**
+* 处理Form序列化形成的数据
+* 日期和moment对象 都处理为YYYY-MM-DD HH:mm:ss格式
+*/
+function procFieldsValue(oldObj){
+  const newObj = {};
+  for (const key in oldObj) {
+    if (oldObj[key] === undefined || oldObj[key] === null) {
+      continue;
+    }
+
+    if (oldObj[key] instanceof Date) {
+      newObj[key] = oldObj[key].format('yyyy-MM-dd HH:mm:ss');
+    } else if (moment.isMoment(oldObj[key])) {  // 处理moment对象
+      newObj[key] = oldObj[key].format('YYYY-MM-DD HH:mm:ss');
+    } else {
+      newObj[key] = oldObj[key];
+    }
+  }
+
+  return newObj;
+}
+
 const formItemLayout = {
   labelCol: {
-    xs: { span: 3 },
-    sm: { span: 1 },
+    xs: { span: 4 },
+    sm: { span: 2 },
   },
   wrapperCol: {
     xs: { span: 20 },
