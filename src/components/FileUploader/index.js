@@ -178,15 +178,26 @@ class FileUploader extends React.Component {
   };
 
   /**
-   * 点击预览按钮
+   * 点击预览按钮图片
    *
    * @param file
    */
-  handlePreview = (file) => {
+  handlePreviewImage = (file) => {
     this.setState({
       previewImage: file.url || file.thumbUrl,
       previewVisible: true,
     });
+  };
+
+  /**
+  * 点击下载文件
+  * 如果上传文件 那么点击后下载文件 而不是浏览器中打开文件
+  */
+  downfile = (file) => {
+    var a = document.createElement('a');
+    a.href = file.url;
+    a.download = file.filename;
+    a.click();
   };
 
   /**
@@ -319,7 +330,7 @@ class FileUploader extends React.Component {
           action={this.uploadUrl}
           listType={this.listType}
           fileList={fileList}
-          onPreview={this.forImage ? this.handlePreview : undefined}
+          onPreview={this.forImage ? this.handlePreviewImage : this.downfile}
           onChange={this.handleChange}
           beforeUpload={this.beforeUpload}
           accept={this.accept}
