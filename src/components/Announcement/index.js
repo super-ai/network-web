@@ -42,6 +42,7 @@ const data = [{
   ouIds:[{value:1,label:'铁通公司'},{value:14954,label:'重庆'}],
   createStaffName: '张三',
   createDateTime: '2017-10-10 09:00:00',
+  attachments:['url2'],
 }, {
   key: '2',
   title:'共产党十九大胜利召开',

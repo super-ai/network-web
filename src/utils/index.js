@@ -220,7 +220,7 @@ const Utils = {
   * 日期和moment对象 都处理为YYYY-MM-DD HH:mm:ss格式
   * 注意moment要作为参数传入
   */
-  procFieldsValue(oldObj,moment){
+  procFieldsDateValue(oldObj,moment){
     const newObj = {};
     for (const key in oldObj) {
       if (oldObj[key] === undefined || oldObj[key] === null) {
@@ -238,6 +238,35 @@ const Utils = {
 
     return newObj;
   },
+
+  /**
+  * 字段数组fields中所有host开头的 都去掉host
+  */
+  removeServer(obj,fields,host){
+    // 参数为空 返回
+    if(!obj||!fields||!host) return;
+
+    for(var i in fields){
+      for(var j in obj[fields[i]]){
+        obj[fields[i]][j] = obj[fields[i]][j].replace(host,'');
+      }
+    }
+  },
+
+  /**
+  * 字段数组fields中所有host开头的 都增加host
+  */
+  addServer(obj,fields,host){
+    // 参数为空 返回
+    if(!obj||!fields||!host) return;
+
+    for(var i in fields){
+      for(var j in obj[fields[i]]){
+        obj[fields[i]][j] = host + obj[fields[i]][j];
+      }
+    }
+  },
+
 };
 
 export default Utils;

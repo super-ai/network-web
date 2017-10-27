@@ -40,7 +40,7 @@ class FileUploader extends React.Component {
     if (url) {
         this.uploadUrl = url;
     } else {
-      this.uploadUrl = `${globalConfig.api.path}${forImage ? globalConfig.upload.image : globalConfig.upload.file}`;  // 默认上传接口
+      this.uploadUrl = `${globalConfig.api.host}${globalConfig.api.path}${forImage ? globalConfig.upload.image : globalConfig.upload.file}`;  // 默认上传接口
       // console.info(`请求地址为:${this.uploadUrl}`);
     }
 
@@ -205,7 +205,7 @@ class FileUploader extends React.Component {
     // 还要自己处理一下fileList
     for (const tmp of fileList) {
       if (tmp.status === 'done' && !tmp.url && tmp.response && tmp.response.success) {
-        tmp.url = tmp.response.data;  // 服务端返回的url
+        tmp.url = `${globalConfig.api.host}` + tmp.response.data;  // 服务端返回的url
       }
     }
 

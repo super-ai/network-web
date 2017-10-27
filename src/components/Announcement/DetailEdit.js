@@ -5,6 +5,8 @@ import './index.less';
 import configData from './configData.js';
 import Ou from 'components/Custom/OuTreeSelect';
 import utils from 'utils';
+import FileUploader from 'components/FileUploader';
+import globalConfig from 'config.js';
 
 const Component = React.Component;
 const FormItem = Form.Item;
@@ -35,8 +37,13 @@ class DetailEdit extends Component{
 
   handleSave(){
     var oldObj = this.props.form.getFieldsValue();
+    var host = globalConfig.api.host;
     var newObj = {};
-    newObj = utils.procFieldsValue(oldObj,moment);
+    // 日期处理
+    newObj = utils.procFieldsDateValue(oldObj,moment);
+    // 上传文件url去掉server
+    utils.removeServer(newObj,['attachments'],host);
+
     console.log('处理后的表单数据为: ',newObj);
   }
 
@@ -47,7 +54,6 @@ class DetailEdit extends Component{
 
   render(){
     const { getFieldDecorator } = this.props.form;
-    console.info('DetailEdit的当前selectedRow为:%o',this.state.selectedRow);
     return(
       <div>
         <Row>
@@ -76,8 +82,10 @@ class DetailEdit extends Component{
             </FormItem>
             <FormItem label='附件'  {...formItemLayout}>
               {getFieldDecorator('attachments',{initialValue:this.state.selectedRow ? this.state.selectedRow.attachments:null})
-                (attachments)}
+                (<FileUploader max='5'  sizeLimit='500' placeholder='上传文件' />)
+              }
             </FormItem>
+
           </Form>
         </div>
       </div>
@@ -125,3 +133,8 @@ const replies =
     <li>Tyson回复</li>
     <li>习大大回复</li>
   </ul>;
+
+  // <FormItem label='附件tmp'  {...formItemLayout}>
+  //   {getFieldDecorator('attachmentsTmp',{})
+  //     (attachments)}
+  // </FormItem>
