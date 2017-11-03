@@ -41,7 +41,7 @@ class TableList extends Component{
               <Radio.Button value="all">全部</Radio.Button>
             </Radio.Group>
           </div>
-          <Table dataSource={this.state.data} columns={columns} onRowClick={this.handleOnRowClick.bind(this)}/>
+          <Table dataSource={this.state.data} columns={columns} onRowClick={this.handleOnRowClick.bind(this)} className='announcement'/>
         </div>
     )
   }
