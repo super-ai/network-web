@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button,Input,Icon,Tree} from 'antd';
+import {Button,Input,Icon,Tree,Modal,message} from 'antd';
 import './index.less';
 import configData from './configData.js';
 import ItemList from './ItemList.js';
@@ -37,8 +37,23 @@ class DetailView extends Component{
     this.props.setStateData({activeComp:'DetailEdit'});
   }
 
-  handleDelete(){
+  handleDelete(e){
+    e.preventDefault();
+    Modal.confirm({
+      title: '确认删除',
+      content: `当前被选中标题为: ${this.state.selectedRow.title}`,
+      // 这里注意要用箭头函数, 否则this不生效
+      onOk: () => {
+        this.delete(`${this.state.selectedRow.id}`);
+      },
+    });
+  }
 
+  /**
+  * 删除某条记录
+  */
+  delete(id){
+    message.info('发起删除请求');
   }
 
   handleTransmit(){
