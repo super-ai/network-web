@@ -30,7 +30,7 @@ class ItemList extends Component{
         <a onClick={this.handleExpand.bind(this)}>+</a>
         <a style={{fontWeight:'bold'}}>{this.props.title}</a>
         <div style={{display:this.state.display}}>
-          <ul>
+          <ul className='itemUl'>
             {this.state.data.map((item,index)=>(<li key={item}>{item}</li>))}
           </ul>
         </div>
