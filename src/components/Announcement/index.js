@@ -3,6 +3,7 @@ import TableList from './TableList';
 import DetailView from './DetailView';
 import DetailEdit from './DetailEdit'
 import Reply from './Reply';
+import Transfer from './Transfer';
 
 const Component = React.Component;
 
@@ -27,6 +28,7 @@ class Announcement extends Component{
           <DetailView stateData={this.state} setStateData={this.setStateData.bind(this)}/>
           {this.state.activeComp=='DetailEdit' && <DetailEdit stateData={this.state} setStateData={this.setStateData.bind(this)}/>}
           <Reply stateData={this.state}  setStateData={this.setStateData.bind(this)}/>
+          <Transfer stateData={this.state}  setStateData={this.setStateData.bind(this)}/>
         </div>
     )
   }

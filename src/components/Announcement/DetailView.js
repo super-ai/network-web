@@ -42,7 +42,7 @@ class DetailView extends Component{
   }
 
   handleTransmit(){
-
+    this.props.setStateData({activeComp:'Transfer'});
   }
 
   renderTreeNodes = (data) => {

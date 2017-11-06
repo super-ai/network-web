@@ -72,10 +72,6 @@ class DetailEdit extends Component{
               {getFieldDecorator('content',{initialValue:this.state.selectedRow ? this.state.selectedRow.content:null})
                 (<TextArea autosize={{ minRows: 8, maxRows: 28 }}  />)}
             </FormItem>
-            <FormItem label='范围'  {...formItemLayout}>
-              {getFieldDecorator('ouIds',{initialValue:this.state.selectedRow && this.state.selectedRow.ouIds ? this.state.selectedRow.ouIds:[]})
-                (<Ou multiple allowClear labelInValue/>)}
-            </FormItem>
             <FormItem label='归档'  {...formItemLayout}>
               {getFieldDecorator('recordDateTime',{initialValue:this.state.selectedRow ? moment(this.state.selectedRow.recordDateTime,'YYYY-MM-DD HH:mm:ss'):null})
                 (<DatePicker showTime format="YYYY-MM-DD HH:mm:ss"/>)}
@@ -137,4 +133,9 @@ const replies =
   // <FormItem label='附件tmp'  {...formItemLayout}>
   //   {getFieldDecorator('attachmentsTmp',{})
   //     (attachments)}
+  // </FormItem>
+
+  // <FormItem label='范围'  {...formItemLayout}>
+  //   {getFieldDecorator('ouIds',{initialValue:this.state.selectedRow && this.state.selectedRow.ouIds ? this.state.selectedRow.ouIds:[]})
+  //     (<Ou multiple allowClear labelInValue/>)}
   // </FormItem>
