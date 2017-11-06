@@ -37,6 +37,7 @@ module.exports = {
     extensions: ['', '.js', '.jsx'],  // require的时候可以直接使用require('file')，不用require('file.js')
     alias: {
       antdcss: 'antd/dist/antd.min.css',  // import时的别名
+      
     },
   },
 

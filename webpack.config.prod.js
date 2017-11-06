@@ -41,6 +41,10 @@ module.exports = {
   resolve: {
     modulesDirectories: ['node_modules', './src'],
     extensions: ['', '.js', '.jsx'],
+    alias: {
+      antdcss: 'antd/dist/antd.min.css',  // import时的别名
+      
+    },
   },
 
   module: {
