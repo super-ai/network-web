@@ -12,6 +12,7 @@ const Component = React.Component;
 const FormItem = Form.Item;
 const {TextArea} = Input;
 const TreeNode = TreeSelect.TreeNode;
+const formItemLayout = configData.formItemLayout;
 
 /**
 * 单条公告新增和编辑
@@ -93,16 +94,7 @@ const DetailEditForm = Form.create()(DetailEdit);
 
 export default DetailEditForm;
 
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 4 },
-    sm: { span: 2 },
-  },
-  wrapperCol: {
-    xs: { span: 20 },
-    sm: { span: 20 },
-  },
-};
+
 
 const attachments =
   <ul>

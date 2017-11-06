@@ -1,4 +1,15 @@
 module.exports ={
+  formItemLayout : {
+    labelCol: {
+      xs: { span: 4 },
+      sm: { span: 2 },
+    },
+    wrapperCol: {
+      xs: { span: 20 },
+      sm: { span: 20 },
+    },
+  },
+  
   replysTreeData : [{
     title: '回复',
     key: '0-0',

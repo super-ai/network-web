@@ -1,10 +1,12 @@
 import React from 'react';
 import {Button,Form,Input} from 'antd';
 import Ou from 'components/Custom/OuTreeSelect';
+import configData from './configData.js';
 
 const Component = React.Component;
 const TextArea = Input.TextArea;
 const FormItem = Form.Item;
+const formItemLayout = configData.formItemLayout;
 
 /**
 * 转发
@@ -36,8 +38,8 @@ class Transfer extends Component{
           <Button icon='left-circle-o' type='primary' onClick={this.handleReturn.bind(this)}>返回</Button>
           <Button icon='save' onClick={this.handleSave.bind(this)}>保存</Button>
           <br />
-          <Form>
-            <FormItem label='范围'>
+          <Form style={{marginTop:'20px'}}>
+            <FormItem label='范围'  {...formItemLayout}>
               {getFieldDecorator('ouIds',{initialValue:[]})
                 (<Ou multiple allowClear labelInValue/>)}
             </FormItem>
