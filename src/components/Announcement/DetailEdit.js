@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button,Form,Input,Icon,Row,Col,TreeSelect,DatePicker} from 'antd';
+import {Button,Form,Input,Icon,Row,Col,TreeSelect,DatePicker,Radio} from 'antd';
 import moment from 'moment';
 import './index.less';
 import configData from './configData.js';
@@ -13,6 +13,7 @@ const FormItem = Form.Item;
 const {TextArea} = Input;
 const TreeNode = TreeSelect.TreeNode;
 const formItemLayout = configData.formItemLayout;
+const RadioGroup = Radio.Group;
 
 /**
 * 单条公告新增和编辑
@@ -72,6 +73,13 @@ class DetailEdit extends Component{
             <FormItem label='内容'  {...formItemLayout}>
               {getFieldDecorator('content',{initialValue:this.state.selectedRow ? this.state.selectedRow.content:null})
                 (<TextArea autosize={{ minRows: 8, maxRows: 28 }}  />)}
+            </FormItem>
+            <FormItem label='置顶'  {...formItemLayout}>
+              {getFieldDecorator('isTop',{initialValue:this.state.selectedRow ? this.state.selectedRow.isTop:null})
+                (<RadioGroup>
+                    <Radio value={true}>是</Radio>
+                    <Radio value={false}>否</Radio>
+                  </RadioGroup>)}
             </FormItem>
             <FormItem label='归档'  {...formItemLayout}>
               {getFieldDecorator('recordDateTime',{initialValue:this.state.selectedRow ? moment(this.state.selectedRow.recordDateTime,'YYYY-MM-DD HH:mm:ss'):null})
