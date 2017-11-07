@@ -17,11 +17,13 @@ const RadioGroup = Radio.Group;
 
 /**
 * 单条公告新增和编辑
+* 新增时候无id
+* 编辑时候 无范围
 */
 class DetailEdit extends Component{
 
   state = {
-    formState:'select', //insert、edit、select
+    forUpdate:true, // 默认为编辑
     value: [],
   }
 
@@ -33,8 +35,17 @@ class DetailEdit extends Component{
     this.setState(nextProps.stateData);
   }
 
+  /**
+  * 编辑时候返回详细信息
+  * 新增时候返回List
+  */
   handleReturn(){
-    this.props.setStateData({activeComp:'DetailView'});
+    if(this.state.forUpdate){
+      this.props.setStateData({activeComp:'DetailView'});
+    }
+    else {
+      this.props.setStateData({activeComp:'TableList'});
+    }
   }
 
   handleSave(){
@@ -62,10 +73,16 @@ class DetailEdit extends Component{
           <Col span={12} offset={0} style={{ textAlign: 'left' }}>
             <Button type='primary' icon='left-circle-o' onClick={this.handleReturn.bind(this)}>返回</Button>
             <Button icon='save' onClick={this.handleSave.bind(this)}>保存</Button>
+            <Button>{this.state.forUpdate ? '编辑':'新增'}</Button>
           </Col>
         </Row>
         <div>
           <Form style={{marginTop:'20px'}}>
+            {this.state.forUpdate &&
+            <FormItem label='ID'  {...formItemLayout} style={{display:'none'}}>
+              {getFieldDecorator('id',{initialValue:this.state.selectedRow ? this.state.selectedRow.id:null})
+                (<Input />)}
+            </FormItem>}
             <FormItem label='标题'  {...formItemLayout}>
               {getFieldDecorator('title',{initialValue:this.state.selectedRow ? this.state.selectedRow.title:null})
                 (<Input />)}
@@ -74,6 +91,11 @@ class DetailEdit extends Component{
               {getFieldDecorator('content',{initialValue:this.state.selectedRow ? this.state.selectedRow.content:null})
                 (<TextArea autosize={{ minRows: 8, maxRows: 28 }}  />)}
             </FormItem>
+            {!this.state.forUpdate &&
+              <FormItem label='范围'  {...formItemLayout}>
+              {getFieldDecorator('ouIds',{initialValue:[]})
+                (<Ou multiple allowClear labelInValue/>)}
+            </FormItem>}
             <FormItem label='置顶'  {...formItemLayout}>
               {getFieldDecorator('isTop',{initialValue:this.state.selectedRow ? this.state.selectedRow.isTop:null})
                 (<RadioGroup>
@@ -133,9 +155,4 @@ const replies =
   // <FormItem label='附件tmp'  {...formItemLayout}>
   //   {getFieldDecorator('attachmentsTmp',{})
   //     (attachments)}
-  // </FormItem>
-
-  // <FormItem label='范围'  {...formItemLayout}>
-  //   {getFieldDecorator('ouIds',{initialValue:this.state.selectedRow && this.state.selectedRow.ouIds ? this.state.selectedRow.ouIds:[]})
-  //     (<Ou multiple allowClear labelInValue/>)}
   // </FormItem>

@@ -29,11 +29,15 @@ class TableList extends Component{
 
   }
 
+  handleInsert(){
+    this.props.setStateData({activeComp:'DetailEdit',selectedRow:null,forUpdate:false});
+  }
+
   render(){
     return(
         <div style={{display:this.state.activeComp=='TableList' ? 'inline':'none' }}>
           <div className='toolbar'>
-            <Button icon='plus-circle-o' type='primary'>新增</Button>
+            <Button icon='plus-circle-o' type='primary' onClick={this.handleInsert.bind(this)}>新增</Button>
             <Search size='large' placeholder='关键搜索子...' className='search' onSearch={(value)=>{console.info(value)}}/>
             <Radio.Group defaultValue='now' onChange={this.handleRangeChange.bind(this)} className='filter'>
               <Radio.Button value="now">当前</Radio.Button>

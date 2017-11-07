@@ -14,7 +14,6 @@ const TreeNode = Tree.TreeNode;
 class DetailView extends Component{
 
   state = {
-    formState:'select', //insert、edit、select
   }
 
   componentDidMount(){
@@ -34,7 +33,7 @@ class DetailView extends Component{
   }
 
   handleEdit(){
-    this.props.setStateData({activeComp:'DetailEdit'});
+    this.props.setStateData({activeComp:'DetailEdit',forUpdate:true});
   }
 
   handleDelete(e){
