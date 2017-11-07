@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button,Form,Input,Icon,Row,Col,TreeSelect,DatePicker,Radio} from 'antd';
+import {Button,Form,Input,Icon,Row,Col,TreeSelect,DatePicker,Radio,Tag} from 'antd';
 import moment from 'moment';
 import './index.less';
 import configData from './configData.js';
@@ -73,7 +73,8 @@ class DetailEdit extends Component{
           <Col span={12} offset={0} style={{ textAlign: 'left' }}>
             <Button type='primary' icon='left-circle-o' onClick={this.handleReturn.bind(this)}>返回</Button>
             <Button icon='save' onClick={this.handleSave.bind(this)}>保存</Button>
-            <Button>{this.state.forUpdate ? '编辑':'新增'}</Button>
+            <Icon type={this.state.forUpdate ? 'edit':'plus-circle-o'} style={{fontSize: 20,display:'none'}}/>
+            <Tag color="blue">{this.state.forUpdate ? '编辑状态':'新增状态'}</Tag>
           </Col>
         </Row>
         <div>
