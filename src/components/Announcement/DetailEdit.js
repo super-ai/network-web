@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button,Form,Input,Icon,Row,Col,TreeSelect,DatePicker,Radio,Tag} from 'antd';
+import {Button,Form,Input,Icon,Row,Col,TreeSelect,DatePicker,Radio,Tag,notification} from 'antd';
 import moment from 'moment';
 import './index.less';
 import configData from './configData.js';
@@ -7,6 +7,7 @@ import Ou from 'components/Custom/OuTreeSelect';
 import utils from 'utils';
 import FileUploader from 'components/FileUploader';
 import globalConfig from 'config.js';
+import ajax from '../../utils/ajax';
 
 const Component = React.Component;
 const FormItem = Form.Item;
@@ -35,6 +36,15 @@ class DetailEdit extends Component{
     this.setState(nextProps.stateData);
   }
 
+  error(errorMsg) {
+    // 对于错误信息, 要很明显的提示用户, 这个通知框要用户手动关闭
+    notification.error({
+      message: '出错!',
+      description: `请联系管理员, 错误信息: ${errorMsg}`,
+      duration: 0,
+    });
+  }
+
   /**
   * 编辑时候返回详细信息
   * 新增时候返回List
@@ -48,7 +58,7 @@ class DetailEdit extends Component{
     }
   }
 
-  handleSave(){
+  async handleSave(){
     var oldObj = this.props.form.getFieldsValue();
     var host = globalConfig.api.host;
     var newObj = {};
@@ -56,8 +66,40 @@ class DetailEdit extends Component{
     newObj = utils.procFieldsDateValue(oldObj,moment);
     // 上传文件url去掉server
     utils.removeServer(newObj,['attachments'],host);
-
     console.log('处理后的表单数据为: ',newObj);
+    return;
+
+    // 后台提交
+    try{
+      var res = await(this.ajax.post(`${globalConfig.api.host}${globalConfig.api.path}`, newObj));
+      if(res.success){
+        notification.success({
+          message: '新增成功',
+          description: this.primaryKey ? `新增数据行 主键=${res.data[this.primaryKey]}` : '',
+          duration: 3,
+        });
+
+        //forUpdate返回详情
+        //否则返回List
+        if(this.state.forUpdate){
+          this.props.setStateData({activeComp:'DetailView',selectedRow:res.data});
+        }
+        else {
+          this.props.setStateData({activeComp:'TableList'});
+          // ?如何刷新表格
+
+        }
+
+      }else{
+        this.error(res.failInfo.errorMessage);
+      }
+    }catch(ex){
+      this.error(`网络请求出错: ${ex.message}`);
+    }
+
+
+
+
   }
 
   onChange = (value) => {
