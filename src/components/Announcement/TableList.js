@@ -1,6 +1,8 @@
 import React from 'react';
-import {Button,Icon,Table,Input,Radio,Form} from 'antd';
+import {Button,Icon,Table,Input,Radio,Form,notification} from 'antd';
 import './index.less';
+import ajax from 'utils/ajax';
+import globalConfig from 'config.js';
 
 const Component = React.Component;
 const {Search} = Input;
@@ -10,7 +12,9 @@ const FormItem = Form.Item;
 class TableList extends Component{
 
   state = {
-    data:[]
+    data:[],
+    page: 1,
+    pageSize:20
   }
 
   componentDidMount(){
@@ -26,10 +30,56 @@ class TableList extends Component{
   }
 
   /**
+   * 切换分页时触发查询
+   *
+   * @param page
+   */
+  handlePageChange = async(page) => {
+    logger.debug('handlePageChange, page = %d', page);
+    const res = await this.select(this.state.queryObj, page, this.state.pageSize);
+    if (res.status == 'success') {
+      this.setState({
+        currentPage: page,
+        data: res.data,
+        total: res.total,
+        tableLoading: false,
+      });
+    } else {
+      this.error(res.message);
+    }
+  };
+
+  error(errorMsg) {
+    // 对于错误信息, 要很明显的提示用户, 这个通知框要用户手动关闭
+    notification.error({
+      message: '出错!',
+      description: `请联系管理员, 错误信息: ${errorMsg}`,
+      duration: 0,
+    });
+  }
+  /**
   * 提交查询
   */
-  loadData(){
+  async loadData(){
     var obj = this.props.form.getFieldsValue();
+    obj.page = 1
+    obj.pageSize = 20;
+
+    try{
+      const res = await ajax.get(`${globalConfig.api.host}/api/Bulletin/list`, obj);
+
+      debugger;
+      if(res.success){
+        if(!res.data) return;
+
+        this.setState({data:res.data});
+      }else{
+        this.error(res.failInfo);
+      }
+    }catch(ex){
+      this.error(`网络请求出错: ${ex.message}`);
+    }
+
     console.info(obj);
   }
 
@@ -64,7 +114,7 @@ class TableList extends Component{
             </FormItem>
           </Form>
           </div>
-          <Table dataSource={this.state.data} columns={columns} onRowClick={this.handleOnRowClick.bind(this)} className='announcement'/>
+          <Table columns={columns} onRowClick={this.handleOnRowClick.bind(this)} className='announcement'/>
         </div>
     )
   }
@@ -99,10 +149,10 @@ const columns = [{
   }
 }, {
   title: '发布人',
-  dataIndex: 'createStaffName',
-  key: 'createStaffName',
+  dataIndex: 'createUserName',
+  key: 'createUserName',
 }, {
   title: '发布时间',
-  dataIndex: 'createDateTime',
-  key: 'createDateTime',
+  dataIndex: 'createTime',
+  key: 'createTime',
 }];
