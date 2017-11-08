@@ -52,12 +52,14 @@ class TableList extends Component{
   * 提交查询
   */
   async loadData(pagination){
+    // debugger;
+    // pagination = pagination|| this.state.pagination;
     var obj = this.props.form.getFieldsValue();
-    // obj.page = this.state.pagination.current;
-    // obj.pageSize = this.state.pagination.pageSize;
     obj.page = pagination.current;
     obj.pageSize = pagination.pageSize;
-    // debugger;
+
+    console.info('查询请求参数为:%o',obj);
+    console.info('state分页参数为:%o',this.state.pagination);
 
     try{
       const res = await ajax.get(`${globalConfig.api.host}/api/Bulletin/list`, obj);
@@ -78,6 +80,11 @@ class TableList extends Component{
 
   }
 
+  // 查询数据
+  handleSelect(){
+    this.loadData(this.state.pagination);
+  }
+
   handleInsert(){
     this.props.setStateData({activeComp:'DetailEdit',selectedRow:null,forUpdate:false});
   }
@@ -93,11 +100,14 @@ class TableList extends Component{
             </FormItem>
             <FormItem>
               {getFieldDecorator('searchKey',{initialValue:null})
-                (<Search placeholder='关键搜索字...' className='search' onSearch={this.loadData.bind(this)}/>)}
+                (<Search placeholder='关键搜索字...' className='search'/>)}
+            </FormItem>
+            <FormItem>
+                <Button onClick={this.handleSelect.bind(this)}>查询</Button>
             </FormItem>
             <FormItem>
               {getFieldDecorator('isArchived',{initialValue:false})
-              (<Radio.Group defaultValue={false} onChange={this.handleRangeChange.bind(this)}>
+              (<Radio.Group defaultValue={false}>
                 <Radio.Button value={false}>当前</Radio.Button>
                 <Radio.Button value={true}>归档</Radio.Button>
               </Radio.Group>)}
