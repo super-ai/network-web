@@ -13,8 +13,10 @@ class TableList extends Component{
 
   state = {
     data:[],
-    page: 1,
-    pageSize:20
+    pagination:{
+      current:1,
+      pageSize:2
+      }
   }
 
   componentDidMount(){
@@ -30,24 +32,10 @@ class TableList extends Component{
     this.props.setStateData({activeComp:'DetailView',selectedRow:record});
   }
 
-  /**
-   * 切换分页时触发查询
-   *
-   * @param page
-   */
-  handlePageChange = async(page) => {
-    logger.debug('handlePageChange, page = %d', page);
-    const res = await this.select(this.state.queryObj, page, this.state.pageSize);
-    if (res.status == 'success') {
-      this.setState({
-        currentPage: page,
-        data: res.data,
-        total: res.total,
-        tableLoading: false,
-      });
-    } else {
-      this.error(res.message);
-    }
+  handlePageChange = (page) => {
+    this.state.pagination = page;
+    this.loadData();
+    console.info('异步获取分页数据');
   };
 
   error(errorMsg) {
@@ -63,15 +51,15 @@ class TableList extends Component{
   */
   async loadData(){
     var obj = this.props.form.getFieldsValue();
-    obj.page = 1
-    obj.pageSize = 20;
+    obj.page = this.state.pagination.current;
+    obj.pageSize = this.state.pagination.pageSize;
 
     try{
       const res = await ajax.get(`${globalConfig.api.host}/api/Bulletin/list`, obj);
 
       if(res.success){
         if(!res.data) return;
-        this.setState({data:res.data});
+        this.setState({data:res.data,pagination:{total:res.total}});
       }else{
         this.error(res.failInfo);
       }
@@ -111,7 +99,7 @@ class TableList extends Component{
             </FormItem>
           </Form>
           </div>
-          <Table dataSource={this.state.data}columns={columns} onRowClick={this.handleOnRowClick.bind(this)} className='announcement'/>
+          <Table dataSource={this.state.data} onChange={this.handlePageChange.bind(this)} columns={columns} pagination={this.state.pagination} onRowClick={this.handleOnRowClick.bind(this)} className='announcement'/>
         </div>
     )
   }
