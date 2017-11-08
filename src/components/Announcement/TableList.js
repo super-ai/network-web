@@ -75,11 +75,6 @@ class TableList extends Component{
     }
   }
 
-  // 范围筛选
-  handleRangeChange(){
-
-  }
-
   // 查询数据
   handleSelect(){
     this.loadData(this.state.pagination);
@@ -100,7 +95,7 @@ class TableList extends Component{
             </FormItem>
             <FormItem>
               {getFieldDecorator('searchKey',{initialValue:null})
-                (<Search placeholder='关键搜索字...' className='search'/>)}
+                (<Input placeholder='关键搜索字...' className='search'/>)}
             </FormItem>
             <FormItem>
                 <Button onClick={this.handleSelect.bind(this)}>查询</Button>
