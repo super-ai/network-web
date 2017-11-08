@@ -56,8 +56,8 @@ class TableList extends Component{
   async loadData(pagination){
     // pagination = pagination|| this.state.pagination;
     var obj = this.props.form.getFieldsValue();
-    // debugger;
-    obj.searchKey = this.refs.searchKey.input.value;
+    debugger;
+    obj.searchKey = this.refs.searchKey.input.input.value;
     obj.page = pagination.current;
     obj.pageSize = pagination.pageSize;
 
@@ -98,7 +98,7 @@ class TableList extends Component{
               <Button icon='plus-circle-o' type='primary' onClick={this.handleInsert.bind(this)}>新增</Button>
             </FormItem>
             <FormItem>
-                <Input placeholder='关键搜索字...' className='search' ref='searchKey'/>
+                <Search placeholder='关键搜索字...' className='search' ref='searchKey' onSearch={this.handleSelect.bind(this)}/>
             </FormItem>
             <FormItem>
                 <Button onClick={this.handleSelect.bind(this)}>查询</Button>
