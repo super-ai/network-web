@@ -1,10 +1,11 @@
 import React from 'react';
-import {Button,Icon,Table,Input,Radio} from 'antd';
+import {Button,Icon,Table,Input,Radio,Form} from 'antd';
 import './index.less';
 
 const Component = React.Component;
 const {Search} = Input;
 const ColLength = {title:10,content:20};
+const FormItem = Form.Item;
 
 class TableList extends Component{
 
@@ -24,6 +25,14 @@ class TableList extends Component{
     this.props.setStateData({activeComp:'DetailView',selectedRow:record});
   }
 
+  /**
+  * 提交查询
+  */
+  loadData(){
+    var obj = this.props.form.getFieldsValue();
+    console.info(obj);
+  }
+
   // 范围筛选
   handleRangeChange(){
 
@@ -34,16 +43,27 @@ class TableList extends Component{
   }
 
   render(){
+    const { getFieldDecorator } = this.props.form;
     return(
         <div style={{display:this.state.activeComp=='TableList' ? 'inline':'none' }}>
           <div className='toolbar'>
-            <Button icon='plus-circle-o' type='primary' onClick={this.handleInsert.bind(this)}>新增</Button>
-            <Search size='large' placeholder='关键搜索子...' className='search' onSearch={(value)=>{console.info(value)}}/>
-            <Radio.Group defaultValue='now' onChange={this.handleRangeChange.bind(this)} className='filter'>
-              <Radio.Button value="now">当前</Radio.Button>
-              <Radio.Button value="history">归档</Radio.Button>
-              <Radio.Button value="all">全部</Radio.Button>
-            </Radio.Group>
+          <Form layout="inline">
+            <FormItem>
+              <Button icon='plus-circle-o' type='primary' onClick={this.handleInsert.bind(this)}>新增</Button>
+            </FormItem>
+            <FormItem>
+              {getFieldDecorator('searchKey',{initialValue:null})
+                (<Search placeholder='关键搜索字...' className='search' onSearch={this.loadData.bind(this)}/>)}
+            </FormItem>
+            <FormItem>
+              {getFieldDecorator('isArchived',{initialValue:false})
+              (<Radio.Group defaultValue='now' onChange={this.handleRangeChange.bind(this)}>
+                <Radio.Button value="now">当前</Radio.Button>
+                <Radio.Button value="history">归档</Radio.Button>
+                <Radio.Button value="all">全部</Radio.Button>
+              </Radio.Group>)}
+            </FormItem>
+          </Form>
           </div>
           <Table dataSource={this.state.data} columns={columns} onRowClick={this.handleOnRowClick.bind(this)} className='announcement'/>
         </div>
@@ -51,7 +71,10 @@ class TableList extends Component{
   }
 }
 
-export default TableList;
+
+const TableListForm = Form.create()(TableList);
+export default TableListForm;
+
 
 const columns = [{
   title: '标题',
