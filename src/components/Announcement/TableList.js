@@ -57,10 +57,9 @@ class TableList extends Component{
             </FormItem>
             <FormItem>
               {getFieldDecorator('isArchived',{initialValue:false})
-              (<Radio.Group defaultValue='now' onChange={this.handleRangeChange.bind(this)}>
-                <Radio.Button value="now">当前</Radio.Button>
-                <Radio.Button value="history">归档</Radio.Button>
-                <Radio.Button value="all">全部</Radio.Button>
+              (<Radio.Group defaultValue={false} onChange={this.handleRangeChange.bind(this)}>
+                <Radio.Button value={false}>当前</Radio.Button>
+                <Radio.Button value={true}>归档</Radio.Button>
               </Radio.Group>)}
             </FormItem>
           </Form>
