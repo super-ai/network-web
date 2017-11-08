@@ -10,7 +10,7 @@ const Component = React.Component;
 class Announcement extends Component{
   state = {
     activeComp:'TableList',
-    data:data,
+    data:[],
     selectedRow:{},
   }
 

@@ -19,6 +19,7 @@ class TableList extends Component{
 
   componentDidMount(){
     this.setState(this.props.stateData);
+    this.loadData();
   }
 
   componentWillReceiveProps(nextProps){
@@ -68,10 +69,8 @@ class TableList extends Component{
     try{
       const res = await ajax.get(`${globalConfig.api.host}/api/Bulletin/list`, obj);
 
-      debugger;
       if(res.success){
         if(!res.data) return;
-
         this.setState({data:res.data});
       }else{
         this.error(res.failInfo);
@@ -79,8 +78,6 @@ class TableList extends Component{
     }catch(ex){
       this.error(`网络请求出错: ${ex.message}`);
     }
-
-    console.info(obj);
   }
 
   // 范围筛选
@@ -114,7 +111,7 @@ class TableList extends Component{
             </FormItem>
           </Form>
           </div>
-          <Table columns={columns} onRowClick={this.handleOnRowClick.bind(this)} className='announcement'/>
+          <Table dataSource={this.state.data}columns={columns} onRowClick={this.handleOnRowClick.bind(this)} className='announcement'/>
         </div>
     )
   }
