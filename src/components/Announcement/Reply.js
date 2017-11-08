@@ -28,7 +28,9 @@ class Reply extends Component{
   }
 
   handleSave(){
-
+    var obj = this.props.form.getFieldsValue();
+    console.info('回复数据为:%o',obj);
+    
   }
 
   render(){
