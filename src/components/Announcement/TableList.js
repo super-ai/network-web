@@ -10,18 +10,19 @@ const ColLength = {title:10,content:20};
 const FormItem = Form.Item;
 
 class TableList extends Component{
-
   state = {
     data:[],
     pagination:{
       current:1,
-      pageSize:2
+      pageSize:10,
+      total:0,
+      showSizeChanger:true,
       }
   }
 
   componentDidMount(){
     this.setState(this.props.stateData);
-    this.loadData();
+    this.loadData(this.state.pagination);
   }
 
   componentWillReceiveProps(nextProps){
@@ -32,11 +33,11 @@ class TableList extends Component{
     this.props.setStateData({activeComp:'DetailView',selectedRow:record});
   }
 
-  handlePageChange = (page) => {
-    this.state.pagination = page;
-    this.loadData();
-    console.info('异步获取分页数据');
-  };
+  handlePageChange(pagination){
+    this.setState({pagination});
+    this.loadData(pagination);
+    console.info('触发分页:%o',pagination);
+  }
 
   error(errorMsg) {
     // 对于错误信息, 要很明显的提示用户, 这个通知框要用户手动关闭
@@ -46,20 +47,24 @@ class TableList extends Component{
       duration: 0,
     });
   }
+
   /**
   * 提交查询
   */
-  async loadData(){
+  async loadData(pagination){
     var obj = this.props.form.getFieldsValue();
-    obj.page = this.state.pagination.current;
-    obj.pageSize = this.state.pagination.pageSize;
+    // obj.page = this.state.pagination.current;
+    // obj.pageSize = this.state.pagination.pageSize;
+    obj.page = pagination.current;
+    obj.pageSize = pagination.pageSize;
+    // debugger;
 
     try{
       const res = await ajax.get(`${globalConfig.api.host}/api/Bulletin/list`, obj);
 
       if(res.success){
         if(!res.data) return;
-        this.setState({data:res.data,pagination:{total:res.total}});
+        this.setState({data:res.data,pagination:{...this.state.pagination,total:res.total}});
       }else{
         this.error(res.failInfo);
       }
@@ -99,7 +104,9 @@ class TableList extends Component{
             </FormItem>
           </Form>
           </div>
-          <Table dataSource={this.state.data} onChange={this.handlePageChange.bind(this)} columns={columns} pagination={this.state.pagination} onRowClick={this.handleOnRowClick.bind(this)} className='announcement'/>
+          <Table dataSource={this.state.data}
+          columns={columns} pagination={this.state.pagination}  className='announcement'
+          onChange={this.handlePageChange.bind(this)} onRowClick={this.handleOnRowClick.bind(this)}/>
         </div>
     )
   }
