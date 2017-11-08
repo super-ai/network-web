@@ -23,10 +23,12 @@ class TableList extends Component{
   componentDidMount(){
     this.setState(this.props.stateData);
     this.loadData(this.state.pagination);
+    console.info('TableList的componentDidMount');
   }
 
   componentWillReceiveProps(nextProps){
     this.setState(nextProps.stateData);
+      console.info('TableList的componentWillReceiveProps');
   }
 
   handleOnRowClick(record,index,event){
@@ -36,7 +38,7 @@ class TableList extends Component{
   handlePageChange(pagination){
     this.setState({pagination});
     this.loadData(pagination);
-    console.info('触发分页:%o',pagination);
+
   }
 
   error(errorMsg) {
@@ -86,6 +88,7 @@ class TableList extends Component{
 
   render(){
     const { getFieldDecorator } = this.props.form;
+    console.info('TableList重写Render');
     return(
         <div style={{display:this.state.activeComp=='TableList' ? 'inline':'none' }}>
           <div className='toolbar'>
@@ -116,7 +119,6 @@ class TableList extends Component{
     )
   }
 }
-
 
 const TableListForm = Form.create()(TableList);
 export default TableListForm;
