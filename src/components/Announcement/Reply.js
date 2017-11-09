@@ -13,30 +13,20 @@ const formItemLayout = configData.formItemLayout;
 */
 class Reply extends Component{
 
-  state={}
-
-  componentDidMount(){
-    this.setState(this.props.publicState);
-  }
-
-  componentWillReceiveProps(nextProps){
-    this.setState(nextProps.publicState);
-  }
-
   handleReturn(){
+    this.props.form.resetFields(); // 清空表单数据
     this.props.setPublicState({activeComp:'DetailView'});
   }
 
   handleSave(){
-    var obj = this.props.form.getFieldsValue();
-    console.info('回复数据为:%o',obj);
-    
+    var params = this.props.form.getFieldsValue();
+    console.info('回复数据为:%o',params);
   }
 
   render(){
     const { getFieldDecorator } = this.props.form;
     return(
-        <div style={{display:this.state.activeComp=='Reply' ? 'inline':'none' }}>
+        <div>
           <Button icon='left-circle-o' type='primary' onClick={this.handleReturn.bind(this)}>返回</Button>
           <Button icon='save' onClick={this.handleSave.bind(this)}>保存</Button>
           <br />

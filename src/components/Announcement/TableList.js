@@ -88,7 +88,7 @@ class TableList extends Component{
 
   render(){
     const { getFieldDecorator } = this.props.form;
-    console.warn('TableList重写Render，此时表格数据为%o',this.state.data);
+    
     return(
         <div style={{display:this.state.activeComp=='TableList' ? 'inline':'none' }}>
           <div className='toolbar'>

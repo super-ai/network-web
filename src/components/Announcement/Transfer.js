@@ -13,28 +13,19 @@ const formItemLayout = configData.formItemLayout;
 */
 class Transfer extends Component{
 
-  state={}
-
-  componentDidMount(){
-    this.setState(this.props.publicState);
-  }
-
-  componentWillReceiveProps(nextProps){
-    this.setState(nextProps.publicState);
-  }
-
   handleReturn(){
+    this.props.form.resetFields(); // 清空表单数据
     this.props.setPublicState({activeComp:'DetailView'});
   }
 
   handleSave(){
-
+    
   }
 
   render(){
     const { getFieldDecorator } = this.props.form;
     return(
-        <div style={{display:this.state.activeComp=='Transfer' ? 'inline':'none' }}>
+        <div>
           <Button icon='left-circle-o' type='primary' onClick={this.handleReturn.bind(this)}>返回</Button>
           <Button icon='save' onClick={this.handleSave.bind(this)}>保存</Button>
           <br />
@@ -52,3 +43,5 @@ class Transfer extends Component{
 const TransferForm = Form.create()(Transfer);
 
 export default TransferForm;
+
+//         <div style={{display:this.state.activeComp=='Transfer' ? 'inline':'none' }}>

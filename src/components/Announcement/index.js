@@ -27,8 +27,8 @@ class Announcement extends Component{
           <TableList publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>
           <DetailView publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>
           {this.state.activeComp=='DetailEdit' && <DetailEdit publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>}
-          <Reply publicState={this.state}  setPublicState={this.setPublicState.bind(this)}/>
-          <Transfer publicState={this.state}  setPublicState={this.setPublicState.bind(this)}/>
+          {this.state.activeComp=='Reply' && <Reply publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>}
+          <Transfer publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>
         </div>
     )
   }

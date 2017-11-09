@@ -13,15 +13,15 @@ const TreeNode = Tree.TreeNode;
 */
 class DetailView extends Component{
 
-  state = {
-  }
+  // state = {
+  // }
 
   componentDidMount(){
-    this.setState(this.props.publicState);
+    // this.setState(this.props.publicState);
   }
 
   componentWillReceiveProps(nextProps){
-    this.setState(nextProps.publicState);
+    // this.setState(nextProps.publicState);jlljjljljlpdppqw
   }
 
   handleReturn(){
@@ -40,10 +40,10 @@ class DetailView extends Component{
     e.preventDefault();
     Modal.confirm({
       title: '确认删除',
-      content: `当前被选中标题为: ${this.state.selectedRow.title}`,
+      content: `当前被选中标题为: ${this.props.publicState.selectedRow.title}`,
       // 这里注意要用箭头函数, 否则this不生效
       onOk: () => {
-        this.delete(`${this.state.selectedRow.id}`);
+        this.delete(`${this.props.publicState.selectedRow.id}`);
       },
     });
   }
@@ -73,6 +73,7 @@ class DetailView extends Component{
   }
 
   render(){
+    console.warn('DetailView重写Render');
     const replysTree =
       <Tree className='announcementTree'>
         {this.renderTreeNodes(configData.replysTreeData)}
@@ -81,8 +82,9 @@ class DetailView extends Component{
       <Tree className='announcementTree'>
         {this.renderTreeNodes(configData.readsTreeData)}
       </Tree>;
+
     return(
-      <div style={{display:this.state.activeComp=='DetailView' ? 'inline':'none' }} className='announcement'>
+      <div style={{display:this.props.publicState.activeComp=='DetailView' ? 'inline':'none' }} className='announcement'>
         <div>
           <Button type='primary' icon='left-circle-o' onClick={this.handleReturn.bind(this)}>返回</Button>
           <Button icon='plus' onClick={this.handleReply.bind(this)}>回复</Button>
@@ -91,16 +93,16 @@ class DetailView extends Component{
           <Button icon='share-alt' onClick={this.handleTransmit.bind(this)}>转发</Button>
         </div>
         <div className='announcementTitle'>
-          <span>{this.state.selectedRow ? this.state.selectedRow.title:null}</span>
+          <span>{this.props.publicState.selectedRow ? this.props.publicState.selectedRow.title:null}</span>
         </div>
         <div className='announcementCreate'>
-          <span>{this.state.selectedRow ? this.state.selectedRow.createStaffName:null}</span>
+          <span>{this.props.publicState.selectedRow ? this.props.publicState.selectedRow.createUserName:null}</span>
           &nbsp;&nbsp;
-          <span>{this.state.selectedRow ? this.state.selectedRow.createDateTime:null}</span>
+          <span>{this.props.publicState.selectedRow ? this.props.publicState.selectedRow.createTime:null}</span>
         </div>
         <hr className='hr'/>
         <br />
-        <p className='announcementContent'>{this.state.selectedRow ? this.state.selectedRow.content:null}</p>
+        <p className='announcementContent'>{this.props.publicState.selectedRow ? this.props.publicState.selectedRow.content:null}</p>
         <br />
         <hr />
         <br /><br />
@@ -122,13 +124,3 @@ const ranges = ['北京','上海','广州'];
 const attachments = ['附件一','附件二','附件三','附件四','附件五'];
 const reads = ['张三阅','李四阅','Tom阅','Tyson阅','习大大阅'];
 const replies = ['张三回复','李四回复','Tom回复','Tyson回复','习大大回复'];
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 2 },
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 14 },
-  },
-};
