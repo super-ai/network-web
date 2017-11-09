@@ -24,11 +24,11 @@ class Announcement extends Component{
   render(){
     return(
         <div>
-          <TableList publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>
-          <DetailView publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>
+          {this.state.activeComp=='TableList' && <TableList publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>}
+          {this.state.activeComp=='DetailView' && <DetailView publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>}
           {this.state.activeComp=='DetailEdit' && <DetailEdit publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>}
           {this.state.activeComp=='Reply' && <Reply publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>}
-          <Transfer publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>
+          {this.state.activeComp=='Transfer' && <Transfer publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>}
         </div>
     )
   }
@@ -39,17 +39,17 @@ export default Announcement;
 const data = [{
   key: '1',
   title:'长江流域发现白鱀豚',
-  recordDateTime:'2017-10-10 09:00:00',
+  archivedTime:'2017-10-10 09:00:00',
   content: '长江流域发现白鱀豚长江流域发现白鱀豚长江流域发现白鱀豚长江流域发现白鱀豚长江流域发现白鱀豚长江流域发现白鱀豚长江流域发现白鱀豚长江流域发现白鱀豚长江流域发现白鱀豚长江流域发现白鱀豚',
   ouIds:[{value:1,label:'铁通公司'},{value:14954,label:'重庆'}],
   isTop:true,
   createUserName: '张三',
   createDateTime: '2017-10-10 09:00:00',
-  attachments:['http://localhost:8080/upload/f8/d5a749e6-628a-49fb-89bd-c95ba3d099ec.jpg','http://localhost:8080/upload/7c/ebd3a403-da86-4f3a-a6fb-1a54692df7f9.svg'],
+  additions:['http://localhost:8080/upload/f8/d5a749e6-628a-49fb-89bd-c95ba3d099ec.jpg','http://localhost:8080/upload/7c/ebd3a403-da86-4f3a-a6fb-1a54692df7f9.svg'],
 }, {
   key: '2',
   title:'共产党十九大胜利召开',
-  recordDateTime:'2017-11-10 09:00:00',
+  archivedTime:'2017-11-10 09:00:00',
   content: '共产党十九大胜利召开共产党十九大胜利召开共产党十九大胜利召开共产党十九大胜利召开共产党十九大胜利召开',
   ouIds:[{value:1,label:'铁通公司'},{value:14954,label:'重庆'}],
   isTop:true,
@@ -58,7 +58,7 @@ const data = [{
 }, {
   key: '3',
   title:'流氓斗殴此起彼伏',
-  recordDateTime:'2017-12-10 09:00:00',
+  archivedTime:'2017-12-10 09:00:00',
   content: '流氓斗殴此起彼伏流氓斗殴此起彼伏流氓斗殴此起彼伏流氓斗殴此起彼伏流氓斗殴此起彼伏流氓斗殴此起彼伏流氓斗殴此起彼伏流氓斗殴此起彼伏流氓斗殴此起彼伏',
   ouIds:[{value:1,label:'铁通公司'},{value:14954,label:'重庆'}],
   isTop:false,
@@ -67,7 +67,7 @@ const data = [{
 },{
   key: '4',
   title:'长江流域发现白鱀豚长江流域发现白鱀豚',
-  recordDateTime:'2017-10-10 09:00:00',
+  archivedTime:'2017-10-10 09:00:00',
   content: '长江流域发现白鱀豚长江流域发现白鱀豚长江流域发现白鱀豚长江流域发现白鱀豚长江流域发现白鱀豚长江流域发现白鱀豚长江流域发现白鱀豚',
   ouIds:[{value:1,label:'铁通公司'},{value:14954,label:'重庆'}],
   isTop:false,
@@ -76,7 +76,7 @@ const data = [{
 }, {
   key: '5',
   title:'共产党十九大胜利召开',
-  recordDateTime:'2017-10-10 09:00:00',
+  archivedTime:'2017-10-10 09:00:00',
   content: '共产党十九大胜利召开共产党十九大胜利召开共产党十九大胜利召开共产党十九大胜利召开共产党十九大胜利召开共产党十九大胜利召开',
   ouIds:[{value:1,label:'铁通公司'},{value:14954,label:'重庆'}],
   isTop:false,
@@ -85,7 +85,7 @@ const data = [{
 }, {
   key: '6',
   title:'流氓斗殴此起彼伏',
-  recordDateTime:'2017-10-10 09:00:00',
+  archivedTime:'2017-10-10 09:00:00',
   content: '流氓斗殴此起彼伏流氓斗殴此起彼伏流氓斗殴此起彼伏流氓斗殴此起彼伏流氓斗殴此起彼伏流氓斗殴此起彼伏流氓斗殴此起彼伏',
   ouIds:[{value:1,label:'铁通公司'},{value:14954,label:'重庆'}],
   isTop:false,

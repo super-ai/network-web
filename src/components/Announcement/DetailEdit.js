@@ -65,7 +65,7 @@ class DetailEdit extends Component{
     // 日期处理
     newObj = utils.procFieldsDateValue(oldObj,moment);
     // 上传文件url去掉server
-    utils.removeServer(newObj,['attachments'],host);
+    utils.removeServer(newObj,['additions'],host);
     console.log('处理后的表单数据为: ',newObj);
     return;
 
@@ -147,11 +147,11 @@ class DetailEdit extends Component{
                   </RadioGroup>)}
             </FormItem>
             <FormItem label='归档'  {...formItemLayout}>
-              {getFieldDecorator('recordDateTime',{initialValue:this.state.selectedRow ? moment(this.state.selectedRow.recordDateTime,'YYYY-MM-DD HH:mm:ss'):null})
+              {getFieldDecorator('archivedTime',{initialValue:this.state.selectedRow ? moment(this.state.selectedRow.archivedTime,'YYYY-MM-DD HH:mm:ss'):null})
                 (<DatePicker showTime format="YYYY-MM-DD HH:mm:ss"/>)}
             </FormItem>
             <FormItem label='附件'  {...formItemLayout}>
-              {getFieldDecorator('attachments',{initialValue:this.state.selectedRow ? this.state.selectedRow.attachments:null})
+              {getFieldDecorator('additions',{initialValue:this.state.selectedRow ? this.state.selectedRow.additions:null})
                 (<FileUploader max='5'  sizeLimit='500' placeholder='上传文件' />)
               }
             </FormItem>
@@ -194,8 +194,3 @@ const replies =
     <li>Tyson回复</li>
     <li>习大大回复</li>
   </ul>;
-
-  // <FormItem label='附件tmp'  {...formItemLayout}>
-  //   {getFieldDecorator('attachmentsTmp',{})
-  //     (attachments)}
-  // </FormItem>

@@ -36,7 +36,7 @@ class Reply extends Component{
                 (<TextArea autosize={{ minRows: 8, maxRows: 28 }} />)}
             </FormItem>
             <FormItem label='附件'  {...formItemLayout}>
-              {getFieldDecorator('attachments')
+              {getFieldDecorator('additions')
                 (<FileUploader max='5'  sizeLimit='500' placeholder='上传文件' />)
               }
             </FormItem>

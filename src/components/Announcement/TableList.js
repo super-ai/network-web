@@ -88,9 +88,9 @@ class TableList extends Component{
 
   render(){
     const { getFieldDecorator } = this.props.form;
-    
+
     return(
-        <div style={{display:this.state.activeComp=='TableList' ? 'inline':'none' }}>
+        <div>
           <div className='toolbar'>
           <Form layout="inline">
             <FormItem>
