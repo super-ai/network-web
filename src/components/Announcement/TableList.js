@@ -140,13 +140,13 @@ const columns = [{
     if(record && record.isTop){
       rlt =
         <div>
-          <Tooltip title='置顶'><img src={img} style={{width:'35px'}}/></Tooltip>
+          <Tooltip title='置顶'><img src={img} style={{width:'32px'}}/></Tooltip>
           <span>{rlt}</span>
         </div>;
     }else{
       rlt =
         <div>
-          <img style={{width:'35px'}}/>
+          <img style={{width:'32px'}}/>
           <span>{rlt}</span>
         </div>;
     }
