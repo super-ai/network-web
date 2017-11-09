@@ -7,7 +7,7 @@ import Ou from 'components/Custom/OuTreeSelect';
 import utils from 'utils';
 import FileUploader from 'components/FileUploader';
 import globalConfig from 'config.js';
-import ajax from '../../utils/ajax';
+import ajax from 'utils/ajax';
 
 const Component = React.Component;
 const FormItem = Form.Item;
@@ -59,46 +59,47 @@ class DetailEdit extends Component{
   }
 
   async handleSave(){
-    var oldObj = this.props.form.getFieldsValue();
-    var host = globalConfig.api.host;
-    var newObj = {};
-    // 日期处理
-    newObj = utils.procFieldsDateValue(oldObj,moment);
-    // 上传文件url去掉server
-    utils.removeServer(newObj,['additions'],host);
-    console.log('处理后的表单数据为: ',newObj);
-    return;
+    // 表单验证
+    this.props.form.validateFieldsAndScroll(async (err,values)=>{
+      if(!err){
+        // 参数获取、处理
+        var oldObj = this.props.form.getFieldsValue();
+        var host = globalConfig.api.host;
+        var newObj = {};
+        newObj = utils.procFieldsDateValue(oldObj,moment); // 日期处理
+        utils.removeServer(newObj,['additions'],host); // 上传文件url去掉server
+        console.log('处理后的表单数据为: ',JSON.stringify(newObj));
 
-    // 后台提交
-    try{
-      var res = await(this.ajax.post(`${globalConfig.api.host}${globalConfig.api.path}`, newObj));
-      if(res.success){
-        notification.success({
-          message: '新增成功',
-          description: this.primaryKey ? `新增数据行 主键=${res.data[this.primaryKey]}` : '',
-          duration: 3,
-        });
+        // 后台提交
+        try{
+          var res = await ajax.post(`${globalConfig.api.host}/api/Bulletin/insert`, newObj);
+          if(res.success){
+            notification.success({
+              message: '新增成功',
+              description: this.primaryKey ? `新增数据行 主键=${res.data[this.primaryKey]}` : '',
+              duration: 3,
+            });
 
-        //forUpdate返回详情
-        //否则返回List
-        if(this.state.forUpdate){
-          this.props.setPublicState({activeComp:'DetailView',selectedRow:res.data});
+            //forUpdate返回详情
+            //否则返回List
+            if(this.state.forUpdate){
+              this.props.setPublicState({activeComp:'DetailView',selectedRow:res.data});
+            }
+            else {
+              this.props.setPublicState({activeComp:'TableList'});
+              // ?如何刷新表格
+
+            }
+
+          }else{
+            this.error(res.failInfo.errorMessage);
+          }
+        }catch(ex){
+          this.error(`网络请求出错: ${ex.message}`);
         }
-        else {
-          this.props.setPublicState({activeComp:'TableList'});
-          // ?如何刷新表格
 
-        }
-
-      }else{
-        this.error(res.failInfo.errorMessage);
       }
-    }catch(ex){
-      this.error(`网络请求出错: ${ex.message}`);
-    }
-
-
-
+    });
 
   }
 
@@ -127,27 +128,27 @@ class DetailEdit extends Component{
                 (<Input />)}
             </FormItem>}
             <FormItem label='标题'  {...formItemLayout}>
-              {getFieldDecorator('title',{initialValue:this.state.selectedRow ? this.state.selectedRow.title:null})
+              {getFieldDecorator('title',{rules: [{required: true,message:'标题必填'}],initialValue:this.state.selectedRow ? this.state.selectedRow.title:null})
                 (<Input />)}
             </FormItem>
             <FormItem label='内容'  {...formItemLayout}>
-              {getFieldDecorator('content',{initialValue:this.state.selectedRow ? this.state.selectedRow.content:null})
+              {getFieldDecorator('content',{rules: [{required: true,message:'内容必填'}],initialValue:this.state.selectedRow ? this.state.selectedRow.content:null})
                 (<TextArea autosize={{ minRows: 8, maxRows: 28 }}  />)}
             </FormItem>
             {!this.state.forUpdate &&
               <FormItem label='范围'  {...formItemLayout}>
-              {getFieldDecorator('ouIds',{initialValue:[]})
+              {getFieldDecorator('ous',{rules: [{required: true,message:'范围必填'}],initialValue:[]})
                 (<Ou multiple allowClear labelInValue/>)}
             </FormItem>}
             <FormItem label='置顶'  {...formItemLayout}>
-              {getFieldDecorator('isTop',{initialValue:this.state.selectedRow ? this.state.selectedRow.isTop:null})
+              {getFieldDecorator('isTop',{rules: [{required: true,message:'是否置顶必填'}],initialValue:this.state.selectedRow ? this.state.selectedRow.isTop:null})
                 (<RadioGroup>
                     <Radio value={true}>是</Radio>
                     <Radio value={false}>否</Radio>
                   </RadioGroup>)}
             </FormItem>
             <FormItem label='归档'  {...formItemLayout}>
-              {getFieldDecorator('archivedTime',{initialValue:this.state.selectedRow ? moment(this.state.selectedRow.archivedTime,'YYYY-MM-DD HH:mm:ss'):null})
+              {getFieldDecorator('archivedTime',{rules: [{required: true,message:'归档时间必填'}],initialValue:this.state.selectedRow ? moment(this.state.selectedRow.archivedTime,'YYYY-MM-DD HH:mm:ss'):null})
                 (<DatePicker showTime format="YYYY-MM-DD HH:mm:ss"/>)}
             </FormItem>
             <FormItem label='附件'  {...formItemLayout}>

@@ -1,8 +1,8 @@
 module.exports ={
   formItemLayout : {
     labelCol: {
-      xs: { span: 1 },
-      sm: { span: 1 },
+      xs: { span: 2 },
+      sm: { span: 2 },
     },
     wrapperCol: {
       xs: { span: 20 },

@@ -3,6 +3,7 @@ import {Button,Icon,Table,Input,Radio,Form,notification,Tooltip} from 'antd';
 import './index.less';
 import ajax from 'utils/ajax';
 import globalConfig from 'config.js';
+import utils from 'utils';
 import img from 'image/isTop.svg';
 
 const Component = React.Component;
@@ -33,6 +34,8 @@ class TableList extends Component{
   }
 
   handleOnRowClick(record,index,event){
+    var host = globalConfig.api.host;
+    utils.addServer(record,['additions'],host); // 附件列表中增加server
     this.props.setPublicState({activeComp:'DetailView',selectedRow:record});
   }
 
