@@ -36,7 +36,7 @@ class TableList extends Component{
   }
 
   handlePageChange(pagination){
-    this.setState({pagination});
+    this.props.setStateData({pagination});
     this.loadData(pagination);
   }
 
