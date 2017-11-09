@@ -21,22 +21,22 @@ class TableList extends Component{
   }
 
   componentDidMount(){
-    this.setState(this.props.stateData);
+    this.setState(this.props.publicState);
     this.loadData(this.state.pagination); // 初始化加载数据
     console.info('TableList的componentDidMount');
   }
 
   componentWillReceiveProps(nextProps){
-    this.setState(nextProps.stateData);
-    console.warn('TableList的componentWillReceiveProps，此时传递进来的状态值为%o',nextProps.stateData);
+    this.setState(nextProps.publicState);
+    console.warn('TableList的componentWillReceiveProps，此时传递进来的状态值为%o',nextProps.publicState);
   }
 
   handleOnRowClick(record,index,event){
-    this.props.setStateData({activeComp:'DetailView',selectedRow:record});
+    this.props.setPublicState({activeComp:'DetailView',selectedRow:record});
   }
 
   handlePageChange(pagination){
-    this.props.setStateData({pagination});
+    this.props.setPublicState({pagination});
     this.loadData(pagination);
   }
 
@@ -68,7 +68,7 @@ class TableList extends Component{
       if(res.success){
         if(!res.data) return;
         // this.setState({data:res.data,pagination:{...this.state.pagination,total:res.total}});
-        this.props.setStateData({data:res.data,pagination:{...this.state.pagination,total:res.total}});
+        this.props.setPublicState({data:res.data,pagination:{...this.state.pagination,total:res.total}});
       }else{
         this.error(res.failInfo);
       }
@@ -83,7 +83,7 @@ class TableList extends Component{
   }
 
   handleInsert(){
-    this.props.setStateData({activeComp:'DetailEdit',selectedRow:null,forUpdate:false});
+    this.props.setPublicState({activeComp:'DetailEdit',selectedRow:null,forUpdate:false});
   }
 
   render(){

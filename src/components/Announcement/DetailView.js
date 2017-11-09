@@ -17,23 +17,23 @@ class DetailView extends Component{
   }
 
   componentDidMount(){
-    this.setState(this.props.stateData);
+    this.setState(this.props.publicState);
   }
 
   componentWillReceiveProps(nextProps){
-    this.setState(nextProps.stateData);
+    this.setState(nextProps.publicState);
   }
 
   handleReturn(){
-    this.props.setStateData({activeComp:'TableList'});
+    this.props.setPublicState({activeComp:'TableList'});
   }
 
   handleReply(){
-    this.props.setStateData({activeComp:'Reply'});
+    this.props.setPublicState({activeComp:'Reply'});
   }
 
   handleEdit(){
-    this.props.setStateData({activeComp:'DetailEdit',forUpdate:true});
+    this.props.setPublicState({activeComp:'DetailEdit',forUpdate:true});
   }
 
   handleDelete(e){
@@ -56,7 +56,7 @@ class DetailView extends Component{
   }
 
   handleTransmit(){
-    this.props.setStateData({activeComp:'Transfer'});
+    this.props.setPublicState({activeComp:'Transfer'});
   }
 
   renderTreeNodes = (data) => {

@@ -29,11 +29,11 @@ class DetailEdit extends Component{
   }
 
   componentDidMount(){
-    this.setState(this.props.stateData);
+    this.setState(this.props.publicState);
   }
 
   componentWillReceiveProps(nextProps){
-    this.setState(nextProps.stateData);
+    this.setState(nextProps.publicState);
   }
 
   error(errorMsg) {
@@ -51,10 +51,10 @@ class DetailEdit extends Component{
   */
   handleReturn(){
     if(this.state.forUpdate){
-      this.props.setStateData({activeComp:'DetailView'});
+      this.props.setPublicState({activeComp:'DetailView'});
     }
     else {
-      this.props.setStateData({activeComp:'TableList'});
+      this.props.setPublicState({activeComp:'TableList'});
     }
   }
 
@@ -82,10 +82,10 @@ class DetailEdit extends Component{
         //forUpdate返回详情
         //否则返回List
         if(this.state.forUpdate){
-          this.props.setStateData({activeComp:'DetailView',selectedRow:res.data});
+          this.props.setPublicState({activeComp:'DetailView',selectedRow:res.data});
         }
         else {
-          this.props.setStateData({activeComp:'TableList'});
+          this.props.setPublicState({activeComp:'TableList'});
           // ?如何刷新表格
 
         }

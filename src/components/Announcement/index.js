@@ -17,18 +17,18 @@ class Announcement extends Component{
   /**
   * 回写状态数据
   */
-  setStateData(state){
+  setPublicState(state){
     this.setState(state);
   }
 
   render(){
     return(
         <div>
-          <TableList stateData={this.state} setStateData={this.setStateData.bind(this)}/>
-          <DetailView stateData={this.state} setStateData={this.setStateData.bind(this)}/>
-          {this.state.activeComp=='DetailEdit' && <DetailEdit stateData={this.state} setStateData={this.setStateData.bind(this)}/>}
-          <Reply stateData={this.state}  setStateData={this.setStateData.bind(this)}/>
-          <Transfer stateData={this.state}  setStateData={this.setStateData.bind(this)}/>
+          <TableList publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>
+          <DetailView publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>
+          {this.state.activeComp=='DetailEdit' && <DetailEdit publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>}
+          <Reply publicState={this.state}  setPublicState={this.setPublicState.bind(this)}/>
+          <Transfer publicState={this.state}  setPublicState={this.setPublicState.bind(this)}/>
         </div>
     )
   }

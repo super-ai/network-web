@@ -16,15 +16,15 @@ class Reply extends Component{
   state={}
 
   componentDidMount(){
-    this.setState(this.props.stateData);
+    this.setState(this.props.publicState);
   }
 
   componentWillReceiveProps(nextProps){
-    this.setState(nextProps.stateData);
+    this.setState(nextProps.publicState);
   }
 
   handleReturn(){
-    this.props.setStateData({activeComp:'DetailView'});
+    this.props.setPublicState({activeComp:'DetailView'});
   }
 
   handleSave(){
