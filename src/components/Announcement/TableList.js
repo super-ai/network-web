@@ -22,13 +22,13 @@ class TableList extends Component{
 
   componentDidMount(){
     this.setState(this.props.stateData);
-    this.loadData(this.state.pagination);
+    this.loadData(this.state.pagination); // 初始化加载数据
     console.info('TableList的componentDidMount');
   }
 
   componentWillReceiveProps(nextProps){
     this.setState(nextProps.stateData);
-      console.info('TableList的componentWillReceiveProps');
+    console.warn('TableList的componentWillReceiveProps，此时传递进来的状态值为%o',nextProps.stateData);
   }
 
   handleOnRowClick(record,index,event){
@@ -38,7 +38,6 @@ class TableList extends Component{
   handlePageChange(pagination){
     this.setState({pagination});
     this.loadData(pagination);
-
   }
 
   error(errorMsg) {
@@ -54,22 +53,22 @@ class TableList extends Component{
   * 提交查询
   */
   async loadData(pagination){
-    // pagination = pagination|| this.state.pagination;
-    var obj = this.props.form.getFieldsValue();
-    debugger;
-    obj.searchKey = this.refs.searchKey.input.input.value;
-    obj.page = pagination.current;
-    obj.pageSize = pagination.pageSize;
+    var params = {};
+    params.searchKey = this.refs.searchKey.input.input.value;
+    params.isArchived = this.refs.isArchived.state.value;
+    params.page = pagination.current;
+    params.pageSize = pagination.pageSize;
 
-    console.info('查询请求参数为:%o',obj);
+    console.info('查询请求参数为:%o',params);
     console.info('state分页参数为:%o',this.state.pagination);
 
     try{
-      const res = await ajax.get(`${globalConfig.api.host}/api/Bulletin/list`, obj);
+      const res = await ajax.get(`${globalConfig.api.host}/api/Bulletin/list`, params);
 
       if(res.success){
         if(!res.data) return;
-        this.setState({data:res.data,pagination:{...this.state.pagination,total:res.total}});
+        // this.setState({data:res.data,pagination:{...this.state.pagination,total:res.total}});
+        this.props.setStateData({data:res.data,pagination:{...this.state.pagination,total:res.total}});
       }else{
         this.error(res.failInfo);
       }
@@ -89,7 +88,7 @@ class TableList extends Component{
 
   render(){
     const { getFieldDecorator } = this.props.form;
-    console.info('TableList重写Render');
+    console.warn('TableList重写Render，此时表格数据为%o',this.state.data);
     return(
         <div style={{display:this.state.activeComp=='TableList' ? 'inline':'none' }}>
           <div className='toolbar'>
@@ -104,11 +103,10 @@ class TableList extends Component{
                 <Button onClick={this.handleSelect.bind(this)}>查询</Button>
             </FormItem>
             <FormItem>
-              {getFieldDecorator('isArchived',{initialValue:false})
-              (<Radio.Group defaultValue={false} onChange={this.handleSelect.bind(this)}>
+              <Radio.Group defaultValue={false} ref='isArchived'>
                 <Radio.Button value={false}>当前</Radio.Button>
                 <Radio.Button value={true}>归档</Radio.Button>
-              </Radio.Group>)}
+              </Radio.Group>
             </FormItem>
           </Form>
           </div>
