@@ -3,6 +3,7 @@ import {Button,Icon,Table,Input,Radio,Form,notification} from 'antd';
 import './index.less';
 import ajax from 'utils/ajax';
 import globalConfig from 'config.js';
+import img from 'image/isTop.svg';
 
 const Component = React.Component;
 const {Search} = Input;
@@ -127,11 +128,30 @@ const columns = [{
   dataIndex: 'title',
   key: 'title',
   render:(text,record,index)=>{
+    // 长度截取
+    var rlt;
     if (text.length <= ColLength.title) {
-      return text;
+      rlt = text;
     }else {
-      return text.substring(0,ColLength.title-1)+'...';
+      rlt = text.substring(0,ColLength.title-1)+'...';
     }
+
+    // 增加置顶图片
+    if(record && record.isTop){
+      rlt =
+        <div>
+          <img src={img} style={{width:'35px'}}/>
+          <span>{rlt}</span>
+        </div>;
+    }else{
+      rlt =
+        <div>
+          <img style={{width:'35px'}}/>
+          <span>{rlt}</span>
+        </div>;
+    }
+
+    return rlt;
   }
 },{
   title: '内容',
