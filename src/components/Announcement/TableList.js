@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button,Icon,Table,Input,Radio,Form,notification} from 'antd';
+import {Button,Icon,Table,Input,Radio,Form,notification,Tooltip} from 'antd';
 import './index.less';
 import ajax from 'utils/ajax';
 import globalConfig from 'config.js';
@@ -140,7 +140,7 @@ const columns = [{
     if(record && record.isTop){
       rlt =
         <div>
-          <img src={img} style={{width:'35px'}}/>
+          <Tooltip title='置顶'><img src={img} style={{width:'35px'}}/></Tooltip>
           <span>{rlt}</span>
         </div>;
     }else{
