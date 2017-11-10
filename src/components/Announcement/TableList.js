@@ -8,7 +8,7 @@ import img from 'image/isTop.svg';
 
 const Component = React.Component;
 const {Search} = Input;
-const ColLength = {title:10,content:20};
+const ColLength = {title:10,content:25};
 const FormItem = Form.Item;
 
 class TableList extends Component{
@@ -19,6 +19,7 @@ class TableList extends Component{
       pageSize:10,
       total:0,
       showSizeChanger:true,
+      showTotal:total=>`共${total}条`,
       }
   }
 
