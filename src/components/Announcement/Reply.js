@@ -1,7 +1,10 @@
 import React from 'react';
-import {Button,Form,Input} from 'antd';
+import {Button,Form,Input,notification} from 'antd';
 import configData from './configData.js';
 import FileUploader from 'components/FileUploader';
+import utils from 'utils';
+import ajax from 'utils/ajax';
+import globalConfig from 'config.js';
 
 const Component = React.Component;
 const TextArea = Input.TextArea;
@@ -17,9 +20,44 @@ class Reply extends Component{
     this.props.setPublicState({activeComp:'DetailView'});
   }
 
-  handleSave(){
-    var params = this.props.form.getFieldsValue();
-    console.info('回复数据为:%o',params);
+  error(errorMsg) {
+    // 对于错误信息, 要很明显的提示用户, 这个通知框要用户手动关闭
+    notification.error({
+      message: '出错!',
+      description: `请联系管理员, 错误信息: ${errorMsg}`,
+      duration: 0,
+    });
+  }
+
+  async handleSave(){
+    // 表单验证
+    this.props.form.validateFieldsAndScroll(async (err,values)=>{
+      if(!err){
+        // 参数获取、处理
+        var obj = this.props.form.getFieldsValue();
+        obj.bulletinId = this.props.publicState.selectedRow.id; //公告id
+        utils.removeServer(obj,['additions'],globalConfig.api.host); // 上传文件url去掉server
+        console.log('处理后的回复表单数据为: ',JSON.stringify(obj));
+
+        // 后台提交
+        try{
+          var res = await ajax.post(`${globalConfig.api.host}/api/Bulletin/reply`, obj);
+          if(res.success){
+            notification.success({
+              message: '新增成功',
+              description: this.primaryKey ? `新增数据行 主键=${res.data[this.primaryKey]}` : '',
+              duration: 3,
+            });
+            //forUpdate返回详情 否则返回List
+            this.props.setPublicState({activeComp:'DetailView',isRefreshTableList:true});
+          }else{
+            this.error(res.failInfo.errorMessage);
+          }
+        }catch(ex){
+          this.error(`网络请求出错: ${ex.message}`);
+        }
+      }
+    });
   }
 
   render(){
@@ -31,7 +69,7 @@ class Reply extends Component{
           <br />
           <Form style={{marginTop:'20px'}}>
             <FormItem label='内容'  {...formItemLayout}>
-              {getFieldDecorator('replyContent',)
+              {getFieldDecorator('content',{rules: [{required: true,message:'内容必填'}]})
                 (<TextArea autosize={{ minRows: 8, maxRows: 28 }} />)}
             </FormItem>
             <FormItem label='附件'  {...formItemLayout}>

@@ -127,5 +127,4 @@ export default DetailView;
 
 const ranges = ['北京','上海','广州'];
 const additions = ['附件一','附件二','附件三','附件四','附件五'];
-const reads = ['张三阅','李四阅','Tom阅','Tyson阅','习大大阅'];
 const replies = ['张三回复','李四回复','Tom回复','Tyson回复','习大大回复'];
