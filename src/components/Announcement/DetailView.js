@@ -50,6 +50,17 @@ class DetailView extends Component{
     this.props.setPublicState({activeComp:'Transfer'});
   }
 
+  /**
+  * 对于阅读数据进行渲染
+  */
+  readsRender(bulletinReads){
+    var rlt = [];
+    rlt = bulletinReads.map((item)=>{
+      return item.readStaffName + ' ' + item.readTime;
+    });
+    return rlt;
+  }
+
   renderTreeNodes = (data) => {
     return data.map((item) => {
       if (item.children) {
@@ -103,7 +114,7 @@ class DetailView extends Component{
         <FileUploader max='5' sizeLimit='500' placeholder='上传文件' defaultValue={this.props.publicState.selectedRow.additions} disabled={true}/>
         <br />
         <hr />
-        <ItemList data={reads} title='阅读'/>
+        <ItemList data={this.readsRender(this.props.publicState.selectedRow.bulletinReads)} title='阅读'/>
         <br />
         <hr />
         <ItemList data={replies} title='回复'/>
