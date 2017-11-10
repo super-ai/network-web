@@ -23,18 +23,20 @@ class Announcement extends Component{
 
   render(){
     return(
-        <div>
-          <TableList publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>
-          {this.state.activeComp=='DetailView' && <DetailView publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>}
-          {this.state.activeComp=='DetailEdit' && <DetailEdit publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>}
-          {this.state.activeComp=='Reply' && <Reply publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>}
-          {this.state.activeComp=='Transfer' && <Transfer publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>}
-        </div>
+      <div>
+        <TableList publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>
+        {this.state.activeComp=='DetailView' && <DetailView publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>}
+        {this.state.activeComp=='DetailEdit' && <DetailEdit publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>}
+        {this.state.activeComp=='Reply' && <Reply publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>}
+        {this.state.activeComp=='Transfer' && <Transfer publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>}
+      </div>
     )
   }
 }
 
 export default Announcement;
+
+// <div style={{display:this.state.activeComp=='Transfer' ? 'inline':'none' }}>
 
 const data = [{
   key: '1',

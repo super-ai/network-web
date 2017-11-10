@@ -13,18 +13,6 @@ const TreeNode = Tree.TreeNode;
 */
 class DetailView extends Component{
 
-  // state = {
-  // }
-
-  componentDidMount(){
-    // this.setState(this.props.publicState);
-    console.info('DetailView的componentDidMount');
-  }
-
-  componentWillReceiveProps(nextProps){
-    // this.setState(nextProps.publicState);jlljjljljlpdppqw
-  }
-
   handleReturn(){
     this.props.setPublicState({activeComp:'TableList'});
   }

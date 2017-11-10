@@ -14,7 +14,6 @@ const formItemLayout = configData.formItemLayout;
 class Reply extends Component{
 
   handleReturn(){
-    this.props.form.resetFields(); // 清空表单数据
     this.props.setPublicState({activeComp:'DetailView'});
   }
 

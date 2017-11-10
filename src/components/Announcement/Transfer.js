@@ -14,28 +14,26 @@ const formItemLayout = configData.formItemLayout;
 class Transfer extends Component{
 
   handleReturn(){
-    this.props.form.resetFields(); // 清空表单数据
     this.props.setPublicState({activeComp:'DetailView'});
   }
 
   handleSave(){
-    
   }
 
   render(){
     const { getFieldDecorator } = this.props.form;
     return(
-        <div>
-          <Button icon='left-circle-o' type='primary' onClick={this.handleReturn.bind(this)}>返回</Button>
-          <Button icon='save' onClick={this.handleSave.bind(this)}>保存</Button>
-          <br />
-          <Form style={{marginTop:'20px'}}>
-            <FormItem label='范围'  {...formItemLayout}>
-              {getFieldDecorator('ouIds',{initialValue:[]})
-                (<Ou multiple allowClear labelInValue/>)}
-            </FormItem>
-          </Form>
-        </div>
+      <div>
+        <Button icon='left-circle-o' type='primary' onClick={this.handleReturn.bind(this)}>返回</Button>
+        <Button icon='save' onClick={this.handleSave.bind(this)}>保存</Button>
+        <br />
+        <Form style={{marginTop:'20px'}}>
+          <FormItem label='范围'  {...formItemLayout}>
+            {getFieldDecorator('ouIds',{initialValue:[]})
+              (<Ou multiple allowClear labelInValue/>)}
+          </FormItem>
+        </Form>
+      </div>
     )
   }
 }
