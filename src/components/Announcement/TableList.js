@@ -13,7 +13,7 @@ const FormItem = Form.Item;
 
 class TableList extends Component{
   state = {
-    data:[],
+    // 私有状态
     pagination:{
       current:1,
       pageSize:10,
@@ -75,7 +75,6 @@ class TableList extends Component{
 
       if(res.success){
         if(!res.data) return;
-        // this.setState({data:res.data,pagination:{...this.state.pagination,total:res.total}});
         this.props.setPublicState({data:res.data,pagination:{...this.state.pagination,total:res.total}});
       }else{
         this.error(res.failInfo);
@@ -116,7 +115,7 @@ class TableList extends Component{
             </FormItem>
           </Form>
           </div>
-          <Table dataSource={this.state.data}
+          <Table dataSource={this.props.publicState.data}
           columns={columns} pagination={this.state.pagination}  className='announcement'
           onChange={this.handlePageChange.bind(this)} onRowClick={this.handleOnRowClick.bind(this)}/>
         </div>
