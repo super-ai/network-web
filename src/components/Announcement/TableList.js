@@ -38,10 +38,21 @@ class TableList extends Component{
     }
   }
 
-  handleOnRowClick(record,index,event){
-    var host = globalConfig.api.host;
-    utils.addServer(record,['additions'],host); // 附件列表中增加server
-    this.props.setPublicState({activeComp:'DetailView',selectedRow:record});
+  /**
+  * 获取单条公告详细数据
+  */
+  async handleOnRowClick(record,index,event){
+    try{
+      var res = await ajax.get(`${globalConfig.api.host}/api/Bulletin/select/${record.id}`, null);
+      if(res.success){
+        utils.addServer(res.data,['additions'],globalConfig.api.host); // 附件列表中增加server
+        this.props.setPublicState({activeComp:'DetailView',selectedRow:res.data});
+      }else{
+        this.error(res.failInfo.errorMessage);
+      }
+    }catch(ex){
+      this.error(`网络请求出错: ${ex.message}`);
+    }
   }
 
   handlePageChange(pagination){
