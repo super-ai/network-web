@@ -17,6 +17,11 @@ class FileUploader extends React.Component {
 
   // 注意这个组件不能做成PureComponent, 会有bug, 因为上传的过程中会不断触发onChange, 进而导致状态不断变化
 
+  /**
+  * 2017-11-10 增加disabled属性 默认为false
+  * 当设置为true 按钮不显示
+  */
+
   state = {
     previewVisible: false,  // 是否显示图片预览modal
     previewImage: '',  // 要预览的图片
@@ -284,6 +289,8 @@ class FileUploader extends React.Component {
    * 上传按钮的样式, 跟文件类型/当前状态都有关
    */
   renderUploadButton() {
+
+
     const {fileList} = this.state;
     const disabled = fileList.length >= this.props.max;
 
@@ -339,7 +346,7 @@ class FileUploader extends React.Component {
           withCredentials={true}
           disabled={disabled}
         >
-          {this.renderUploadButton()}
+          {disabled ? null : this.renderUploadButton()}
         </Upload>
         {/*只有上传图片时才需要这个预览modal*/}
         {this.forImage &&
