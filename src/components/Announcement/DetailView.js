@@ -4,6 +4,7 @@ import './index.less';
 import configData from './configData.js';
 import ItemList from './ItemList.js';
 import FileUploader from 'components/FileUploader';
+import Ou from 'components/Custom/OuTreeSelect';
 
 const Component = React.Component;
 const {TextArea} = Input;
@@ -95,8 +96,8 @@ class DetailView extends Component{
         <p className='announcementContent'>{this.props.publicState.selectedRow ? this.props.publicState.selectedRow.content:null}</p>
         <br />
         <hr />
-        <br /><br />
-        <ItemList data={ranges} title='范围'/>
+        <br />
+        <Ou multiple allowClear labelInValue value={this.props.publicState.selectedRow.ous} style={{width:'100%'}} disabled={true}/>
         <br />
         <hr />
         <FileUploader max='5' sizeLimit='500' placeholder='上传文件' defaultValue={this.props.publicState.selectedRow.additions} disabled={true}/>

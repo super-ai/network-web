@@ -97,15 +97,18 @@ class OuTreeSelect extends React.Component{
   }
 
   render(){
+    var {disabled} = this.props; // 默认为 false
+    disabled = disabled ? disabled:false;
+    
     return (
       <TreeSelect
       placeholder="部门"
-      
       dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
       treeData={this.state.treeData}
       loadData={this.onLoadData}
       onChange={this.onChangeHandler}
       value={this.state.value}
+      disabled={disabled}
       {...this.props}
       />
     )
