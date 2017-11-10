@@ -24,7 +24,7 @@ class Announcement extends Component{
   render(){
     return(
         <div>
-          {this.state.activeComp=='TableList' && <TableList publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>}
+          <TableList publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>
           {this.state.activeComp=='DetailView' && <DetailView publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>}
           {this.state.activeComp=='DetailEdit' && <DetailEdit publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>}
           {this.state.activeComp=='Reply' && <Reply publicState={this.state} setPublicState={this.setPublicState.bind(this)}/>}

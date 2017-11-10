@@ -18,6 +18,7 @@ class DetailView extends Component{
 
   componentDidMount(){
     // this.setState(this.props.publicState);
+    console.info('DetailView的componentDidMount');
   }
 
   componentWillReceiveProps(nextProps){

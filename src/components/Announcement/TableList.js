@@ -94,7 +94,7 @@ class TableList extends Component{
     const { getFieldDecorator } = this.props.form;
 
     return(
-        <div>
+        <div style={{display:this.state.activeComp=='TableList' ? 'inline':'none' }}>
           <div className='toolbar'>
           <Form layout="inline">
             <FormItem>
@@ -176,3 +176,5 @@ const columns = [{
   dataIndex: 'createTime',
   key: 'createTime',
 }];
+
+// <div style={{display:this.state.activeComp=='TableList' ? 'inline':'none' }}>
