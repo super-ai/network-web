@@ -25,7 +25,6 @@ class DetailEdit extends Component{
 
   state = {
     forUpdate:true, // 默认为编辑
-    value: [],
   }
 
   componentDidMount(){
@@ -80,15 +79,12 @@ class DetailEdit extends Component{
               duration: 3,
             });
 
-            //forUpdate返回详情
-            //否则返回List
+            //forUpdate返回详情 否则返回List
             if(this.state.forUpdate){
-              this.props.setPublicState({activeComp:'DetailView',selectedRow:res.data});
+              this.props.setPublicState({activeComp:'DetailView',selectedRow:res.data,isRefreshTableList:true});
             }
             else {
-              this.props.setPublicState({activeComp:'TableList'});
-              // ?如何刷新表格
-
+              this.props.setPublicState({activeComp:'TableList',isRefreshTableList:true}); // 跳转同事刷新TableList
             }
 
           }else{

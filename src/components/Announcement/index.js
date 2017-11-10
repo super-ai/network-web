@@ -9,9 +9,11 @@ const Component = React.Component;
 
 class Announcement extends Component{
   state = {
+    // 以下存放的为公共状态
     activeComp:'TableList',
     data:[],
     selectedRow:{},
+    isRefreshTableList:false, //是否刷新TableList 
   }
 
   /**

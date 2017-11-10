@@ -25,12 +25,16 @@ class TableList extends Component{
   componentDidMount(){
     this.setState(this.props.publicState);
     this.loadData(this.state.pagination); // 初始化加载数据
-    console.info('TableList的componentDidMount');
   }
 
   componentWillReceiveProps(nextProps){
     this.setState(nextProps.publicState);
-    console.warn('TableList的componentWillReceiveProps，此时传递进来的状态值为%o',nextProps.publicState);
+    // 如果是编辑或者新增的返回 需要刷新表格
+    if (nextProps.publicState.isRefreshTableList){
+      console.error('TableList刷新数据');
+      this.loadData(this.state.pagination); // 初始化加载数据
+      this.props.setPublicState({isRefreshTableList:false});
+    }
   }
 
   handleOnRowClick(record,index,event){
@@ -54,7 +58,7 @@ class TableList extends Component{
   }
 
   /**
-  * 提交查询
+  * 提交查询（固定函数名 提供给各种handler调用）
   */
   async loadData(pagination){
     var params = {};
@@ -102,8 +106,6 @@ class TableList extends Component{
             </FormItem>
             <FormItem>
                 <Search placeholder='关键搜索字...' className='search' ref='searchKey' onSearch={this.handleSelect.bind(this)}/>
-            </FormItem>
-            <FormItem>
                 <Button onClick={this.handleSelect.bind(this)}>查询</Button>
             </FormItem>
             <FormItem>
