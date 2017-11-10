@@ -128,7 +128,7 @@ class TableList extends Component{
           </Form>
           </div>
           <Table dataSource={this.props.publicState.data}
-          columns={columns} pagination={this.state.pagination}  className='announcement'
+          columns={columns} pagination={this.state.pagination}  className='announcement' size='small'
           onChange={this.handlePageChange.bind(this)} onRowClick={this.handleOnRowClick.bind(this)}/>
         </div>
     )
@@ -140,6 +140,10 @@ export default TableListForm;
 
 
 const columns = [{
+  title: 'ID',
+  dataIndex: 'id',
+  key: 'id',
+},{
   title: '标题',
   dataIndex: 'title',
   key: 'title',
@@ -184,10 +188,15 @@ const columns = [{
   title: '发布人',
   dataIndex: 'createUserName',
   key: 'createUserName',
-}, {
+},{
   title: '发布时间',
   dataIndex: 'createTime',
   key: 'createTime',
-}];
+},{
+  title: '附件数',
+  dataIndex: 'additions',
+  key: 'additions',
+  render:(text,record,index)=> record.additions ? record.additions.length:'',
+},];
 
 // <div style={{display:this.state.activeComp=='TableList' ? 'inline':'none' }}>

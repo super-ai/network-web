@@ -3,6 +3,7 @@ import {Button,Input,Icon,Tree,Modal,message} from 'antd';
 import './index.less';
 import configData from './configData.js';
 import ItemList from './ItemList.js';
+import FileUploader from 'components/FileUploader';
 
 const Component = React.Component;
 const {TextArea} = Input;
@@ -97,10 +98,13 @@ class DetailView extends Component{
         <br /><br />
         <ItemList data={ranges} title='范围'/>
         <br />
-        <ItemList data={additions} title='附件'/>
+        <hr />
+        <FileUploader max='5' sizeLimit='500' placeholder='上传文件' defaultValue={this.props.publicState.selectedRow.additions} disabled={true}/>
         <br />
+        <hr />
         <ItemList data={reads} title='阅读'/>
         <br />
+        <hr />
         <ItemList data={replies} title='回复'/>
       </div>
     )
