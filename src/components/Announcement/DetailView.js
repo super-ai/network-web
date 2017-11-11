@@ -65,7 +65,7 @@ class DetailView extends Component{
   replysRender(bulletinReplys){
     var rlt = [];
     rlt = bulletinReplys.map((item)=>{
-      return item.content + ' ' + item.replyUserName + ' ' + item.replyTime;
+      return item.replyTime + ' ' + item.replyUserName + ' ' + item.content;
     });
     return rlt;
   }
@@ -91,11 +91,8 @@ class DetailView extends Component{
           <span>{this.props.publicState.selectedRow ? this.props.publicState.selectedRow.createTime:null}</span>
         </div>
         <hr className='hr'/>
-        <br />
         <p className='announcementContent'>{this.props.publicState.selectedRow ? this.props.publicState.selectedRow.content:null}</p>
-        <br />
         <hr />
-        <br />
         <Ou multiple allowClear labelInValue value={this.props.publicState.selectedRow.ous} style={{width:'100%'}} disabled={true}/>
         <hr />
         <FileUploader max='5' sizeLimit='500' placeholder='上传文件' defaultValue={this.props.publicState.selectedRow.additions} disabled={true}/>
