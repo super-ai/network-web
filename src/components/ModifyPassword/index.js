@@ -2,6 +2,7 @@ import React from 'react';
 import { Form,Input,Button,notification } from 'antd';
 import './index.less';
 import ajax from 'utils/ajax.js';
+import globalConfig from 'config.js';
 
 const Component = React.Component;
 const FormItem = Form.Item;
@@ -47,17 +48,16 @@ class ModifyPassword extends Component{
      if (!err) {
        try{ // 提交数据
          console.log('提交的表单数据为: ',this.props.form.getFieldsValue());
-         const res = await ajax.get('/api/staff/password',this.props.form.getFieldsValue());
+         const res = await ajax.get(`${globalConfig.api.host}/api/staff/password`,this.props.form.getFieldsValue());
 
-         if (res.success) {
+         if (res > 0) {
            notification.success({
              message: '修改密码成功',
-            //  description: this.primaryKey ? `新增数据行 主键=${res.data[this.primaryKey]}` : '',
              duration: 3,
            });
            this.props.form.resetFields();
          } else {
-           this.error(res.failInfo.errorMessage);
+           this.error('修改密码失败');
          }
        }catch(ex){
          this.error(`网络请求出错: ${ex.message}`);

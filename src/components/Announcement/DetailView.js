@@ -61,29 +61,17 @@ class DetailView extends Component{
     return rlt;
   }
 
-  renderTreeNodes = (data) => {
-    return data.map((item) => {
-      if (item.children) {
-        return (
-          <TreeNode title={item.title} key={item.key} dataRef={item}>
-            {this.renderTreeNodes(item.children)}
-          </TreeNode>
-        );
-      }
-      return <TreeNode {...item} />;
+  // tmp func
+  replysRender(bulletinReplys){
+    var rlt = [];
+    rlt = bulletinReplys.map((item)=>{
+      return item.content + ' ' + item.replyUserName + ' ' + item.replyTime;
     });
+    return rlt;
   }
 
   render(){
     console.warn('DetailView重写Render');
-    const replysTree =
-      <Tree className='announcementTree'>
-        {this.renderTreeNodes(configData.replysTreeData)}
-      </Tree>;
-    const readsTree =
-      <Tree className='announcementTree'>
-        {this.renderTreeNodes(configData.readsTreeData)}
-      </Tree>;
 
     return(
       <div className='announcement'>
@@ -117,7 +105,7 @@ class DetailView extends Component{
         <ItemList data={this.readsRender(this.props.publicState.selectedRow.bulletinReads)} title='阅读'/>
         <br />
         <hr />
-        <ItemList data={replies} title='回复'/>
+        <ItemList data={this.replysRender(this.props.publicState.selectedRow.bulletinReplys)} title='回复'/>
       </div>
     )
   }
