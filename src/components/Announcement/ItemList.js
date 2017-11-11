@@ -15,20 +15,20 @@ class ItemList extends Component{
 
   // ul 展开折叠
   handleExpand(e){
-    if(e.target.innerHTML=='-'){
-      e.target.innerHTML='+';
-      this.setState({display:'none'});
-    }else{
-      e.target.innerHTML='-';
+    debugger;
+    if(e.target.innerHTML.indexOf('+') > -1){
+      e.target.innerHTML = `-${this.props.title}`;
       this.setState({display:'block'});
+    }else{
+      e.target.innerHTML = `+${this.props.title}`;
+      this.setState({display:'none'});
     }
   }
 
   render(){
     return(
       <div>
-        <a onClick={this.handleExpand.bind(this)}>+</a>
-        <a style={{fontWeight:'bold'}}>{this.props.title}</a>
+        <a style={{fontWeight:'bold',cursor:'hand'}} onClick={this.handleExpand.bind(this)}>+{this.props.title}</a>
         <div style={{display:this.state.display}}>
           <ul className='itemListUl'>
             {this.state.data.map((item,index)=>(<li key={index} className='itemListLi'>{item}</li>))}
