@@ -61,11 +61,23 @@ class DetailView extends Component{
     return rlt;
   }
 
-  // tmp func
+  /**
+  * 对于回复数据进行渲染
+  * 内容、附件创建单独的ul
+  */
   replysRender(bulletinReplys){
     var rlt = [];
     rlt = bulletinReplys.map((item)=>{
-      return item.replyTime + ' ' + item.replyUserName + ' ' + item.content;
+      return (
+        <div>
+          <span>{item.replyTime + ' ' + item.replyUserName }</span>
+          <ul className='itemListUl2'>
+            <li>{item.content}</li>
+            <li>附件1</li>
+            <li>附件2</li>
+          </ul>
+        </div>
+      );
     });
     return rlt;
   }

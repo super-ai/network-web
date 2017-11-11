@@ -31,7 +31,7 @@ class ItemList extends Component{
         <a style={{fontWeight:'bold'}}>{this.props.title}</a>
         <div style={{display:this.state.display}}>
           <ul className='itemListUl'>
-            {this.state.data.map((item,index)=>(<li key={item} className='itemListLi'>{item}</li>))}
+            {this.state.data.map((item,index)=>(<li key={index} className='itemListLi'>{item}</li>))}
           </ul>
         </div>
       </div>
