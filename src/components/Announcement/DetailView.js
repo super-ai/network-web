@@ -56,7 +56,7 @@ class DetailView extends Component{
   readsRender(bulletinReads){
     var rlt = [];
     rlt = bulletinReads.map((item)=>{
-      return item.readStaffName + ' ' + item.readTime;
+      return item.readTime + ' ' + item.readStaffName;
     });
     return rlt;
   }
@@ -97,15 +97,12 @@ class DetailView extends Component{
         <hr />
         <br />
         <Ou multiple allowClear labelInValue value={this.props.publicState.selectedRow.ous} style={{width:'100%'}} disabled={true}/>
-        <br />
         <hr />
         <FileUploader max='5' sizeLimit='500' placeholder='上传文件' defaultValue={this.props.publicState.selectedRow.additions} disabled={true}/>
-        <br />
-        <hr />
-        <ItemList data={this.readsRender(this.props.publicState.selectedRow.bulletinReads)} title='阅读'/>
-        <br />
         <hr />
         <ItemList data={this.replysRender(this.props.publicState.selectedRow.bulletinReplys)} title='回复'/>
+        <hr />
+        <ItemList data={this.readsRender(this.props.publicState.selectedRow.bulletinReads)} title='阅读'/>
       </div>
     )
   }
