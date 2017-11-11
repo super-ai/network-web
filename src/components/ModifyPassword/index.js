@@ -48,7 +48,7 @@ class ModifyPassword extends Component{
      if (!err) {
        try{ // 提交数据
          console.log('提交的表单数据为: ',this.props.form.getFieldsValue());
-         const res = await ajax.get(`${globalConfig.api.host}/api/staff/password`,this.props.form.getFieldsValue());
+         const res = await ajax.post(`${globalConfig.api.host}/api/staff/password`,null,{params:this.props.form.getFieldsValue()});
 
          if (res > 0) {
            notification.success({
