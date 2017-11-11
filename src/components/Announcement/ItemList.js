@@ -4,23 +4,18 @@ const Component = React.Component;
 
 class ItemList extends Component{
   state = {
-    display:'none',
-    data:[],
-    // visibility:'hidden',
+    display:'block',  // 初始状态 block / none
+    data:[],          // 内容
   }
 
   componentDidMount(){
     this.setState({data:this.props.data});
   }
 
-  // ul 展开折叠
   handleExpand(e){
-    debugger;
-    if(e.target.innerHTML.indexOf('+') > -1){
-      e.target.innerHTML = `-${this.props.title}`;
+    if(e.target.innerHTML.indexOf('+') > -1){  //不能使用-进行判断 因为e.target.innerHTML 在开始时候一直有符号-
       this.setState({display:'block'});
     }else{
-      e.target.innerHTML = `+${this.props.title}`;
       this.setState({display:'none'});
     }
   }
@@ -28,7 +23,9 @@ class ItemList extends Component{
   render(){
     return(
       <div>
-        <a style={{fontWeight:'bold',cursor:'hand'}} onClick={this.handleExpand.bind(this)}>+{this.props.title}</a>
+        <a style={{fontWeight:'bold',cursor:'hand'}} onClick={this.handleExpand.bind(this)}>
+          {this.state.display=='block' ? '-':'+'}{this.props.title}
+        </a>
         <div style={{display:this.state.display}}>
           <ul className='itemListUl'>
             {this.state.data.map((item,index)=>(<li key={index} className='itemListLi'>{item}</li>))}

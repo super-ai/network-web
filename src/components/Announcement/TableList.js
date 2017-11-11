@@ -193,7 +193,7 @@ const columns = [{
   dataIndex: 'createTime',
   key: 'createTime',
 },{
-  title: '附件数',
+  title: '附件',
   dataIndex: 'additions',
   key: 'additions',
   render:(text,record,index)=> record.additions ? record.additions.length:'',
