@@ -45,7 +45,6 @@ class Reply extends Component{
           if(res.success){
             notification.success({
               message: '回复成功',
-              description: this.primaryKey ? `新增数据行 主键=${res.data[this.primaryKey]}` : '',
               duration: 3,
             });
 
