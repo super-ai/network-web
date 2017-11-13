@@ -29,7 +29,6 @@ class DetailView extends Component{
 
   componentWillReceiveProps(nextProps){
     // 如果是回复或者转发的返回 需要刷新表格
-    debugger;
     if (nextProps.publicState.isRefreshDetailView){
       this.loadData(); // 初始化加载数据
       this.props.setPublicState({isRefreshDetailView:false});
@@ -70,8 +69,8 @@ class DetailView extends Component{
         utils.addServer(res.data,['additions'],globalConfig.api.host); // 附件列表中增加server
 
         // 为什么ajax返回的数据 不能刷新ItemList呢 ?
-        this.setState({selectedRowDetail:{...res.data,renderData:'ajax中增加的renderData'}});
-        // debugger;
+        debugger;
+        this.setState({selectedRowDetail:res.data});
       }else{
         this.error(res.failInfo.errorMessage);
       }
@@ -110,6 +109,41 @@ class DetailView extends Component{
             }]
       }
     });
+  }
+
+  /**
+  * 对于阅读数据进行渲染
+  */
+  readsRender(bulletinReads){
+    console.info('bulletinReads被调用%o',bulletinReads);
+    var rlt = [];
+    if (!bulletinReads) return rlt;
+    rlt = bulletinReads.map((item)=>{
+      return item.readTime + ' ' + item.readStaffName;
+    });
+    return rlt;
+  }
+
+  /**
+  * 对于回复数据进行渲染
+  * 内容、附件创建单独的ul
+  */
+  replysRender(bulletinReplys){
+    var rlt = [];
+    if (!bulletinReplys) return rlt;
+    rlt = bulletinReplys.map((item)=>{
+      return (
+        <div>
+          <span>{item.replyTime + ' ' + item.replyUserName }</span>
+          <ul className='itemListUl2'>
+            <li>{item.content}</li>
+            <li>附件1</li>
+            <li>附件2</li>
+          </ul>
+        </div>
+      );
+    });
+    return rlt;
   }
 
   error(errorMsg) {
@@ -165,9 +199,9 @@ class DetailView extends Component{
         <a className='viewLabel'>附件</a><br />
         <FileUploader max='5' sizeLimit='500' placeholder='上传文件' defaultValue={this.state.selectedRowDetail.additions} disabled={true}/>
         <hr />
-        <ItemList data={this.state.selectedRowDetail.bulletinReplys} type='replays' title='回复'/>
+        <ItemList data={this.replysRender(this.state.selectedRowDetail.bulletinReplys)} title='回复'/>
         <hr />
-        <ItemList data={this.state.selectedRowDetail.bulletinReads} type='reads' title='阅读'/>
+        <ItemList data={this.readsRender(this.state.selectedRowDetail.bulletinReads)} title='阅读'/>
       </div>
     )
   }

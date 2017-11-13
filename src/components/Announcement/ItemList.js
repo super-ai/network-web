@@ -5,35 +5,17 @@ const Component = React.Component;
 class ItemList extends Component{
   state = {
     display:'block',  // 初始状态 block / none
-    renderData:[],          // 内容
+    data:[],          // 内容
   }
 
   componentDidMount(){
-    var renderData = {};
-    var type = this.props.type;
-    if (type=='replays')
-      renderData = this.replysRender(this.props.data);
-
-    if (type=='reads')
-      renderData = this.readsRender(this.props.data);
-
-    // debugger;
-    this.setState({renderData});
+    this.setState(this.props.data);
   }
 
+  // 主要使用nextProps.data 而不是this.props.data
   componentWillReceiveProps(nextProps){
-
-    var renderData = {};
-    var type = this.props.type;
-    if (type=='replays')
-      renderData = this.replysRender(nextProps.data);
-
-    if (type=='reads')
-      renderData = this.readsRender(nextProps.data);
-
-    // debugger;
-    this.setState({renderData});
-
+    debugger;
+    this.setState({data:nextProps.data});
   }
 
   handleExpand(e){
@@ -44,41 +26,6 @@ class ItemList extends Component{
     }
   }
 
-  /**
-  * 对于阅读数据进行渲染
-  */
-  readsRender(bulletinReads){
-    console.info('bulletinReads被调用%o',bulletinReads);
-    var rlt = [];
-    if (!bulletinReads) return rlt;
-    rlt = bulletinReads.map((item)=>{
-      return item.readTime + ' ' + item.readStaffName;
-    });
-    return rlt;
-  }
-
-  /**
-  * 对于回复数据进行渲染
-  * 内容、附件创建单独的ul
-  */
-  replysRender(bulletinReplys){
-    var rlt = [];
-    if (!bulletinReplys) return rlt;
-    rlt = bulletinReplys.map((item)=>{
-      return (
-        <div>
-          <span>{item.replyTime + ' ' + item.replyUserName }</span>
-          <ul className='itemListUl2'>
-            <li>{item.content}</li>
-            <li>附件1</li>
-            <li>附件2</li>
-          </ul>
-        </div>
-      );
-    });
-    return rlt;
-  }
-
   render(){
     return(
       <div>
@@ -87,7 +34,7 @@ class ItemList extends Component{
         </a>
         <div style={{display:this.state.display}}>
           <ul className='itemListUl'>
-            {this.state.renderData.map((item,index)=>(<li key={index} className='itemListLi'>{item}</li>))}
+            {this.state.data.map((item,index)=>(<li key={index} className='itemListLi'>{item}</li>))}
           </ul>
         </div>
       </div>
