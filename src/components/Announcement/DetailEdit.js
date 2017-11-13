@@ -57,7 +57,17 @@ class DetailEdit extends Component{
     }
   }
 
+  /**
+  * 新增和删除公告
+  */
   async handleSave(){
+    this.state.forUpdate ? this.update():this.insert();
+  }
+
+  /**
+  * 新增数据
+  */
+  async insert(){
     // 表单验证
     this.props.form.validateFieldsAndScroll(async (err,values)=>{
       if(!err){
@@ -67,8 +77,6 @@ class DetailEdit extends Component{
         var newObj = {};
         newObj = utils.procFieldsDateValue(oldObj,moment); // 日期处理
         utils.removeServer(newObj,['additions'],host); // 上传文件url去掉server
-        console.log('处理后的表单数据为: ',JSON.stringify(newObj));
-
         // 后台提交
         try{
           var res = await ajax.post(`${globalConfig.api.host}/api/Bulletin/insert`, newObj);
@@ -80,23 +88,55 @@ class DetailEdit extends Component{
             });
 
             //forUpdate返回详情 否则返回List
-            if(this.state.forUpdate){
-              this.props.setPublicState({activeComp:'DetailView',selectedRow:res.data,isRefreshTableList:true});
-            }
-            else {
-              this.props.setPublicState({activeComp:'TableList',isRefreshTableList:true}); // 跳转同事刷新TableList
-            }
-
+            this.props.setPublicState({activeComp:'TableList',isRefreshTableList:true}); // 跳转同事刷新TableList
           }else{
             this.error(res.failInfo.errorMessage);
           }
         }catch(ex){
           this.error(`网络请求出错: ${ex.message}`);
         }
-
       }
     });
+  }
 
+  /**
+  * 更新数据
+  */
+  async update(){
+    // 表单验证
+    this.props.form.validateFieldsAndScroll(async (err,values)=>{
+      if(!err){
+        // 参数获取、处理
+
+        var oldObj = this.props.form.getFieldsValue();
+        var host = globalConfig.api.host;
+        var newObj = {};
+        newObj = utils.procFieldsDateValue(oldObj,moment); // 日期处理
+        utils.removeServer(newObj,['additions'],host); // 上传文件url去掉server
+        console.log('处理后的表单数据为: ',JSON.stringify(newObj));
+
+        // 后台提交
+        try{
+
+          var res = await ajax.post(`${globalConfig.api.host}/api/Bulletin/update`, newObj);
+          debugger;
+          if(res.success){
+            notification.success({
+              message: '更新成功',
+              description: this.primaryKey ? `新增数据行 主键=${res.data[this.primaryKey]}` : '',
+              duration: 3,
+            });
+
+            //forUpdate返回详情 否则返回List
+            this.props.setPublicState({activeComp:'DetailView',selectedRow:res.data,isRefreshTableList:true});
+          }else{
+            this.error(res.failInfo.errorMessage);
+          }
+        }catch(ex){
+          this.error(`网络请求出错: ${ex.message}`);
+        }
+      }
+    });
   }
 
   onChange = (value) => {
