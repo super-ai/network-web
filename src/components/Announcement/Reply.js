@@ -48,8 +48,8 @@ class Reply extends Component{
               description: this.primaryKey ? `新增数据行 主键=${res.data[this.primaryKey]}` : '',
               duration: 3,
             });
-            //forUpdate返回详情 否则返回List
-            this.props.setPublicState({activeComp:'DetailView',isRefreshTableList:true});
+
+            this.props.setPublicState({activeComp:'DetailView',isRefreshDetailView:true});
           }else{
             this.error(res.failInfo.errorMessage);
           }
