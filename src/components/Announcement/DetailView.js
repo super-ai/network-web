@@ -24,7 +24,7 @@ class DetailView extends Component{
 
   componentDidMount(){
     this.loadData();
-    this.addKeyBoardListener.bind(this);
+    this.addKeyBoardListener.bind(this);  // 键盘监控
   }
 
   componentWillReceiveProps(nextProps){
@@ -80,9 +80,6 @@ class DetailView extends Component{
       var res = await ajax.get(`${globalConfig.api.host}/api/Bulletin/select/${this.props.publicState.selectedRow.id}`, null);
       if(res.success){
         utils.addServer(res.data,['additions'],globalConfig.api.host); // 附件列表中增加server
-
-        // 为什么ajax返回的数据 不能刷新ItemList呢 ?
-        debugger;
         this.setState({selectedRowDetail:res.data});
       }else{
         this.error(res.failInfo.errorMessage);
@@ -190,7 +187,8 @@ class DetailView extends Component{
         <Ou multiple allowClear labelInValue value={this.state.selectedRowDetail.ous} style={{width:'100%',marginTop:'10px'}} disabled={true}/>
         <hr />
         <a className='viewLabel'>附件</a><br />
-        <FileUploader max='5' sizeLimit='500' placeholder='上传文件' defaultValue={this.state.selectedRowDetail.additions} disabled={true}/>
+        <FileUploader max='5' sizeLimit='500' placeholder='上传文件'
+          value={this.state.selectedRowDetail.additions} disabled={true}/>
         <hr />
         <ItemList data={this.replysRender(this.state.selectedRowDetail.bulletinReplys)} title='回复'/>
         <hr />

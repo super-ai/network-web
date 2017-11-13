@@ -14,7 +14,6 @@ class ItemList extends Component{
 
   // 主要使用nextProps.data 而不是this.props.data
   componentWillReceiveProps(nextProps){
-    debugger;
     this.setState({data:nextProps.data});
   }
 
