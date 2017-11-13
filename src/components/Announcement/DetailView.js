@@ -19,11 +19,10 @@ const TreeNode = Tree.TreeNode;
 */
 class DetailView extends Component{
   state={
-    selectedRowDetail:{}        // 当前行详情
+    selectedRowDetail:{}        // 当前行详情和公共变量有雷同处（因为把获取详情放到此组件 所以要单独创建一个状态）
   }
 
   componentDidMount(){
-    debugger;
     this.loadData();
   }
 
@@ -62,7 +61,6 @@ class DetailView extends Component{
   * 获取当前行的详情
   */
   async loadData(){
-
     try{
       var res = await ajax.get(`${globalConfig.api.host}/api/Bulletin/select/${this.props.publicState.selectedRow.id}`, null);
       if(res.success){
@@ -83,32 +81,7 @@ class DetailView extends Component{
   * 刷新当前页面数据
   */
   handleRefresh(){
-    this.setState({
-      selectedRowDetail:{
-        ...this.state.selectedRowDetail,
-        // title:'标题被修改',
-        content:'内容被修改',
-        bulletinReplys:[
-            {
-                "id": 2,
-                "bulletinId": 34,
-                "content": "12121",
-                "replyTime": "2017-11-10 17:22:32",
-                "replyUserId": 99,
-                "replyUserName": "root",
-                "additions": null
-            },
-            {
-                "id": 3,
-                "bulletinId": 34,
-                "content": "第二次回复",
-                "replyTime": "2017-11-10 17:22:54",
-                "replyUserId": 99,
-                "replyUserName": "root",
-                "additions": null
-            }]
-      }
-    });
+    loadData();
   }
 
   /**

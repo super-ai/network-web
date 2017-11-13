@@ -12,7 +12,7 @@ class Announcement extends Component{
     // 以下存放的为公共状态publicState
     activeComp:'TableList',
     data:[],                    // TableList 表格数据
-    selectedRow:{},             // 当前选择行
+    selectedRow:{},             // 当前选择行 
     isRefreshTableList:false,   // 是否刷新TableList
     isRefreshDetailView:false,  // 是否刷新DetailView
   }
