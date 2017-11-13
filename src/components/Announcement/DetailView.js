@@ -191,7 +191,7 @@ class DetailView extends Component{
           <span>{this.state.selectedRowDetail ? this.state.selectedRowDetail.createTime:null}</span>
         </div>
         <hr className='hr'/>
-        <p className='announcementContent'>{this.state.selectedRowDetail ? this.state.selectedRowDetail.content:null}</p>
+        <TextArea value={this.state.selectedRowDetail ? this.state.selectedRowDetail.content:null} className='announcementContent' disabled autosize/>
         <hr />
         <a className='viewLabel'>范围</a><br />
         <Ou multiple allowClear labelInValue value={this.state.selectedRowDetail.ous} style={{width:'100%',marginTop:'10px'}} disabled={true}/>
