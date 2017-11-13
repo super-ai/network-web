@@ -4,7 +4,7 @@ const Component = React.Component;
 
 class ItemList extends Component{
   state = {
-    display:'block',  // 初始状态 block / none
+    display:'none',  // 初始状态 block / none
     data:[],          // 内容
   }
 
@@ -29,7 +29,7 @@ class ItemList extends Component{
     return(
       <div>
         <a style={{fontWeight:'bold',cursor:'hand'}} onClick={this.handleExpand.bind(this)}>
-          {this.state.display=='block' ? '-':'+'}{this.props.title}
+          {this.state.display=='block' ? '-':'+'}{this.props.title}【{this.state.data.length}】
         </a>
         <div style={{display:this.state.display}}>
           <ul className='itemListUl'>

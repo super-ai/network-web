@@ -16,7 +16,7 @@ class TableList extends Component{
     // 私有状态
     pagination:{
       current:1,
-      pageSize:10,
+      pageSize:20,
       total:0,
       showSizeChanger:true,
       showTotal:total=>`共${total}条`,
@@ -151,7 +151,7 @@ const columns = [{
     if(record && record.isTop){
       rlt =
         <div>
-          <Tooltip title='置顶'><a style={{color:'#1878FF',fontWeight:'bold'}}>[顶]</a></Tooltip>  
+          <Tooltip title='置顶'><a style={{color:'#1878FF',fontWeight:'bold'}}>[顶]</a></Tooltip>
           <span>{rlt}</span>
         </div>;
     }else{

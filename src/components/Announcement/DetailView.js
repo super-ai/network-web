@@ -100,7 +100,6 @@ class DetailView extends Component{
   * 对于阅读数据进行渲染
   */
   readsRender(bulletinReads){
-    console.info('bulletinReads被调用%o',bulletinReads);
     var rlt = [];
     if (!bulletinReads) return rlt;
     rlt = bulletinReads.map((item)=>{
@@ -138,6 +137,18 @@ class DetailView extends Component{
         <li><a href={`${globalConfig.api.host}${item}`} download={`${item}`} style={{color:'#000000'}}>{item}</a></li>
       ))
     );
+  }
+
+  /**
+  * 对附件数据进行渲染
+  */
+  additionsRender(bulletinAdditions){
+    var rlt = [];
+    if (!bulletinAdditions) return rlt;
+    rlt = bulletinAdditions.map((item)=>{
+      return <a href={`${item}`} download={`${item}`} style={{color:'#000000'}}>{item}</a>;
+    });
+    return rlt;
   }
 
   error(errorMsg) {
@@ -193,12 +204,9 @@ class DetailView extends Component{
         <hr className='hr'/>
         <TextArea value={this.state.selectedRowDetail ? this.state.selectedRowDetail.content:null} className='announcementContent' disabled autosize/>
         <hr />
-        <a className='viewLabel'>范围</a><br />
-        <Ou multiple allowClear labelInValue value={this.state.selectedRowDetail.ous} style={{width:'100%',marginTop:'10px'}} disabled={true}/>
+        <Ou multiple allowClear labelInValue value={this.state.selectedRowDetail.ous} style={{width:'100%',marginTop:'10px',marginBottom:'10px'}} disabled={true}/>
         <hr />
-        <a className='viewLabel'>附件</a><br />
-        <FileUploader max='5' sizeLimit='500' placeholder='上传文件'
-          value={this.state.selectedRowDetail.additions} disabled={true}/>
+        <ItemList data={this.additionsRender(this.state.selectedRowDetail.additions)} title='附件'/>
         <hr />
         <ItemList data={this.replysRender(this.state.selectedRowDetail.bulletinReplys)} title='回复'/>
         <hr />
@@ -213,3 +221,6 @@ export default DetailView;
 const ranges = ['北京','上海','广州'];
 const additions = ['附件一','附件二','附件三','附件四','附件五'];
 const replies = ['张三回复','李四回复','Tom回复','Tyson回复','习大大回复'];
+
+// <FileUploader max='5' sizeLimit='500' placeholder='上传文件'
+//   value={this.state.selectedRowDetail.additions} disabled={true}/>
