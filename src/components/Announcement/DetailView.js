@@ -9,6 +9,7 @@ import ajax from 'utils/ajax';
 import globalConfig from 'config.js';
 import utils from 'utils';
 import MyComp from './MyComp.js';
+import moment from 'moment';
 
 const Component = React.Component;
 const {TextArea} = Input;
@@ -161,15 +162,25 @@ class DetailView extends Component{
     });
   }
 
+  /**
+  * 是否禁用操作 true 禁用
+  */
+  isAchieve(){
+    // debugger;
+    return moment(this.state.selectedRowDetail.archivedTime).diff(moment(), 'seconds') < 0 ;
+    // fromNow 不是一个数字
+    // return moment(this.state.selectedRowDetail.archivedTime, "YYYY-MM-DD HH:mm:ss").fromNow() < 0;
+  }
+
   render(){
     return(
       <div className='announcement'>
         <div>
           <Button type='primary' icon='left-circle-o' onClick={this.handleReturn.bind(this)}>返回</Button>
-          <Button icon='plus' onClick={this.handleReply.bind(this)}>回复</Button>
-          <Button icon='edit' onClick={this.handleEdit.bind(this)}>编辑</Button>
-          <Button icon='delete' onClick={this.handleDelete.bind(this)}>删除</Button>
-          <Button icon='share-alt' onClick={this.handleTransmit.bind(this)}>转发</Button>
+          <Button icon='plus' onClick={this.handleReply.bind(this)} disabled={this.isAchieve.bind(this)()}>回复</Button>
+          <Button icon='edit' onClick={this.handleEdit.bind(this)} disabled={this.isAchieve.bind(this)()}>编辑</Button>
+          <Button icon='delete' onClick={this.handleDelete.bind(this)} disabled={this.isAchieve.bind(this)()}>删除</Button>
+          <Button icon='share-alt' onClick={this.handleTransmit.bind(this)} disabled={this.isAchieve.bind(this)()}>转发</Button>
           <Button icon='reload' onClick={this.handleRefresh.bind(this)}>刷新</Button>
         </div>
         <div className='announcementTitle'>
