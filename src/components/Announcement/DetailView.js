@@ -8,7 +8,6 @@ import Ou from 'components/Custom/OuTreeSelect';
 import ajax from 'utils/ajax';
 import globalConfig from 'config.js';
 import utils from 'utils';
-import MyComp from './MyComp.js';
 import moment from 'moment';
 
 const Component = React.Component;
