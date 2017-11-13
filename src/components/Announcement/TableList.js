@@ -147,16 +147,16 @@ const columns = [{
     }
 
     // 增加置顶图片
+    // 系统颜色'#1878FF'
     if(record && record.isTop){
       rlt =
         <div>
-          <Tooltip title='置顶'><img src={img} style={{width:'32px'}}/></Tooltip>
+          <Tooltip title='置顶'><a style={{color:'#1878FF',fontWeight:'bold'}}>[顶]</a></Tooltip>  
           <span>{rlt}</span>
         </div>;
     }else{
       rlt =
         <div>
-          <img style={{width:'32px'}}/>
           <span>{rlt}</span>
         </div>;
     }
