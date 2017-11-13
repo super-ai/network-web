@@ -24,6 +24,7 @@ class DetailView extends Component{
 
   componentDidMount(){
     this.loadData();
+    this.addKeyBoardListener.bind(this);
   }
 
   componentWillReceiveProps(nextProps){
@@ -32,6 +33,20 @@ class DetailView extends Component{
       this.loadData(); // 初始化加载数据
       this.props.setPublicState({isRefreshDetailView:false});
     }
+  }
+
+  // ESC 返回
+  addKeyBoardListener(){
+    document.addEventListener('keyup',function(e){
+      switch(e.keyCode){
+        case 27:
+        this.handleReturn();
+        break
+
+        default:
+        break
+      }
+    })
   }
 
   handleReturn(){
