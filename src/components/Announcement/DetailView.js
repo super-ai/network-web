@@ -105,8 +105,10 @@ class DetailView extends Component{
         <hr className='hr'/>
         <p className='announcementContent'>{this.props.publicState.selectedRow ? this.props.publicState.selectedRow.content:null}</p>
         <hr />
-        <Ou multiple allowClear labelInValue value={this.props.publicState.selectedRow.ous} style={{width:'100%'}} disabled={true}/>
+        <a className='viewLabel'>范围</a><br />
+        <Ou multiple allowClear labelInValue value={this.props.publicState.selectedRow.ous} style={{width:'100%',marginTop:'10px'}} disabled={true}/>
         <hr />
+        <a className='viewLabel'>附件</a><br />
         <FileUploader max='5' sizeLimit='500' placeholder='上传文件' defaultValue={this.props.publicState.selectedRow.additions} disabled={true}/>
         <hr />
         <ItemList data={this.replysRender(this.props.publicState.selectedRow.bulletinReplys)} title='回复'/>
