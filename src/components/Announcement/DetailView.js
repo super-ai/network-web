@@ -107,16 +107,25 @@ class DetailView extends Component{
     rlt = bulletinReplys.map((item)=>{
       return (
         <div>
-          <span>{item.replyTime + ' ' + item.replyUserName }</span>
+          <span style={{fontWeight:'bold',marginTop:'20px'}}>{item.replyTime + ' ' + item.replyUserName }</span>
           <ul className='itemListUl2'>
             <li>{item.content}</li>
-            <li>附件1</li>
-            <li>附件2</li>
+            {this.renderReplyAdditions(item.additions)}
           </ul>
         </div>
       );
     });
     return rlt;
+  }
+
+  renderReplyAdditions(additions){
+    if(!additions||additions.length==0) return null;
+
+    return (
+      additions.map((item)=>(
+        <li><a href={`${globalConfig.api.host}${item}`} download={`${item}`} style={{color:'#000000'}}>{item}</a></li>
+      ))
+    );
   }
 
   error(errorMsg) {
@@ -141,10 +150,6 @@ class DetailView extends Component{
   }
 
   render(){
-    console.info('DetailView重写Render%o',this.state.selectedRowDetail);
-
-    console.info('XXXXX这个数怎么一直为空%o',this.state.selectedRowDetail.bulletinReplys);
-
     return(
       <div className='announcement'>
         <div>
