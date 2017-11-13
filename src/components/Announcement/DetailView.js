@@ -81,7 +81,7 @@ class DetailView extends Component{
   * 刷新当前页面数据
   */
   handleRefresh(){
-    loadData();
+    this.loadData();
   }
 
   /**
