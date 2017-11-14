@@ -19,7 +19,8 @@ const TreeNode = Tree.TreeNode;
 */
 class DetailView extends Component{
   state={
-    selectedRowDetail:{}        // 当前行详情和公共变量有雷同处（因为把获取详情放到此组件 所以要单独创建一个状态）
+    // 当前行详情和公共变量有雷同处（因为把获取详情放到此组件 所以要单独创建一个状态）
+    selectedRowDetail:{}
   }
 
   componentDidMount(){
@@ -66,6 +67,25 @@ class DetailView extends Component{
   }
 
   /**
+  * 刷新当前页面数据
+  */
+  handleRefresh(){
+    this.loadData();
+  }
+
+  handleDelete(e){
+    e.preventDefault();
+    Modal.confirm({
+      title: '确认删除',
+      content: `当前标题为: ${this.props.publicState.selectedRow.title}`,
+      // 这里注意要用箭头函数, 否则this不生效
+      onOk: () => {
+        this.delete(`${this.props.publicState.selectedRow.id}`);
+      },
+    });
+  }
+
+  /**
   * 获取当前行的详情
   */
   async loadData(){
@@ -75,18 +95,11 @@ class DetailView extends Component{
         utils.addServer(res.data,['additions'],globalConfig.api.host); // 附件列表中增加server
         this.setState({selectedRowDetail:res.data});
       }else{
-        this.error(res.failInfo.errorMessage);
+        utils.error(res.failInfo.errorMessage);
       }
     }catch(ex){
-      this.error(`网络请求出错: ${ex.message}`);
+      utils.error(`网络请求出错: ${ex.message}`);
     }
-  }
-
-  /**
-  * 刷新当前页面数据
-  */
-  handleRefresh(){
-    this.loadData();
   }
 
   /**
@@ -144,27 +157,6 @@ class DetailView extends Component{
     return rlt;
   }
 
-  error(errorMsg) {
-    // 对于错误信息, 要很明显的提示用户, 这个通知框要用户手动关闭
-    notification.error({
-      message: '出错!',
-      description: `请联系管理员, 错误信息: ${errorMsg}`,
-      duration: 0,
-    });
-  }
-
-  handleDelete(e){
-    e.preventDefault();
-    Modal.confirm({
-      title: '确认删除',
-      content: `当前标题为: ${this.props.publicState.selectedRow.title}`,
-      // 这里注意要用箭头函数, 否则this不生效
-      onOk: () => {
-        this.delete(`${this.props.publicState.selectedRow.id}`);
-      },
-    });
-  }
-
   /**
   * 删除某条记录
   */
@@ -193,10 +185,7 @@ class DetailView extends Component{
   * 是否禁用操作 true 禁用
   */
   isAchieve(){
-    // debugger;
     return moment(this.state.selectedRowDetail.archivedTime).diff(moment(), 'seconds') < 0 ;
-    // fromNow 不是一个数字
-    // return moment(this.state.selectedRowDetail.archivedTime, "YYYY-MM-DD HH:mm:ss").fromNow() < 0;
   }
 
   render(){

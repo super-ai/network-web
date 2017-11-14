@@ -14,6 +14,9 @@
  * (new Date()).pattern("yyyy-MM-dd EEE hh:mm:ss") ==> 2009-03-10 星期二 08:09:04
  * (new Date()).pattern("yyyy-M-d h:m:s.S") ==> 2006-7-2 8:9:4.18
  */
+
+import {notification} from 'antd';
+
 Date.prototype.format = function (fmt) {
   var o = {
     "M+": this.getMonth() + 1, //月份
@@ -265,6 +268,15 @@ const Utils = {
         obj[fields[i]][j] = host + obj[fields[i]][j];
       }
     }
+  },
+
+  error(errorMsg) {
+    // 对于错误信息, 要很明显的提示用户, 这个通知框要用户手动关闭
+    notification.error({
+      message: '出错!',
+      description: `请联系管理员, 错误信息: ${errorMsg}`,
+      duration: 0,
+    });
   },
 
 };
