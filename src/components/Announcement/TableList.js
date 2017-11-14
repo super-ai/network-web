@@ -32,7 +32,6 @@ class TableList extends Component{
     this.setState(nextProps.publicState);
     // 如果是编辑或者新增的返回 需要刷新表格
     if (nextProps.publicState.isRefreshTableList){
-      console.error('TableList刷新数据');
       this.loadData(this.state.pagination); // 初始化加载数据
       this.props.setPublicState({isRefreshTableList:false});
     }
@@ -48,15 +47,6 @@ class TableList extends Component{
   handlePageChange(pagination){
     this.props.setPublicState({pagination});
     this.loadData(pagination);
-  }
-
-  error(errorMsg) {
-    // 对于错误信息, 要很明显的提示用户, 这个通知框要用户手动关闭
-    notification.error({
-      message: '出错!',
-      description: `请联系管理员, 错误信息: ${errorMsg}`,
-      duration: 0,
-    });
   }
 
   /**
@@ -79,10 +69,10 @@ class TableList extends Component{
         if(!res.data) return;
         this.props.setPublicState({data:res.data,pagination:{...this.state.pagination,total:res.total}});
       }else{
-        this.error(res.failInfo);
+        utils.error(res.failInfo);
       }
     }catch(ex){
-      this.error(`网络请求出错: ${ex.message}`);
+      utils.error(`网络请求出错: ${ex.message}`);
     }
   }
 

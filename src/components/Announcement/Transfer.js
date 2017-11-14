@@ -39,21 +39,12 @@ class Transfer extends Component{
 
             this.props.setPublicState({activeComp:'DetailView',isRefreshDetailView:true});
           }else{
-            this.error(res.failInfo.errorMessage);
+            utils.error(res.failInfo.errorMessage);
           }
         }catch(ex){
-          this.error(`网络请求出错: ${ex.message}`);
+          utils.error(`网络请求出错: ${ex.message}`);
         }
       }
-    });
-  }
-
-  error(errorMsg) {
-    // 对于错误信息, 要很明显的提示用户, 这个通知框要用户手动关闭
-    notification.error({
-      message: '出错!',
-      description: `请联系管理员, 错误信息: ${errorMsg}`,
-      duration: 0,
     });
   }
 

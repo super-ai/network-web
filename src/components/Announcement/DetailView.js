@@ -174,10 +174,10 @@ class DetailView extends Component{
         // 删除成功后 返回TableList界面
         this.props.setPublicState({activeComp:'TableList',isRefreshTableList:true}); // 跳转同事刷新TableList
       }else{
-        this.error(res.failInfo.errorMessage);
+        utils.error(res.failInfo.errorMessage);
       }
     }catch(ex){
-      this.error(`网络请求出错: ${ex.message}`);
+      utils.error(`网络请求出错: ${ex.message}`);
     }
   }
 
@@ -207,7 +207,7 @@ class DetailView extends Component{
           &nbsp;&nbsp;
           <span>{this.state.selectedRowDetail ? this.state.selectedRowDetail.createTime:null}</span>
         </div>
-        <hr className='hr'/>
+        <hr />
         <TextArea value={this.state.selectedRowDetail ? this.state.selectedRowDetail.content:null} className='announcementContent' disabled autosize/>
         <hr />
         <Ou multiple allowClear labelInValue value={this.state.selectedRowDetail.ous} style={{width:'100%',marginTop:'10px',marginBottom:'10px'}} disabled={true}/>
@@ -223,10 +223,6 @@ class DetailView extends Component{
 }
 
 export default DetailView;
-
-const ranges = ['北京','上海','广州'];
-const additions = ['附件一','附件二','附件三','附件四','附件五'];
-const replies = ['张三回复','李四回复','Tom回复','Tyson回复','习大大回复'];
 
 // <FileUploader max='5' sizeLimit='500' placeholder='上传文件'
 //   value={this.state.selectedRowDetail.additions} disabled={true}/>

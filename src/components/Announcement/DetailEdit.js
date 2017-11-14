@@ -35,15 +35,6 @@ class DetailEdit extends Component{
     this.setState(nextProps.publicState);
   }
 
-  error(errorMsg) {
-    // 对于错误信息, 要很明显的提示用户, 这个通知框要用户手动关闭
-    notification.error({
-      message: '出错!',
-      description: `请联系管理员, 错误信息: ${errorMsg}`,
-      duration: 0,
-    });
-  }
-
   /**
   * 编辑时候返回详细信息
   * 新增时候返回List
@@ -90,10 +81,10 @@ class DetailEdit extends Component{
             //forUpdate返回详情 否则返回List
             this.props.setPublicState({activeComp:'TableList',isRefreshTableList:true}); // 跳转同事刷新TableList
           }else{
-            this.error(res.failInfo.errorMessage);
+            utils.error(res.failInfo.errorMessage);
           }
         }catch(ex){
-          this.error(`网络请求出错: ${ex.message}`);
+          utils.error(`网络请求出错: ${ex.message}`);
         }
       }
     });
@@ -130,10 +121,10 @@ class DetailEdit extends Component{
             //forUpdate返回详情 否则返回List
             this.props.setPublicState({activeComp:'DetailView',selectedRow:res.data,isRefreshTableList:true});
           }else{
-            this.error(res.failInfo.errorMessage);
+            utils.error(res.failInfo.errorMessage);
           }
         }catch(ex){
-          this.error(`网络请求出错: ${ex.message}`);
+          utils.error(`网络请求出错: ${ex.message}`);
         }
       }
     });
@@ -203,31 +194,3 @@ class DetailEdit extends Component{
 const DetailEditForm = Form.create()(DetailEdit);
 
 export default DetailEditForm;
-
-
-
-const attachments =
-  <ul>
-    <li>附件一</li>
-    <li>附件二</li>
-    <li>附件三</li>
-    <li>附件四</li>
-    <li>附件五</li>
-  </ul>;
-
-const reads =
-  <ul>
-    <li>张三阅</li>
-    <li>李四阅</li>
-    <li>Tom阅</li>
-    <li>Tyson阅</li>
-    <li>习大大阅</li>
-  </ul>;
-const replies =
-  <ul>
-    <li>张三回复</li>
-    <li>李四回复</li>
-    <li>Tom回复</li>
-    <li>Tyson回复</li>
-    <li>习大大回复</li>
-  </ul>;
