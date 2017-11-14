@@ -61,13 +61,6 @@ class DetailView extends Component{
     this.props.setPublicState({activeComp:'DetailEdit',forUpdate:true});
   }
 
-  /**
-  * 删除某条记录
-  */
-  delete(id){
-    message.info('发起删除请求');
-  }
-
   handleTransmit(){
     this.props.setPublicState({activeComp:'Transfer'});
   }
@@ -164,12 +157,36 @@ class DetailView extends Component{
     e.preventDefault();
     Modal.confirm({
       title: '确认删除',
-      content: `当前被选中标题为: ${this.props.publicState.selectedRow.title}`,
+      content: `当前标题为: ${this.props.publicState.selectedRow.title}`,
       // 这里注意要用箭头函数, 否则this不生效
       onOk: () => {
         this.delete(`${this.props.publicState.selectedRow.id}`);
       },
     });
+  }
+
+  /**
+  * 删除某条记录
+  */
+  async delete(id){
+    // 后台提交
+    try{
+      var res = await ajax.post(`${globalConfig.api.host}/api/Bulletin/delete/${this.props.publicState.selectedRow.id}`, null);
+      if(res.success){
+        notification.success({
+          message: '删除成功',
+          description: `被删除数据行 主键=${this.props.publicState.selectedRow.id}`,
+          duration: 3,
+        });
+
+        // 删除成功后 返回TableList界面
+        this.props.setPublicState({activeComp:'TableList',isRefreshTableList:true}); // 跳转同事刷新TableList
+      }else{
+        this.error(res.failInfo.errorMessage);
+      }
+    }catch(ex){
+      this.error(`网络请求出错: ${ex.message}`);
+    }
   }
 
   /**
