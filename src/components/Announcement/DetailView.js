@@ -120,7 +120,7 @@ class DetailView extends Component{
         <div>
           <span style={{fontWeight:'bold',marginTop:'20px'}}>{item.replyTime + ' ' + item.replyUserName }</span>
           <ul className='itemListUl2'>
-            <li>{item.content}</li>
+            <li><span>{item.content}</span></li>
             {this.renderReplyAdditions(item.additions)}
           </ul>
         </div>

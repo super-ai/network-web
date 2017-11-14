@@ -9,6 +9,7 @@
 // 遵循统一的规范, 好维护, 交给其他人也比较简单
 
 // const host = 'http://10.10.64.87:8080';
+// const host = 'http://10.10.64.74:8080';
 // const host = 'http://211.98.64.232:8080';
 const host = 'http://localhost:8080';
 module.exports = {
