@@ -52,10 +52,19 @@ const routes = (
         <Route path='custom-manage'>
           <Route path='custom' tableName='Customer' getComponent={DBTableContainer}/>
           <Route path='contact' tableName='Contact' getComponent={DBTableContainer}/>
+          <Route path='contract-business' tableName='ContractBusiness' getComponent={DBTableContainer}/>
+        </Route>
+
+        <Route path='business-manage'>
           <Route path='financial-subjects' tableName='FinancialSubjects' getComponent={DBTableContainer}/>
           <Route path='business' tableName='Business' getComponent={DBTableContainer}/>
+        </Route>
+
+        <Route path='contract-manage'>
           <Route path='contract' tableName='Contract' getComponent={DBTableContainer}/>
-          <Route path='contract-business' tableName='ContractBusiness' getComponent={DBTableContainer}/>
+        </Route>
+
+        <Route path='income-manage'>
           <Route path='business-volumn' tableName='BusinessVolumn' getComponent={DBTableContainer}/>
           <Route path='income-cost' tableName='IncomeCost' getComponent={DBTableContainer}/>
         </Route>

@@ -71,6 +71,11 @@ module.exports = [
     showType:'radio',
     options: [{key: true, value: '是'}, {key: false, value: '否'}],
   },{
+    key:'taxRate',
+    title:'税率(%)',
+    dataType:'float',
+    validator: [{required: true, message: '必填'}],
+  },{
     key:'remarks',
     title:'备注',
     dataType:'varchar',
