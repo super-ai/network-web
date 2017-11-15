@@ -20,7 +20,8 @@ class TableList extends Component{
       total:0,
       showSizeChanger:true,
       showTotal:total=>`共${total}条`,
-      }
+    },
+    loading:false
   }
 
   componentDidMount(){
@@ -60,6 +61,7 @@ class TableList extends Component{
     params.pageSize = pagination.pageSize;
 
     var hide = message.loading('正在查询...',0);
+    this.setState({loading:true});
     try{
       const res = await ajax.get(`${globalConfig.api.host}/api/Bulletin/list`, params);
 
@@ -73,6 +75,7 @@ class TableList extends Component{
       utils.error(`网络请求出错: ${ex.message}`);
     }
     hide();
+    this.setState({loading:false});
   }
 
   // 查询数据
@@ -106,7 +109,7 @@ class TableList extends Component{
             </FormItem>
           </Form>
           </div>
-          <Table dataSource={this.props.publicState.data}
+          <Table dataSource={this.props.publicState.data} loading={this.state.loading}
           columns={columns} pagination={this.state.pagination}  className='announcement' size='small'
           onChange={this.handlePageChange.bind(this)} onRowClick={this.handleOnRowClick.bind(this)}/>
         </div>
