@@ -91,6 +91,7 @@ class DetailView extends Component{
   async loadData(){
     try{
       var res = await ajax.get(`${globalConfig.api.host}/api/Bulletin/select/${this.props.publicState.selectedRow.id}`, null);
+      var hide = message.loading('正在查询...',0);
       if(res.success){
         utils.addServer(res.data,['additions'],globalConfig.api.host); // 附件列表中增加server
         this.setState({selectedRowDetail:res.data});
@@ -100,6 +101,7 @@ class DetailView extends Component{
     }catch(ex){
       utils.error(`网络请求出错: ${ex.message}`);
     }
+    hide();
   }
 
   /**
@@ -117,14 +119,15 @@ class DetailView extends Component{
   /**
   * 对于回复数据进行渲染
   * 内容、附件创建单独的ul
+  * div backgroundColor:'aliceblue'
   */
   replysRender(bulletinReplys){
     var rlt = [];
     if (!bulletinReplys) return rlt;
     rlt = bulletinReplys.map((item)=>{
       return (
-        <div>
-          <span style={{fontWeight:'bold',marginTop:'20px'}}>{item.replyTime + ' ' + item.replyUserName }</span>
+        <div style={{}}>
+          <span style={{fontWeight:'bold',marginTop:'40px'}}>{item.replyUserName + ' ' + item.replyTime }</span>
           <ul className='itemListUl2'>
             <li><span>{item.content}</span></li>
             {this.renderReplyAdditions(item.additions)}

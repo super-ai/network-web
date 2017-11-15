@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button,Icon,Table,Input,Radio,Form,notification,Tooltip} from 'antd';
+import {Button,Icon,Table,Input,Radio,Form,notification,Tooltip,message} from 'antd';
 import './index.less';
 import ajax from 'utils/ajax';
 import globalConfig from 'config.js';
@@ -59,9 +59,7 @@ class TableList extends Component{
     params.page = pagination.current;
     params.pageSize = pagination.pageSize;
 
-    console.info('查询请求参数为:%o',params);
-    console.info('state分页参数为:%o',this.state.pagination);
-
+    var hide = message.loading('正在查询...',0);
     try{
       const res = await ajax.get(`${globalConfig.api.host}/api/Bulletin/list`, params);
 
@@ -74,6 +72,7 @@ class TableList extends Component{
     }catch(ex){
       utils.error(`网络请求出错: ${ex.message}`);
     }
+    hide();
   }
 
   // 查询数据
