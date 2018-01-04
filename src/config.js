@@ -4,6 +4,7 @@
 
 'use strict';
 
+
 // 约定优于配置
 // 我可以提供尽量多的配置, 但尽量不要太个性化, 接口的路径/名称/格式之类的
 // 遵循统一的规范, 好维护, 交给其他人也比较简单
@@ -14,7 +15,7 @@
 const host = 'http://localhost:8080';
 module.exports = {
   name: '互联网信息化系统',  // 项目的名字
-  favicon:'/image/Male_man_face.png', // 设置网页的favicon, 可以是外链, 也可以是本地
+  favicon: 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3521320559,2076308639&fm=27&gp=0.jpg', // 设置网页的favicon, 可以是外链, 也可以是本地
   footer: '中移铁通云数据支撑 © 2017-2099',  // footer中显示的字, 可以嵌入html标签
 
   debug: false,  // 是否开启debug模式, 不会请求后端接口, 使用mock的数据
